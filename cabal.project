@@ -1,0 +1,8 @@
+packages:
+  .
+  examples/
+
+index-state: 2025-06-09T17:17:55Z
+
+allow-newer:
+  all:base

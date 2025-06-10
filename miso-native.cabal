@@ -1,0 +1,86 @@
+cabal-version:       2.2
+name:                miso-native
+version:             1.9.0.0
+category:            Web, Miso, Data Structures
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              David M. Johnson <code@dmj.io>
+maintainer:          David M. Johnson <code@dmj.io>
+homepage:            http://github.com/dmjio/miso-native
+copyright:           Copyright (c) 2016-2025 David M. Johnson
+bug-reports:         https://github.com/dmjio/miso-native/issues
+build-type:          Simple
+extra-source-files:  README.md
+synopsis:            A tasty Haskell mobile framework
+description:
+            Miso-native is a small, production-ready, component-oriented, isomorphic Haskell mobile framework featuring a virtual-dom, recursive diffing / patching algorithm, event delegation, event batching, SVG, Server-sent events, Websockets, type-safe servant-style routing and an extensible Subscription-based subsystem. Inspired by Elm and React. Miso is pure by default, but side effects can be introduced into the system via the Effect data type. Miso makes heavy use of the GHC FFI and therefore has minimal dependencies.
+
+extra-source-files:
+  README.md
+
+source-repository head
+   type: git
+   location: https://github.com/dmjio/miso-native.git
+
+common cpp
+  if arch(javascript)
+    cpp-options:
+      -DGHCJS_NEW
+
+common jsaddle
+  if !(impl(ghcjs) || arch(javascript) || arch(wasm32))
+    build-depends:
+      jsaddle-warp < 0.10
+
+  if !(impl(ghcjs) || arch(javascript))
+    build-depends:
+      file-embed < 0.1
+
+common client
+  if arch(javascript)
+    js-sources:
+      -- dmj: by default this is in prod. mode (aka. bun build --minify)
+      -- new JS backend has large payloads so we must use --minify.
+      -- 10MB to 2MB reduction w/ --minify in hello world cases, :shrug:
+      js/miso-native.js
+
+library
+  import:
+    jsaddle,
+    client,
+    cpp,
+  default-language:
+    Haskell2010
+  exposed-modules:
+    Miso.Native
+    Miso.Native.Element
+    Miso.Native.Element.Image
+    Miso.Native.Element.Image.Event
+    Miso.Native.Element.Image.FFI
+    Miso.Native.Element.Image.Property
+    Miso.Native.Element.List
+    Miso.Native.Element.List.Event
+    Miso.Native.Element.List.FFI
+    Miso.Native.Element.List.Property
+    Miso.Native.Element.ScrollView
+    Miso.Native.Element.ScrollView.Event
+    Miso.Native.Element.ScrollView.FFI
+    Miso.Native.Element.ScrollView.Property
+    Miso.Native.Element.Text
+    Miso.Native.Element.Text.Event
+    Miso.Native.Element.Text.Property
+    Miso.Native.Element.View
+    Miso.Native.Element.View.Event
+    Miso.Native.Element.View.FFI
+    Miso.Native.Element.View.Property
+    Miso.Native.FFI
+  ghc-options:
+    -Wall
+  hs-source-dirs:
+    src
+  build-depends:
+    aeson      < 2.3,
+    base       < 5,
+    containers < 0.9,
+    jsaddle    < 0.10,
+    miso       >= 1.9 && < 2.0

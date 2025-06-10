@@ -1,0 +1,57 @@
+{
+  "name": "miso-native",
+  "version": "1.9.0",
+  "description": "miso: A tasty Haskell mobile framework",
+  "scripts": {
+    "clean": "tsc --build --clean && find ts -name '*~' -or -name '*.js' -delete",
+    "watch": "tsc --project tsconfig.lib.json --watch",
+    "build": "bun build --outfile=js/miso-native.js ./ts/miso-native.ts --target=browser --minify",
+    "js": "bun run build",
+    "r": "rspack build"
+  },
+  "type": "module",
+  "module": "ts/miso-native.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmjio/miso-native.git"
+  },
+  "keywords": [
+    "miso",
+    "virtual-dom",
+    "haskell"
+  ],
+  "author": "dmijo",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/dmjio/miso-native/issues"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100,
+    "quoteProps": "preserve"
+  },
+  "homepage": "https://haskell-miso.org",
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^17.5.6",
+    "prettier": "3.5.3",
+    "@types/bun": "latest"
+  },
+  "files": [
+    "ts/miso-native.ts",
+    "ts/miso/context/native.ts",
+    "ts/miso/types.ts",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "@lcov-viewer/cli": "^1.3.0",
+    "@lynx-js/template-webpack-plugin": "0.6.4",
+    "@lynx-js/type-element-api": "https://gitpkg.vercel.app/lynx-family/lynx/js_libraries/type-element-api?develop",
+    "@lynx-js/types": "^3.2.1",
+    "@rspack/cli": "^1.2.8",
+    "@rspack/core": "^1.2.8",
+    "jsbi": "^4.3.2",
+    "text-encoding": "^0.7.0",
+    "typescript": "^5.8.3"
+  }
+}
