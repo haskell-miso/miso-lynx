@@ -73,6 +73,7 @@ library
     Miso.Native.Element.View.Event
     Miso.Native.Element.View.FFI
     Miso.Native.Element.View.Property
+    Miso.Native.Event
     Miso.Native.FFI
   ghc-options:
     -Wall

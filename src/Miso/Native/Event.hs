@@ -10,12 +10,19 @@
 -- Portability :  non-portable
 ----------------------------------------------------------------------------
 module Miso.Native.Event
-  ( onTap
+  ( -- * Events
+    nativeEvents
+  , onTap
   ) where
 ----------------------------------------------------------------------------
-import Miso.Html (Attribute, on)
-import Miso.Event
+import Miso.Types (Attribute)
+import Miso.Event (Events, emptyDecoder, on)
+----------------------------------------------------------------------------
+import qualified Data.Map.Strict as M
 ----------------------------------------------------------------------------
 onTap :: action -> Attribute action
-onTap action = on "tap" emptyDecoder $ \() -> action
+onTap action = on "tap" emptyDecoder $ \() _ -> action
+----------------------------------------------------------------------------
+nativeEvents :: Events
+nativeEvents = M.fromList [ ("tap", False) ]
 ----------------------------------------------------------------------------

@@ -17,13 +17,15 @@ common options
   ghc-options:
     -funbox-strict-fields -O2 -ferror-spans -fspecialise-aggressively -Wall
 
+  if arch(javascript)
+    ld-options:
+      -sENVIRONMENT=shell -sWASM=0
+
 executable counter
   import:
     options
   default-language:
     Haskell2010
-  ld-options:
-    -sENVIRONMENT=shell -sWASM=0
   main-is:
     Main.hs
   ghcjs-options:
@@ -37,6 +39,4 @@ executable counter
     base < 5,
     containers,
     miso,
-    miso-native,
-    mtl,
-    transformers
+    miso-native
