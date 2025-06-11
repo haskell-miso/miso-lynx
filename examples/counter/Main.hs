@@ -56,7 +56,14 @@ updateModel (Tap x) =
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
 viewModel :: Model -> View Action
-viewModel m = view_ []
+viewModel m = view_
+  [ CSS.style_
+    [ CSS.height "200px"
+    , CSS.display "flex"
+    , CSS.alignItems "center"
+    , CSS.justifyContent "center"
+    ]
+  ]
   [ view_
     [ onTap AddOne
     , id_ "plus"
@@ -64,21 +71,36 @@ viewModel m = view_ []
         [ CSS.backgroundColor CSS.yellow
         , CSS.width "100px"
         , CSS.height "100px"
+        , CSS.margin "2px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
         ]
     ]
-    [ text_ [  ] [ "+" ]
+    [ text_
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ "🐈"
+      ]
     ]
   , view_
     [ CSS.style_
         [ CSS.backgroundColor CSS.orange
         , CSS.width "100px"
         , CSS.height "100px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
         ]
     ]
     [ text_
-      []
-      [ "🍜 Miso counter"
-      , text ("value: " <> ms m)
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ text $ ms (m ^. value)
       ]
     ]
   , view_
@@ -88,10 +110,19 @@ viewModel m = view_ []
         [ CSS.backgroundColor CSS.pink
         , CSS.width "100px"
         , CSS.height "100px"
+        , CSS.margin "2px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
         ]
-
     ]
-    [ text_ [ ] [ "-" ]
+    [ text_
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ "🍜"
+      ]
     ]
   ]
 -----------------------------------------------------------------------------
