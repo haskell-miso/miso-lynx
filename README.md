@@ -20,20 +20,17 @@
   <a href="https://actions-badge.atrox.dev/dmjio/miso/goto?ref=master">
     <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fdmjio%2Fmiso%2Fbadge%3Fref%3Dmaster&style=flat-square" />
   </a>
-  <a href="https://discord.gg/QVDtfYNSxq">
-    <img alt="Discord" src="https://img.shields.io/discord/1302720467232096358?style=flat-square&label=discord&logoColor=7289da">
+  <a href="http://hackage.haskell.org/package/miso-native">
+    <img src="https://img.shields.io/hackage/v/miso-native.svg?style=flat-square" alt="Hackage">
   </a>
-  <a href="http://hackage.haskell.org/package/miso">
-    <img src="https://img.shields.io/hackage/v/miso.svg?style=flat-square" alt="Hackage">
-  </a>
-  <a href="https://github.com/dmjio/miso/blob/master/LICENSE">
+  <a href="https://github.com/dmjio/miso-native/blob/master/LICENSE">
     <img src="http://img.shields.io/badge/license-BSD3-blueviolet.svg?style=flat-square" alt="LICENSE">
   </a>
 </p>
 
-**Miso Native** is a small, production-ready, component-oriented, [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) [Haskell](https://www.haskell.org/) mobile framework for quickly building highly interactive iOS and Android applications.
+**Miso native** 🍜 is a small, production-ready, component-oriented, [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) [Haskell](https://www.haskell.org/) mobile framework for quickly building highly interactive iOS and Android applications.
 
-**Miso Native** uses [LynxJS](https://lynxjs.org) to facilitate drawing to native iOS `UIView` and Android views. 
+**Miso native** uses 🐈 [LynxJS](https://lynxjs.org) to facilitate drawing to native iOS `UIView` and Android views.
 
 ## Table of Contents
 - [Quick Start](#quick-start)
@@ -63,606 +60,200 @@
 - [License](#license)
 
 ## Quick start
-To start developing applications with `miso` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
+To start developing applications with `miso-native` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
 > [!TIP]
 > For new Haskell users we recommend using [GHCup](https://www.haskell.org/ghcup/) to acquire both [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/)
 
-## Setup 🏗️
-
-To develop and build your first `miso` application you will need 3 files:
-
-  - `cabal.project`
-  - `app.cabal`
-  - `Main.hs`
-
-### `cabal.project`
-
-```yaml
-packages:
-  .
-
-source-repository-package
-  type: git
-  location: https://github.com/dmjio/miso
-  branch: master
-```
-
-### `app.cabal`
-
-We recommend using at least `cabal-version: 2.2`, this will give you the [common sections](https://vrom911.github.io/blog/common-stanzas) feature which we will use later to allow multiple compilers to build our project (so we can target `WASM` and `JS` backends)
-
-```yaml
-cabal-version: 2.2
-name: app
-version: 0.1.0.0
-synopsis: Sample miso app
-category: Web
-
-common wasm
-  if arch(wasm32)
-    ghc-options:
-      -no-hs-main
-      -optl-mexec-model=reactor
-      "-optl-Wl,--export=hs_start"
-    cpp-options:
-      -DWASM
-
-executable app
-  import:
-    wasm
-  main-is:
-    Main.hs
-  build-depends:
-    base, miso
-  default-language:
-    Haskell2010
-```
+## Setup
 
 ### `Main.hs`
 
-This file contains a simple `miso` counter application.
+This file contains a simple `miso-native` counter application.
 
 ```haskell
-----------------------------------------------------------------------------
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE LambdaCase        #-}
-{-# LANGUAGE CPP               #-}
-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+{-# LANGUAGE DataKinds          #-}
+{-# LANGUAGE RecordWildCards    #-}
+{-# LANGUAGE OverloadedStrings  #-}
+-----------------------------------------------------------------------------
 module Main where
-----------------------------------------------------------------------------
-import Miso
-import Miso.String
-import Miso.Lens
-----------------------------------------------------------------------------
--- | Component model state
-newtype Model = Model
-  { _counter :: Int
-  } deriving (Show, Eq)
-----------------------------------------------------------------------------
-counter :: Lens Model Int
-counter = lens _counter $ \record field -> record { _counter = field }
-----------------------------------------------------------------------------
--- | Sum type for Component events
+-----------------------------------------------------------------------------
+import           Miso hiding (id_)
+import           Miso.Lens
+import           Miso.String
+import           Miso.Native
+import qualified Miso.Style as CSS
+-----------------------------------------------------------------------------
+import           Prelude hiding (unlines)
+-----------------------------------------------------------------------------
+-- | Type synonym for an application model
+newtype Model = Model { _value :: Int }
+  deriving (Show, Eq)
+-----------------------------------------------------------------------------
+instance ToMisoString Model where
+  toMisoString (Model v) = toMisoString v
+-----------------------------------------------------------------------------
+value :: Lens Model Int
+value = lens _value $ \m v -> m { _value = v }
+-----------------------------------------------------------------------------
 data Action
   = AddOne
   | SubtractOne
   | SayHelloWorld
+  | Tap Int
   deriving (Show, Eq)
-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run (startComponent component)
-----------------------------------------------------------------------------
--- | WASM export, required when compiling w/ the WASM backend.
-#ifdef WASM
-foreign export javascript "hs_start" main :: IO ()
-#endif
-----------------------------------------------------------------------------
--- | `defaultComponent` takes as arguments the initial model, update function, view function
-component :: Component name Model Action
-component = defaultComponent emptyModel updateModel viewModel
-----------------------------------------------------------------------------
--- | Empty application state
-emptyModel :: Model
-emptyModel = Model 0
-----------------------------------------------------------------------------
--- | Updates model, optionally introduces side effects
-updateModel :: Action -> Effect Model Action
-updateModel = \case
-  AddOne        -> counter += 1
-  SubtractOne   -> counter -= 1
-  SayHelloWorld -> io_ $ do
-    consoleLog "Hello World"
-    alert "Hello World"
-----------------------------------------------------------------------------
+main = run $ native vcomp
+  { events = nativeEvents
+  , initialAction = Just SayHelloWorld
+  }
+-----------------------------------------------------------------------------
+vcomp :: Component "counter" Model Action
+vcomp = defaultComponent (Model 0) updateModel viewModel
+-----------------------------------------------------------------------------
+updateModel
+  :: Action
+  -> Effect Model Action
+updateModel SayHelloWorld =
+  io_ (consoleLog "Inside Say Hello World!")
+updateModel AddOne = do
+  io_ (consoleLog "Inside AddOne")
+  value += 1
+updateModel SubtractOne = do
+  io_ (consoleLog "Inside SubtractOne")
+  value -= 1
+updateModel (Tap x) =
+  io_ $ consoleLog ("tapped: " <> ms (show x))
+-----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
 viewModel :: Model -> View Action
-viewModel x = div_ []
-  [ button_ [ onClick AddOne ] [ text "+" ]
-  , text $ ms (x ^. counter)
-  , button_ [ onClick SubtractOne ] [ text "-" ]
-  , button_ [ onClick SayHelloWorld ] [ text "Alert Hello World!" ]
+viewModel m = view_
+  [ CSS.style_
+    [ CSS.height "200px"
+    , CSS.display "flex"
+    , CSS.alignItems "center"
+    , CSS.justifyContent "center"
+    ]
   ]
-----------------------------------------------------------------------------
+  [ view_
+    [ onTap AddOne
+    , id_ "plus"
+    , CSS.style_
+        [ CSS.backgroundColor CSS.yellow
+        , CSS.width "100px"
+        , CSS.height "100px"
+        , CSS.margin "2px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
+        ]
+    ]
+    [ text_
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ "🐈"
+      ]
+    ]
+  , view_
+    [ CSS.style_
+        [ CSS.backgroundColor CSS.orange
+        , CSS.width "100px"
+        , CSS.height "100px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
+        ]
+    ]
+    [ text_
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ text $ ms (m ^. value)
+      ]
+    ]
+  , view_
+    [ onTap SubtractOne
+    , id_ "minus"
+    , CSS.style_
+        [ CSS.backgroundColor CSS.pink
+        , CSS.width "100px"
+        , CSS.height "100px"
+        , CSS.margin "2px"
+        , CSS.display "flex"
+        , CSS.alignItems "center"
+        , CSS.justifyContent "center"
+        ]
+    ]
+    [ text_
+      [ CSS.style_
+        [ CSS.fontSize "48px"
+        ]
+      ]
+      [ "🍜"
+      ]
+    ]
+ ]
+
+
 ```
 
 Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-With `GHC` and `cabal` on `$PATH`, call `cabal repl`
-
-```bash
-$ cabal repl
-```
-
-You should see the following output in your terminal.
-
-```bash
-[1 of 2] Compiling Main             ( Main.hs, interpreted )
-Ok, one module loaded.
-ghci>
-```
-
-Now call the `main` function in the `GHCi` REPL.
-
-```bash
-ghci> main
-Running on port 8008...
-<a href="http://localhost:8008">run</a>
-ghci>
-```
-
-> [!NOTE]
-> The code running in this example is not compiled to JavaScript or WebAssembly, rather it is running the client side application on the server. It works by sending commands to a small javascript interpreter over a websocket to render elements on the page. This is provided by the [jsaddle](https://github.com/ghcjs/jsaddle) library.
-
-If you visit [http://localhost:8008](http://localhost:8008), the application will be live. You can now edit `Main.hs`, call `:r` and `main` in `GHCi`, and the application will update on the screen.
-
-> [!NOTE]
-> Instead of typing `:r` and `main` manually inside of `GHCi` on every file change, you can use [ghcid](https://github.com/ndmitchell/ghcid) or [ghciwatch](https://github.com/MercuryTechnologies/ghciwatch) tools to do it automatically.
-
-> [!TIP]
-> For users accustomed to a react.js worfklow, we highly recommend using either `ghcid` or `ghciwatch`.
-
-Below is an example of usage with `ghcid`
-
-```bash
-$ ghcid -c 'cabal repl app' -T=Main.main
-```
-
-This screenshot shows the hot-reload functionality in action. This is using `ghcid`, `jsaddle` and `miso`.
-
-![Image](https://github.com/user-attachments/assets/4c5e7191-e4a9-4270-a28b-2f5f71ad6f40)
+Coming soon! 
 
 ## Compilation
 
-When done developing, we can compile to Web Assembly or JavaScript for distribution. This is done by acquiring a `GHC` that supports WebAssembly or JavaScript. We recommend acquiring these backends using `GHCUp` or `Nix`.
+Coming soon ! 
 
-> [!TIP]
-> For new Haskell users we recommend using [GHCup](https://www.haskell.org/ghcup/) to acquire the [WASM](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/wasm.html) and [JS](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/javascript.html) backends.
-
-## ![Image](https://github.com/user-attachments/assets/c57d96b2-368b-410e-b968-28dfe22bf1b1) Web Assembly
-
-> [!TIP]
-> The Haskell `miso` team currently recommends using the WASM backend as the default backend for compilation.
-
-Using [GHCup](https://www.haskell.org/ghcup/) you should be able to acquire the `GHC` `WASM` compiler.
-
-For instructions on how to add a third-party channel with [GHCup](https://www.haskell.org/ghcup/), please see their official [README.md](https://gitlab.haskell.org/haskell-wasm/ghc-wasm-meta#using-ghcup)
-
-> [!TIP]
-> For [Nix](nixos.org) users it is possible to acquire the WASM backend via a [Nix flake](https://nixos-and-flakes.thiscute.world/)
-
-```bash
-$ nix shell 'gitlab:haskell-wasm/ghc-wasm-meta?host=gitlab.haskell.org'
-```
-
-> [!NOTE]
-> This will put `wasm32-wasi-cabal` in your `$PATH`, along with `wasm32-wasi-ghc`. Since the WASM backend is relatively new, the ecosystem is not entirely patched to support it. Therefore, we will need to use patched packages from time to time.
-
-> [!TIP]
-> Instead of using a `nix shell`, it's possible to install the GHC WASM Flake into your environment so it will always be present on `$PATH`
-
-```bash
-$ nix profile install 'gitlab:haskell-wasm/ghc-wasm-meta?host=gitlab.haskell.org'
-```
-
-Update your `cabal.project` to the following
-
-- `cabal.project`
-
-```yaml
-packages:
-  .
-
-with-compiler:
-  wasm32-wasi-ghc
-
-with-hc-pkg:
-  wasm32-wasi-ghc-pkg
-
-source-repository-package
-  type: git
-  location: https://github.com/dmjio/miso
-  branch: master
-
-if arch(wasm32)
-  -- Required for TemplateHaskell. When using wasm32-wasi-cabal from
-  -- ghc-wasm-meta, this is superseded by the global cabal.config.
-  shared: True
-```
-
-Call `wasm32-wasi-cabal build --allow-newer` and a `WASM` payload should be created in `dist-newstyle/` directory.
-
-```bash
-$ wasm32-wasi-cabal update
-$ wasm32-wasi-cabal build --allow-newer
-```
-
-```bash
-Configuration is affected by the following files:
-- cabal.project
-Resolving dependencies...
-Build profile: -w ghc-9.12.2.20250327 -O1
-In order, the following will be built (use -v for more details):
- - app-0.1.0.0 (exe:app) (configuration changed)
-Configuring executable 'app' for app-0.1.0.0...
-Preprocessing executable 'app' for app-0.1.0.0...
-Building executable 'app' for app-0.1.0.0...
-[1 of 1] Compiling Main             ( Main.hs, dist-newstyle/build/wasm32-wasi/ghc-9.12.2.20250327/app-0.1.0.0/x/app/build/app/app-tmp/Main.o )
-[2 of 2] Linking dist-newstyle/build/wasm32-wasi/ghc-9.12.2.20250327/app-0.1.0.0/x/app/build/app/app.wasm
-```
-
-You have now successfully compiled a Haskell `miso` application to WebAssembly 🔥
-
-***
-
-But, we're not done yet. In order to view this in the browser there are still a few more steps. We need to add some additional files that emulate the [WASI interface](https://github.com/WebAssembly/WASI) in the browser ([A browser WASI shim](https://github.com/bjorn3/browser_wasi_shim)).
-
-> [!NOTE]
-> The GHC WASM backend can execute any Haskell program in a WASI-compliant runtime (e.g. [wasmtime](https://github.com/bytecodealliance/wasmtime))
-> See the [official documentation](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/wasm.html) for more information.
-
-To start, we recommend creating an `app.wasmexe` folder to store the additional artifacts required.
-
-```bash
-# Creates the directory for hosting
-$ mkdir -v app.wasmexe
-mkdir: created directory 'app.wasmexe'
-
-# This command produces `ghc_wasm_jsffi.js`, which ensures our FFI works properly.
-$ $(wasm32-wasi-ghc --print-libdir)/post-link.mjs \
-   --input $(wasm32-wasi-cabal list-bin app --allow-newer) \
-   --output app.wasmexe/ghc_wasm_jsffi.js
-
-# This copies the `app.wasm` payload into `app.wasmexe`
-$ cp -v $(wasm32-wasi-cabal list-bin app --allow-newer) app.wasmexe
-Configuration is affected by the following files:
-- cabal.project
-'/home/dmjio/Desktop/miso/sample-app/dist-newstyle/build/wasm32-wasi/ghc-9.12.2.20250327/app-0.1.0.0/x/app/build/app/app.wasm' -> 'app.wasmexe'
-```
-
-> [!NOTE]
-> Along with the above `ghc_wasm_jsffi.js` and `app.wasm` artifacts, we also need to include an `index.html` and an `index.js` for loading the WASM payload into the browser.
-
-- `index.html`
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sample miso WASM counter app</title>
-  </head>
-  <body>
-    <script src="index.js" type="module"></script>
-  </body>
-</html>
-```
-
-- `index.js`
-
-```javascript
-import { WASI, OpenFile, File, ConsoleStdout } from "https://cdn.jsdelivr.net/npm/@bjorn3/browser_wasi_shim@0.3.0/dist/index.js";
-import ghc_wasm_jsffi from "./ghc_wasm_jsffi.js";
-
-const args = [];
-const env = ["GHCRTS=-H64m"];
-const fds = [
-  new OpenFile(new File([])), // stdin
-  ConsoleStdout.lineBuffered((msg) => console.log(`[WASI stdout] ''${msg}`)),
-  ConsoleStdout.lineBuffered((msg) => console.warn(`[WASI stderr] ''${msg}`)),
-];
-const options = { debug: false };
-const wasi = new WASI(args, env, fds, options);
-
-const instance_exports = {};
-const { instance } = await WebAssembly.instantiateStreaming(fetch("app.wasm"), {
-  wasi_snapshot_preview1: wasi.wasiImport,
-  ghc_wasm_jsffi: ghc_wasm_jsffi(instance_exports),
-});
-Object.assign(instance_exports, instance.exports);
-
-wasi.initialize(instance);
-await instance.exports.hs_start(globalThis.example);
-```
-
-The `app.wasmexe` folder will now look like:
-
-```
-❯ ls app.wasmexe
- app.wasm
- ghc_wasm_jsffi.js
- index.html
- index.js
-```
-
-Now you can host and view the `app.wasm` payload in a web browser.
-
-```
-$ http-server app.wasmexe
-```
-
-> [!TIP]
-> You can inspect the WASM payload in the `Sources` tab of your browser by right-clicking and then clicking `Inspect`.
-
-![Image](https://github.com/user-attachments/assets/41af274b-2c25-4b26-acb1-d2a5266cfa8a)
 
 ## JavaScript
-
-Using [GHCup](https://www.haskell.org/ghcup/) you should be able to acquire the latest GHC JS-backend compiler.
-
-> [!TIP]
-> For [Nix](https://nixos.org) users it is possible to acquire the latest JS backend (that `miso` uses) via Nix.
-> Use [cachix](https://cachix.org) to ensure you're not building dependencies unnecessarily `cachix use haskell-miso-cachix`
-
-```bash
-nix-shell -p pkgs.pkgsCross.ghcjs.haskell.packages.ghc9122.ghc -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/65f179f903e8bbeff3215cd613bdc570940c0eab.tar.gz
-```
-
-> [!NOTE]
-> This will put `javascript-unknown-ghcjs-ghc` in your `$PATH`, along with `javascript-unknown-ghcjs-ghc-pkg`. You might also need to specify in your `cabal.project` file that you are using the JS backend.
-
-> [!TIP]
-> Alternatively, if you'd like to install the compiler into your global environment (so you don't need to develop inside a `bash` shell) you can use the following command.
->
-> ```bash
-> nix-env -iA pkgs.pkgsCross.ghcjs.haskell.packages.ghc9122.ghc -f https://github.com/NixOS/nixpkgs/archive/65f179f903e8bbeff3215cd613bdc570940c0eab.tar.gz
-> ```
-
-- `cabal.project`
-
-```yaml
-packages:
-  .
-
-source-repository-package
-  type: git
-  location: https://github.com/dmjio/miso
-  branch: master
-
-with-compiler:
-  javascript-unknown-ghcjs-ghc
-
-with-hc-pkg:
-  javascript-unknown-ghcjs-ghc-pkg
-```
-
-> [!NOTE]
-> `cabal` will use the `ghc` specified above in `with-compiler`
-
-
-```bash
-$ cabal update && cabal build --allow-newer
-```
-
-```bash
-Configuring executable 'app' for app-0.1.0.0...
-Preprocessing executable 'app' for app-0.1.0.0...
-Building executable 'app' for app-0.1.0.0...
-[1 of 1] Compiling Main             ( Main.hs, dist-newstyle/build/javascript-ghcjs/ghc-9.12.2/app-0.1.0.0/x/app/build/app/app-tmp/Main.o )
-[2 of 2] Linking dist-newstyle/build/javascript-ghcjs/ghc-9.12.2/app-0.1.0.0/x/app/build/app/app.jsexe
-
-```
-
-> [!TIP]
-> To view the JavaScript in your browser, you can use `cabal list-bin` and `http-server`
-
-```bash
-$ http-server $(cabal list-bin app --allow-newer).jsexe
-Configuration is affected by the following files:
-- cabal.project
-Starting up http-server, serving /home/dmjio/Desktop/miso/sample-app/dist-newstyle/build/javascript-ghcjs/ghc-9.12.2/app-0.1.0.0/x/app/build/app/app.jsexe
-
-http-server version: 14.1.1
-
-http-server settings:
-CORS: disabled
-Cache: 3600 seconds
-Connection Timeout: 120 seconds
-Directory Listings: visible
-AutoIndex: visible
-Serve GZIP Files: false
-Serve Brotli Files: false
-Default File Extension: none
-
-Available on:
-  http://127.0.0.1:8080
-  http://192.168.1.114:8080
-Hit CTRL-C to stop the server
-```
+Coming soon !
 
 ## Haddocks
 
-Offical [Haskell](https://haskell.org) documentation of the [Miso](https://haskell-miso.org) web framework.
-
-| Platform | URL |
-|------|-------------|
-| GHCJS | [Link](https://haddocks.haskell-miso.org/) |
-| GHC | [Link](http://hackage.haskell.org/package/miso) |
-
+Coming soon !
 
 ## Architecture
+Coming soon !
 
-For constructing client and server applications, we recommend using one `cabal` file with two executable sections, where the `buildable` attribute set is contingent on the compiler. An example of this layout is [here](https://github.com/dmjio/miso/blob/master/haskell-miso.org/haskell-miso.cabal#L24-L32).
-
-> [!TIP]
-> For more information on how to use `nix` with a `client`/`server` setup, see the [nix scripts](https://github.com/dmjio/miso/blob/master/haskell-miso.org/default.nix) for [https://haskell-miso.org](https://haskell-miso.org).
 
 ## Internals ⚙️
-
-For some details of the internals and general overview of how `miso` works, see the [Internals](docs/Internals.md).
+Coming soon ! 
 
 ## Examples
 
-For real-world examples of Haskell `miso` applications, see below.
-
-| Name            | Description                            | Source Link                                                                      | Live Demo Link                                | Author                               |
-|-----------------|----------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------|--------------------------------------|
-| **TodoMVC**     | A classic TodoMVC implementation       | [Source](https://github.com/dmjio/miso/blob/master/examples/todo-mvc/Main.hs)    | [Demo](https://todo-mvc.haskell-miso.org/)    | [@dmjio](https://github.com/dmjio)   |
-| **2048**        | A clone of the 2048 game               | [Source](https://github.com/ptigwe/hs2048/)                                      | [Demo](https://2048.haskell-miso.org/)        | [@ptigwe](https://github.com/ptigwe) |
-| **Flatris**     | A Tetris-like game                     | [Source](https://github.com/ptigwe/hs-flatris/)                                  | [Demo](https://flatris.haskell-miso.org/)     | [@ptigwe](https://github.com/ptigwe) |
-| **Plane**       | A flappy-birds-like game               | [Source](https://github.com/Lermex/miso-plane)                                   | [Demo](https://miso-plane.haskell-miso.org/)  | [@Lermex](https://github.com/Lermex) |
-| **Snake**       | The classic Snake game                 | [Source](https://github.com/lbonn/miso-snake)                                    | [Demo](https://snake.haskell-miso.org/)       | [@lbonn](https://github.com/lbonn)   |
-| **SVG**         | An example showcasing SVG rendering    | [Source](https://github.com/dmjio/miso/blob/master/examples/svg/Main.hs)         | [Demo](https://svg.haskell-miso.org/)         | [@dmjio](https://github.com/dmjio)   |
-| **Fetch**       | An example demonstrating AJAX requests | [Source](https://github.com/dmjio/miso/blob/master/examples/fetch/Main.hs)       | [Demo](https://fetch.haskell-miso.org/)       | [@dmjio](https://github.com/dmjio)   |
-| **File Reader** | A FileReader API example               | [Source](https://github.com/dmjio/miso/blob/master/examples/file-reader/Main.hs) | [Demo](https://file-reader.haskell-miso.org/) | [@dmjio](https://github.com/dmjio)   |
-| **WebGL**       | A 3D rendering example using Three.JS  | [Source](https://github.com/dmjio/miso/blob/master/examples/three/Main.hs)       | [Demo](https://threejs.haskell-miso.org/)     | [@dmjio](https://github.com/dmjio)   |
-| **Mario**       | A Super Mario physics example          | [Source](https://github.com/dmjio/miso/blob/master/examples/mario/Main.hs)       | [Demo](https://mario.haskell-miso.org/)       | [@dmjio](https://github.com/dmjio)   |
-| **WebSocket**   | A simple WebSocket example             | [Source](https://github.com/dmjio/miso/blob/master/examples/websocket/Main.hs)   | [Demo](https://websocket.haskell-miso.org/)   | [@dmjio](https://github.com/dmjio)   |
-| **Router**      | A client-side routing example          | [Source](https://github.com/dmjio/miso/blob/master/examples/router/Main.hs)      | [Demo](https://router.haskell-miso.org/)      | [@dmjio](https://github.com/dmjio)   |
-| **Canvas 2D**   | A 2D Canvas rendering example          | [Source](https://github.com/dmjio/miso/blob/master/examples/canvas2d/Main.hs)    | [Demo](https://canvas.haskell-miso.org/)      | [@dmjio](https://github.com/dmjio)   |
-| **Space Invaders**   | A Space-Invaders-like game       | [Source](https://gitlab.com/juliendehos/miso-invaders)    | [Demo](https://juliendehos.gitlab.io/miso-invaders/)      | [@juliendehos](https://github.com/juliendehos)   |
-| **Audio**   | Audio examples       | [Source](https://github.com/juliendehos/miso-audio-test)    | [Demo](https://juliendehos.github.io/miso-audio-test/)      | [@juliendehos](https://github.com/juliendehos)   |
-| **Video**   | Video examples       | [Source](https://github.com/juliendehos/miso-video-test)    | [Demo](https://juliendehos.github.io/miso-video-test/)      | [@juliendehos](https://github.com/juliendehos)   |
+Coming soon !
 
 ## Building examples
 
-The easiest way to build the examples is with the [`nix`](https://nixos.org/nix/) package manager
-
-> [!TIP]
-> Use [cachix](https://cachix.org) to ensure you're not building dependencies unnecessarily `cachix use haskell-miso-cachix`
-
-
-```
-$ git clone https://github.com/dmjio/miso
-$ cd miso
-$ nix-build -A miso-examples
-```
-
-This will compile all the examples to JavaScript into a folder named `result`.
-
-```
-➜ tree -d ./result/bin
-./result/bin
-|-- canvas2d.jsexe
-|-- file-reader.jsexe
-|-- mario.jsexe
-|   `-- imgs
-|-- mathml.jsexe
-|-- router.jsexe
-|-- simple.jsexe
-|-- svg.jsexe
-|-- tests.jsexe
-|-- threejs.jsexe
-|-- todo-mvc.jsexe
-|-- websocket.jsexe
-`-- fetch.jsexe
-```
-
-> [!NOTE]
-> To see examples, we recommend hosting them with a web server (we use [http-server](https://github.com/http-party/http-server))
-
-```
-cd result/bin/todo-mvc.jsexe && http-sever
-Serving HTTP on 0.0.0.0 port 8000 ...
-```
+Coming soon !
 
 ## Interacting with HTTP APIs 🔌
 
-If you want to interact with an HTTP API, we recommend one of the following approaches:
-
-  1. For a simple JSON-based API, you can use Miso's `fetchJSON` function.
-
-  2. In more complex cases, you can define a [Servant](https://www.servant.dev/) API and automatically obtain client functions via `servant-client-js` (or any other `servant-client-core`-based backend).
-
-     The Fetch example ([Source](https://github.com/dmjio/miso/blob/master/examples/fetch/Main.hs), [Demo](https://fetch.haskell-miso.org/)) demonstrates the necessary ingredients. Make sure to add the following to your `cabal.project`:
-
-     ```cabal
-     source-repository-package
-       type: git
-       location: https://github.com/amesgen/servant-client-js
-       tag: 2853fb4f26175f51ae7b9aaf0ec683c45070d06e
-     ```
+Coming soon !
 
 ## Coverage ✅
-
-The core engine of `miso` is the [diff](https://github.com/dmjio/miso/blob/master/ts/miso/dom.ts) function. It is responsible for all DOM manipulation that occurs in a miso application and has [100% code coverage](http://coverage.haskell-miso.org). Tests and coverage made possible using [bun](https://github.com/oven-sh/bun).
-
-> [!NOTE]
-> To run the tests and build the coverage report ensure [bun](https://github.com/oven-sh/bun) is installed.
-
-```bash
-$ curl -fsSL https://bun.sh/install | bash
-```
-or
-
-```bash
-$ nix-env -iA bun -f '<nixpkgs>'
-```
-
-and
-
-```bash
-$ bun install && bun run test
-```
-
-```bash
---------------------|---------|---------|-------------------
-File                | % Funcs | % Lines | Uncovered Line #s
---------------------|---------|---------|-------------------
-All files           |   92.37 |   85.48 |
- ts/happydom.ts     |  100.00 |  100.00 |
- ts/miso/dom.ts     |  100.00 |  100.00 |
- ts/miso/event.ts   |   90.91 |   81.62 |
- ts/miso/hydrate.ts |   80.00 |   91.24 |
- ts/miso/smart.ts   |  100.00 |  100.00 |
- ts/miso/util.ts    |   83.33 |   40.00 |
---------------------|---------|---------|-------------------
-
- 84 pass
- 0 fail
-```
+Coming soon !
 
 ## Isomorphic ☯️
 
-[Isomorphic javascript](https://en.wikipedia.org/wiki/Isomorphic_JavaScript) is a technique for increased SEO, code-sharing and perceived page load times. It works in two parts. First, the server sends a pre-rendered HTML body to the client's browser. Second, after the client javascript application loads, the pointers of the pre-rendered DOM are copied into the virtual DOM (a process known as [hydration](https://en.wikipedia.org/wiki/Hydration_(web_development))), and the application proceeds as normal. All subsequent page navigation is handled locally by the client, while avoiding full-page postbacks.
-
-> [!NOTE]
-> The [miso](https://haddocks.haskell-miso.org/miso/Miso.html#v:miso) function is used to facilitate the pointer-copying behavior client-side.
+Coming soon !
 
 ## Benchmarks 🏎️
 
-[According to benchmarks](https://krausest.github.io/js-framework-benchmark/current.html), `miso` is among the fastest functional programming web frameworks, second only to [Elm](http://elm-lang.org).
-
-<a target="_blank" href="https://krausest.github.io/js-framework-benchmark/current.html"><img src="https://cdn-images-1.medium.com/max/1600/1*6EjJTf1mhlTxd4QWsygCwA.png" width="500" height="600" /></a>
-
-## Nix <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/refs/heads/master/logo/nix-snowflake-colours.svg" alt="nixos-snowflake" width="25"/>
-
-`Nix` is a powerful option for building web applications with `miso` since it encompasses development workflow, configuration management, and deployment. The source code for [`haskell-miso.org`](https://github.com/dmjio/miso/tree/master/haskell-miso.org) is an example of this.
-
-> [!TIP]
-> If unfamiliar with `nix`, we recommend [@Gabriella439](https://github.com/Gabriella439)'s ["Nix and Haskell in production"](https://github.com/Gabriella439/haskell-nix) guide.
+Coming soon !
 
 ### Pinning nixpkgs 📌
 
-By default `miso` uses a known-to-work, pinned version of [`nixpkgs`](https://github.com/dmjio/miso/blob/master/nix/nixpkgs.json) known as `pkgs`.
-
-> [!NOTE]
-> `miso` also maintains a legacy version of nixpkgs known as `legacyPkgs` so we can use tools like `nixops` for deployment and to build `miso` with the original `GHCJS 8.6` backend.
+Coming soon !
 
 ### Binary cache
 
@@ -681,16 +272,16 @@ $ cachix use haskell-miso-cachix
 
 ## Contributing
 
-Feel free to dive in! [Open an issue](https://github.com/dmjio/miso/issues/new) or a submit [Pull Request](https://github.com/dmjio/miso/pulls).
+Feel free to dive in! [Open an issue](https://github.com/dmjio/miso-native/issues/new) or a submit [Pull Request](https://github.com/dmjio/miso-native/pulls).
 
-See [CONTRIBUTING](https://github.com/dmjio/miso/blob/master/CONTRIBUTING.md) for more info.
+See [CONTRIBUTING](https://github.com/dmjio/miso-native/blob/master/CONTRIBUTING.md) for more info.
 
 ## Contributors 🦾
 
 > [!NOTE]
 > This project exists thanks to all the people who [contribute](CONTRIBUTING.md)
 
-<a href="https://github.com/dmjio/miso/graphs/contributors"><img src="https://opencollective.com/miso/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/dmjio/miso-native/graphs/contributors"><img src="https://opencollective.com/miso/contributors.svg?width=890&button=false" /></a>
 
 ## Partnerships 🤝
 
