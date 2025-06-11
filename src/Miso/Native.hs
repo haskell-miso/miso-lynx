@@ -1,5 +1,7 @@
 -----------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Miso.Native
@@ -37,14 +39,31 @@ module Miso.Native
    , module Miso.Native.Element
      -- * FFI
    , module Miso.Native.FFI
+     -- * Event
+   , module Miso.Native.Event
    ) where
 -----------------------------------------------------------------------------
 import Miso (renderComponent, Component)
+import Miso.String (MisoString)
 import Miso.Native.Element
 import Miso.Native.FFI
+import Miso.Native.Event
 -----------------------------------------------------------------------------
-import Language.Javascript.JSaddle
+import Control.Monad (void)
+#ifndef GHCJS_BOTH
+import Data.FileEmbed (embedStringFile)
+#endif
+import Language.Javascript.JSaddle (eval, JSM)
 -----------------------------------------------------------------------------
 native :: Eq model => Component name model action -> JSM ()
-native vcomp = renderComponent (Just "native") vcomp (pure ())
+native vcomp = withJS $ renderComponent (Just "native") vcomp (pure ())
+-----------------------------------------------------------------------------
+-- | Used when compiling with jsaddle to make miso's JavaScript present in
+-- the execution context.
+withJS :: JSM a -> JSM ()
+withJS action = void $ do
+#ifndef GHCJS_BOTH
+  _ <- eval ($(embedStringFile "js/miso-native.js") :: MisoString)
+#endif
+  action
 -----------------------------------------------------------------------------

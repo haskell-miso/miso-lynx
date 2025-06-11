@@ -23,9 +23,17 @@ source-repository head
    location: https://github.com/dmjio/miso-native.git
 
 common cpp
+  if impl(ghcjs) || arch(javascript)
+    cpp-options:
+      -DGHCJS_BOTH
+
   if arch(javascript)
     cpp-options:
       -DGHCJS_NEW
+
+  if !(impl(ghcjs) || arch(javascript))
+    build-depends:
+      file-embed < 0.1
 
 common jsaddle
   if !(impl(ghcjs) || arch(javascript) || arch(wasm32))

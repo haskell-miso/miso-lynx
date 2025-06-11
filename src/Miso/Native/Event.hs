@@ -12,16 +12,11 @@
 module Miso.Native.Event
   ( -- * Events
     nativeEvents
-  , onTap
   ) where
 ----------------------------------------------------------------------------
-import Miso.Types (Attribute)
-import Miso.Event (Events, emptyDecoder, on)
+import Miso.Event (Events)
 ----------------------------------------------------------------------------
 import qualified Data.Map.Strict as M
-----------------------------------------------------------------------------
-onTap :: action -> Attribute action
-onTap action = on "tap" emptyDecoder $ \() _ -> action
 ----------------------------------------------------------------------------
 nativeEvents :: Events
 nativeEvents = M.fromList [ ("tap", False) ]
