@@ -13,7 +13,6 @@ module Miso.Native.Element.View.Property
   ( -- *** Property
     enableScroll_
   , name_
-  , id_
   , class_
   , className_
   , flatten_
@@ -67,17 +66,6 @@ enableScroll_ = boolProp "enable-scroll"
 -- 
 name_ :: MisoString -> Attribute action
 name_ = textProp "name"
------------------------------------------------------------------------------
--- | 'id_'
--- 
--- // DefaultValue undefined
--- id?: string;
--- 
--- Used to specify the unique identity of the element, which can be used by the front-end API to find and operate the corresponding node, such as [`invoke`](../../lynx-api/nodes-ref/nodes-ref-invoke).
--- 
--- 
-id_ :: MisoString -> Attribute action
-id_ = textProp "id"
 -----------------------------------------------------------------------------
 -- | 'class_'
 -- 

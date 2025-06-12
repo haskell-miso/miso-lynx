@@ -60,26 +60,23 @@ This file contains a simple `miso-native` counter application.
 
 ```haskell
 -----------------------------------------------------------------------------
-{-# LANGUAGE DataKinds          #-}
-{-# LANGUAGE RecordWildCards    #-}
-{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE DataKinds                   #-}
+{-# LANGUAGE RecordWildCards             #-}
+{-# LANGUAGE OverloadedStrings           #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving  #-}
 -----------------------------------------------------------------------------
 module Main where
 -----------------------------------------------------------------------------
-import           Miso hiding (id_)
+import           Miso
+import           Miso.Native
+-----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
-import           Miso.Native
 import qualified Miso.Style as CSS
------------------------------------------------------------------------------
-import           Prelude hiding (unlines)
 -----------------------------------------------------------------------------
 -- | Type synonym for an application model
 newtype Model = Model { _value :: Int }
-  deriving (Show, Eq)
------------------------------------------------------------------------------
-instance ToMisoString Model where
-  toMisoString (Model v) = toMisoString v
+  deriving (Show, Eq, ToMisoString)
 -----------------------------------------------------------------------------
 value :: Lens Model Int
 value = lens _value $ \m v -> m { _value = v }
@@ -93,13 +90,13 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run $ native vcomp
+main = run $ native counterComponent
   { events = nativeEvents
   , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
-vcomp :: Component "counter" Model Action
-vcomp = defaultComponent (Model 0) updateModel viewModel
+counterComponent :: Component "counter" Model Action
+counterComponent = defaultComponent (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
@@ -186,8 +183,7 @@ viewModel m = view_
       ]
     ]
  ]
-
-
+-----------------------------------------------------------------------------
 ```
 
 Now that your project files are populated, development can begin.
