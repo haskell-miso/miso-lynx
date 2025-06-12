@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "tsc --build --clean && find ts -name '*~' -or -name '*.js' -delete",
     "watch": "tsc --project tsconfig.lib.json --watch",
-    "build": "bun build --outfile=js/miso-native.js ./ts/miso-native.ts --target=browser --minify",
+    "build": "bun build --outfile=js/miso-native.js ./ts/miso-native.ts --target=browser --minify-whitespace",
     "js": "bun run build",
     "r": "rspack build"
   },
