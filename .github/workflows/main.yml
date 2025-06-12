@@ -33,17 +33,17 @@ jobs:
      - name: Bun install
        run: nix-env -iA bun -f . && bun install
 
-     - name: (JS) Miso GHCJS (GHC 9.12.2)
+     - name: (JS) Miso Native GHCJS (GHC 9.12.2)
        run: nix-build -A miso-native
 
-     - name: (x86) Miso GHC (GHC 9.12.2)
+     - name: (x86) Miso Native GHC (GHC 9.12.2)
        run: nix-build -A miso-native-ghc9122
 
-     - name: (JS) Miso examples (GHCJS 9.12.2)
+     - name: (JS) Miso Native examples (GHCJS 9.12.2)
        run: nix-build -A miso-native-examples-ghcjs9122
 
      - name: (x86) Nix garbage collect
        run: nix-collect-garbage -d
 
-     - name: Miso Haddocks
+     - name: Miso Native Haddocks
        run: nix-shell --run 'cabal update && cabal haddock-project'
