@@ -58,7 +58,7 @@ const context : Context = {
     return __SwapElement(a,b);
   },
   querySelectorAll: (sel: string) => {
-    lynx.querySelectorAll(sel);
+    return lynx.querySelectorAll(sel);
   },
   setAttribute : (node, key, value) => {
     if (key === 'id') return __SetID(node, value);
