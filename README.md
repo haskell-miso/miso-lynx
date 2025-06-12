@@ -2,9 +2,7 @@
 <p align="center">
 
 <a href="https://native.haskell-miso.org">
-  <img width=10% src="https://em-content.zobj.net/thumbs/240/apple/325/steaming-bowl_1f35c.png">
-   </a>
-<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜</p>
+<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 </p>
 </p>
 
 <p align="center">
@@ -28,35 +26,24 @@
   </a>
 </p>
 
-**Miso native** 🍜 is a small, production-ready, component-oriented, [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) [Haskell](https://www.haskell.org/) mobile framework for quickly building highly interactive iOS and Android applications.
-
-**Miso native** uses 🐈 [LynxJS](https://lynxjs.org) to facilitate drawing to native iOS `UIView` and Android views.
+**Miso native** 🍜 is a small, production-ready, component-oriented, [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) [Haskell](https://www.haskell.org/) mobile framework for quickly building highly interactive iOS and Android applications. **Miso native** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
 ## Table of Contents
 - [Quick Start](#quick-start)
 - [Setup](#setup)
 - [Hot Reload](#hot-reload)
 - [Compilation](#compilation)
-- [WebAssembly](#web-assembly)
-- [JavaScript](#JavaScript)
 - [Haddocks](#haddocks)
 - [Architecture](#architecture)
 - [Internals](#internals)
 - [Examples](#examples)
-- [Building examples](#building-examples)
-- [HTTP](#interacting-with-http-apis)
-- [Coverage](#coverage)
+- [Fetch](#fetch)
 - [Isomorphic](#isomorphic)
-- [Benchmarks](#benchmarks)
 - [Nix](#nix)
   - [Pinning nixpkgs](#pinning-nixpkgs)
   - [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
-- [Contributors](#contributors)
-- [Partnerships](#partnerships)
-- [Backers](#backers)
-- [Organizations](#organizations)
 - [License](#license)
 
 ## Quick start
@@ -207,14 +194,14 @@ Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-Coming soon! 
+Coming soon ! 
 
 ## Compilation
 
 Coming soon ! 
 
-
 ## JavaScript
+
 Coming soon !
 
 ## Haddocks
@@ -222,10 +209,11 @@ Coming soon !
 Coming soon !
 
 ## Architecture
+
 Coming soon !
 
+## Internals
 
-## Internals ⚙️
 Coming soon ! 
 
 ## Examples
@@ -236,22 +224,19 @@ Coming soon !
 
 Coming soon !
 
-## Interacting with HTTP APIs 🔌
+## Fetch
 
 Coming soon !
 
-## Coverage ✅
-Coming soon !
-
-## Isomorphic ☯️
+## Isomorphic
 
 Coming soon !
 
-## Benchmarks 🏎️
+## Nix
 
 Coming soon !
 
-### Pinning nixpkgs 📌
+### Pinning nixpkgs
 
 Coming soon !
 
@@ -275,36 +260,6 @@ $ cachix use haskell-miso-cachix
 Feel free to dive in! [Open an issue](https://github.com/dmjio/miso-native/issues/new) or a submit [Pull Request](https://github.com/dmjio/miso-native/pulls).
 
 See [CONTRIBUTING](https://github.com/dmjio/miso-native/blob/master/CONTRIBUTING.md) for more info.
-
-## Contributors 🦾
-
-> [!NOTE]
-> This project exists thanks to all the people who [contribute](CONTRIBUTING.md)
-
-<a href="https://github.com/dmjio/miso-native/graphs/contributors"><img src="https://opencollective.com/miso/contributors.svg?width=890&button=false" /></a>
-
-## Partnerships 🤝
-
-If you'd like to support this project financially, be it through requesting feature development, or a corporate partnership, please drop us a line and we will be in touch shortly. <p><a href="mailto:code@dmj.io">code@dmj.io</a></p>
-
-## Backers
-
-Become a [financial contributor](https://opencollective.com/miso/contribute) and help us sustain our project and community. We are very grateful and thankful for our individual sponsors.
-
-  - Moses Tschanz
-  - [@MaxGabriel](https://github.com/MaxGabriel)
-  - [@DigitalOcean](https://github.com/DigitalOcean)
-  - [@maybetonyfu](https://github.com/maybetonyfu)
-  - [@jhrcek](https://github.com/jhrcek)
-  - etc.
-
-<a href="https://opencollective.com/miso"><img src="https://opencollective.com/miso/individuals.svg?width=890"></a>
-
-## Organizations
-
-[Support this project](https://opencollective.com/miso/contribute) with your organization. Your logo will show up here with a link to your website. We are also very grateful and thankful for our corporate sponsors.
-
-<a target="_blank" href="https://opencollective.com/miso/organization/0/website"><img src="https://opencollective.com/miso/organization/0/avatar.svg"></a>
 
 ## License
 
