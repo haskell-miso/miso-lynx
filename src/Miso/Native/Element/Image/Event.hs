@@ -27,16 +27,12 @@ import           Miso.Event
 import           Miso.String (MisoString)
 import           Miso.Types (Attribute)
 -----------------------------------------------------------------------------
--- *bindLoad*
---
--- <https://lynxjs.org/api/elements/built-in/image.html#bindload>
+-- | <https://lynxjs.org/api/elements/built-in/image.html#bindload>
 --
 onBindLoad :: (ImageLoadEvent -> action) -> Attribute action
 onBindLoad action = on "bindload" imageLoadDecoder (\e _ -> action e)
 -----------------------------------------------------------------------------
--- *bindError*
---
--- <https://lynxjs.org/api/elements/built-in/image.html#binderror>
+-- | <https://lynxjs.org/api/elements/built-in/image.html#binderror>
 --
 onBindError :: (ImageErrorEvent -> action) -> Attribute action
 onBindError action = on "binderror" imageErrorDecoder (\e _ -> action e)

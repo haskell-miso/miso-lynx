@@ -22,9 +22,7 @@ import Language.Javascript.JSaddle
 import Miso.FFI
 import Miso.String
 -----------------------------------------------------------------------------
--- | 'setInterval'
---
--- > https://lynxjs.org/api/lynx-api/global/set-interval.html
+-- | <https://lynxjs.org/api/lynx-api/global/set-interval.html>
 --
 setInterval :: Double -> JSM () -> JSM Double
 setInterval delay f = do
@@ -33,18 +31,14 @@ setInterval delay f = do
   result <- jsg "lynx" # "setInterval" $ ([cb, v] :: [JSVal])
   fromJSValUnchecked result
 -----------------------------------------------------------------------------
--- | 'clearInterval'
---
--- > https://lynxjs.org/api/lynx-api/global/clear-interval.html
+-- | <https://lynxjs.org/api/lynx-api/global/clear-interval.html>
 --
 clearInterval :: Double -> JSM Double
 clearInterval intervalId = do
   result <- jsg "lynx" # "clearInterval" $ [intervalId]
   fromJSValUnchecked result
 -----------------------------------------------------------------------------
--- | 'setTimeout'
---
--- > https://lynxjs.org/api/lynx-api/global/set-timeout.html
+-- | <https://lynxjs.org/api/lynx-api/global/set-timeout.html>
 --
 setTimeout :: Double -> JSM () -> JSM Double
 setTimeout delay f = do
@@ -53,14 +47,12 @@ setTimeout delay f = do
   result <- jsg "lynx" # "setTimeout" $ [cb, v]
   fromJSValUnchecked result
 -----------------------------------------------------------------------------
--- | 'clearTimeout'
---
--- > https://lynxjs.org/api/lynx-api/global/clear-timeout.html
+-- | <https://lynxjs.org/api/lynx-api/global/clear-timeout.html>
 --
 clearTimeout :: Double -> JSM ()
 clearTimeout timerId = void $ jsg "lynx" # "clearTimeout" $ [timerId]
 -----------------------------------------------------------------------------
--- | 'invokeExec'
+-- | <https://lynxjs.org/api/lynx-api/nodes-ref/nodes-ref-invoke.html>
 --
 -- Used to call methods on elements in 'view_', 'image_', etc.
 -- We use this internally to implement the various 'Method' sections

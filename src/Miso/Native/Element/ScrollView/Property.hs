@@ -25,9 +25,7 @@ import           Miso.String (MisoString)
 import           Miso.Types (Attribute)
 import           Miso.Property
 -----------------------------------------------------------------------------
--- | 'scrollOrientation_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-orientation>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-orientation>
 --
 -- // DefaultValue: "vertical"
 -- scroll-orientation?: string
@@ -37,9 +35,7 @@ import           Miso.Property
 scrollOrientation_ :: MisoString -> Attribute action
 scrollOrientation_ = textProp "scroll-orientation"
 -----------------------------------------------------------------------------
--- | 'enableScroll_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#enable-scroll>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#enable-scroll>
 --
 -- // DefaultValue: true
 -- enable-scroll?: boolean
@@ -49,9 +45,7 @@ scrollOrientation_ = textProp "scroll-orientation"
 enableScroll_ :: Bool -> Attribute action
 enableScroll_ = boolProp "enable-scroll"
 -----------------------------------------------------------------------------
--- | 'initialScrollOffset_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-offset>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-offset>
 --
 -- // DefaultValue: N/A
 -- initial-scroll-offset?: string = ${number}px
@@ -61,9 +55,7 @@ enableScroll_ = boolProp "enable-scroll"
 initialScrollOffset_ :: MisoString -> Attribute action
 initialScrollOffset_ = textProp "initial-scroll-offset"
 -----------------------------------------------------------------------------
--- | 'initialScrollToIndex_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-to-index>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-to-index>
 --
 -- // DefaultValue: N/A
 -- initial-scroll-to-index?: string = ${number}px
@@ -73,9 +65,7 @@ initialScrollOffset_ = textProp "initial-scroll-offset"
 initialScrollToIndex_ :: MisoString -> Attribute action
 initialScrollToIndex_ = textProp "initial-scroll-to-index"
 -----------------------------------------------------------------------------
--- | 'bounces_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#bounces>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#bounces>
 --
 -- iOS only.
 --
@@ -87,9 +77,7 @@ initialScrollToIndex_ = textProp "initial-scroll-to-index"
 bounces_ :: Bool -> Attribute action
 bounces_ = boolProp "bounces"
 -----------------------------------------------------------------------------
--- | 'upperThreshold_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#upper-threshold>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#upper-threshold>
 --
 -- // DefaultValue: N/A
 -- upper-threshold?: string = ${number}px
@@ -100,9 +88,7 @@ bounces_ = boolProp "bounces"
 upperThreshold_ :: MisoString -> Attribute action
 upperThreshold_ = textProp "upper-threshold"
 -----------------------------------------------------------------------------
--- | 'lowerThreshold_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#lower-threshold>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#lower-threshold>
 --
 -- // DefaultValue: N/A
 -- lower-threshold?: string = ${number}px
@@ -113,9 +99,7 @@ upperThreshold_ = textProp "upper-threshold"
 lowerThreshold_ :: MisoString -> Attribute action
 lowerThreshold_ = textProp "lower-threshold"
 -----------------------------------------------------------------------------
--- | 'scrollBarEnable_'
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-bar-enable>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-bar-enable>
 --
 -- // DefaultValue: N/A
 -- lower-threshold?: string = ${number}px
