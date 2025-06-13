@@ -90,8 +90,8 @@ const context : Context = {
   setTextContent : (node, text) => {
     return __SetAttribute(node,'text',text);
   },
-  getTextContent : (node) => {
-    return __GetAttribute('text', node);
+  getTextContent : (node: ElementRef) => {
+    return __GetAttributeByName(node, 'textContext');
   },
   isEqual : (x, y) => {
     return __ElementIsEqual(x,y);
