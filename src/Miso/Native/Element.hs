@@ -49,13 +49,11 @@ import           Miso.Native.Element.Text
 native_ :: MisoString -> [Attribute action] -> [View action] -> View action
 native_ = node HTML
 -----------------------------------------------------------------------------
--- | <page>
+-- | <https://lynxjs.org/api/elements/built-in/page.html>
 --
 -- <page> element is the root node, only one <page> element is allowed per page.
 -- You can omit the explicit <page> wrapper, as the frontend framework will
 -- generate the root node by default.
---
--- <https://lynxjs.org/api/elements/built-in/page.html>
 --
 -- You shouldn't use this, we already generate the 'page' for you when
 -- the initial 'renderPage' callback is invoked by PrimJS, and there can
@@ -65,29 +63,25 @@ native_ = node HTML
 page_ :: [Attribute action] -> [View action] -> View action
 page_ = native_ "page"
 -----------------------------------------------------------------------------
--- | <scroll-view>
+-- | <https://lynxjs.org/api/elements/built-in/scroll-view.html>
 --
 -- Basic element, used to contain other elements. <view> is the foundation
 -- for all other elements; its attributes, events, and methods can be
 -- used in other elements.
---
--- <https://lynxjs.org/api/elements/built-in/scroll-view.html>
 --
 scrollView_ :: [Attribute action] -> [View action] -> View action
 scrollView_ = native_ "scroll-view"
 -----------------------------------------------------------------------------
--- | <view>
+-- | <https://lynxjs.org/api/elements/built-in/view.html>
 --
 -- Basic element, used to contain other elements. <view> is the foundation
 -- for all other elements; its attributes, events, and methods can be
 -- used in other elements.
 --
--- <https://lynxjs.org/api/elements/built-in/view.html>
---
 view_ :: [Attribute action] -> [View action] -> View action
 view_ = native_ "view"
 -----------------------------------------------------------------------------
--- | <image>
+-- | <https://lynxjs.org/api/elements/built-in/image.html>
 --
 -- Used to display different types of images, including web images,
 -- static resources, and locally stored images.
@@ -109,14 +103,12 @@ view_ = native_ "view"
 image_ :: MisoString -> [Attribute action] -> View action
 image_ url attrs = native_ "image" (textProp "src" url : attrs) []
 -----------------------------------------------------------------------------
--- |
--- <https://lynxjs.org/api/elements/built-in/list.html>
+-- | <https://lynxjs.org/api/elements/built-in/list.html>
 --
 listItem_ :: [Attribute action] -> [View action] -> View action
 listItem_ = native_ "list-item"
 -----------------------------------------------------------------------------
--- |
--- <https://lynxjs.org/api/elements/built-in/list.html>
+-- | <https://lynxjs.org/api/elements/built-in/list.html>
 --
 list_ :: ListOptions -> [Attribute action] -> [View action] -> View action
 list_ ListOptions {..} attrs = native_ "list" (defaults <> attrs)
@@ -127,8 +119,7 @@ list_ ListOptions {..} attrs = native_ "list" (defaults <> attrs)
       , prop "scroll-orientation" (toJSON scrollOrientation_)
       ]
 -----------------------------------------------------------------------------
--- | <text>
--- <https://lynxjs.org/api/elements/built-in/text.html>
+-- | <https://lynxjs.org/api/elements/built-in/text.html>
 --
 -- <text> is a built-in component in Lynx used to display text content.
 -- It supports specifying text style, binding click event callbacks, and can

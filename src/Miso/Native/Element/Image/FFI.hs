@@ -22,44 +22,36 @@ import           Miso.Native.FFI (invokeExec)
 -----------------------------------------------------------------------------
 import           Language.Javascript.JSaddle (JSM)
 -----------------------------------------------------------------------------
--- | startAnimation
+-- | <https://lynxjs.org/api/elements/built-in/image.html#startanimate>
 --
 -- Starts an animation at the ID selected
---
--- <https://lynxjs.org/api/elements/built-in/image.html#startanimate>
 --
 -- > startAnimation "someImageId"
 --
 startAnimation :: MisoString -> JSM ()
 startAnimation selector = invokeExec selector "startAnimate"
 -----------------------------------------------------------------------------
--- | pauseAnimation
+-- | <https://lynxjs.org/api/elements/built-in/image.html#pauseanimation>
 --
 -- Pauses an animation at the ID selected
---
--- <https://lynxjs.org/api/elements/built-in/image.html#pauseanimation>
 --
 -- > pauseAnimation "someImageId"
 --
 pauseAnimation :: MisoString -> JSM ()
 pauseAnimation selector = invokeExec selector "pauseAnimation"
 -----------------------------------------------------------------------------
--- | resumeAnimation
+-- | <https://lynxjs.org/api/elements/built-in/image.html#resumeanimation>
 --
 -- Resumes an animation at the ID selected
---
--- <https://lynxjs.org/api/elements/built-in/image.html#resumeanimation>
 --
 -- > resumeAnimation "someImageId"
 --
 resumeAnimation :: MisoString -> JSM ()
 resumeAnimation selector = invokeExec selector "resumeAnimation"
 -----------------------------------------------------------------------------
--- | stopAnimation
+-- | <https://lynxjs.org/api/elements/built-in/image.html#stopanimation>
 --
 -- Stops an animation at the ID selected
---
--- <https://lynxjs.org/api/elements/built-in/image.html#stopanimation>
 --
 -- > stopAnimation "someImageId"
 --
