@@ -10,15 +10,15 @@ type DOMRef = HTMLElement | SVGElement | MathMLElement;
 */
 type Context = {
   addEventListener : (mount : Node, event : string, listener : any, capture : boolean) => void;
-  createTextNode : (s: string) => Text;
-  createElementNS : (ns : string, tag : string) => Element;
+  createTextNode : (s: string) => ElementRef;
+  createElementNS : (ns : string, tag : string) => ElementRef;
   appendChild : (parent, child) => void;
   replaceChild : (parent, n, o) => void;
   removeChild : (parent, child) => void;
-  createElement : (name : string) => Element;
+  createElement : (name : string) => ElementRef;
   insertBefore : (parent, child, node) => void;
   swapDOMRefs: (a: Node, b: Node, p: Node) => void;
-  querySelectorAll: (sel: string) => NodeListOf<Element>;
+  querySelectorAll: (sel: string) => Array<ElementRef>;
   setAttribute : (node, key, value) => void;
   removeAttribute : (node, key) => void;
   setAttributeNS : (node, ns, key, value) => void;
@@ -32,12 +32,12 @@ type Context = {
   setStyle : (cCss: CSS, nCss: CSS, node : DOMRef) => void;
   getAttribute : (e: Element, string) => string;
   getTag : (e) => string;
-  firstChild : (e) => Element;
-  lastChild : (e) => Element;
-  parentNode : (e) => Element;
+  firstChild : (e) => ElementRef;
+  lastChild : (e) => ElementRef;
+  parentNode : (e) => ElementRef;
   requestAnimationFrame : (callback: ((timestamp: number) => void)) => void;
   flush : () => void;
-  getRoot : () => Element;
+  getRoot : () => ElementRef;
 };
 
 export {
