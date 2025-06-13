@@ -61,6 +61,9 @@ const context : Context = {
   querySelectorAll: (sel: string) => {
     return lynx.querySelectorAll(sel);
   },
+  removeAttribute : (node : ElementRef, key: string) => {
+    return __SetAttribute(node, key, '');
+  },
   setAttribute : (node, key, value) => {
     if (key === 'id') return __SetID(node, value);
     return __SetAttribute(node,key,value);
