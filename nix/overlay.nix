@@ -16,6 +16,23 @@ self: super: {
     '';
   };
 
+  # bundler script, invokes rspack to bundle main.lynx.bundle.
+  counter-bundle = super.writeScriptBin "counter-bundle" ''
+    set -x
+    if [ ! -f dist/ ]; then
+      rm -rv dist/
+    fi
+    cabal clean
+    mkdir -pv dist/
+    bun run js
+    cp -v $(nix-build -A miso-native-examples-ghcjs9122)/bin/counter.jsexe/all.js .
+    chmod +rw all.js
+    bun build --minify all.js --target=bun --outfile=dist/all.js
+    file dist/all.js
+    bun run bundle
+    file dist/main.lynx.bundle
+  '';
+
   # haskell stuff
   haskell = super.haskell // {
     packages = super.haskell.packages // {

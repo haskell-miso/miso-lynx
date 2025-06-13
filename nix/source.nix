@@ -13,6 +13,8 @@ let
          (hasSuffix ".html" baseName) ||
          (hasSuffix ".png" baseName) ||
          (hasSuffix ".js" baseName) ||
+         (hasSuffix ".ts" baseName) ||
+         (hasSuffix ".json" baseName) ||
          (baseName == "README.md") ||
          (baseName == "LICENSE") ||
          (type == "directory" && baseName != "examples") ||
