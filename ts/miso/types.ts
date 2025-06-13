@@ -1,3 +1,6 @@
+/* imports */
+import { ElementRef } from '@lynx-js/type-element-api';
+
 /* core type for virtual DOM */
 type CSS = Record<string, string>;
 type DOMRef = HTMLElement | SVGElement | MathMLElement;
@@ -24,7 +27,7 @@ type Context = {
   isEqual : (n1, n2) => boolean;
   getTarget : (e: Event) => EventTarget;
   setComponentId : (componentId: string) => void;
-  children : (e: Node) => NodeListOf<ChildNode>;
+  children : (e: Node) => Array<ElementRef>;
   getStyle : (e, string) => string;
   setStyle : (cCss: CSS, nCss: CSS, node : DOMRef) => void;
   getAttribute : (e: Element, string) => string;

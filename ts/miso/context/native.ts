@@ -1,4 +1,5 @@
 import { Context } from '../types';
+import { ElementRef } from '@lynx-js/type-element-api';
 
 const context : Context = {
   addEventListener : (mount : Element, event : string, listener, capture : boolean) => {
@@ -92,8 +93,8 @@ const context : Context = {
   isEqual : (x, y) => {
     return __ElementIsEqual(x,y);
   },
-  children : (node) => {
-    return __Children(node);
+  children : (node: ElementRef) => {
+    return __GetChildren(node);
   },
   getTarget : (e) => {
     return e.target.elementRefptr;
