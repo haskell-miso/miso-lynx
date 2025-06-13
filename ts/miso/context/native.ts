@@ -111,7 +111,7 @@ const context : Context = {
   flush : (): void => {
     return __FlushElementTree();
   },
-  getRoot : (): void => {
+  getRoot : (): ElementRef => {
      return globalThis['page'];
   }
 }
