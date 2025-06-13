@@ -7,7 +7,7 @@
     "watch": "tsc --project tsconfig.lib.json --watch",
     "build": "bun build --outfile=js/miso-native.js ./ts/miso-native.ts --target=browser --minify-whitespace",
     "js": "bun run build",
-    "r": "rspack build"
+    "bundle": "rspack build"
   },
   "type": "module",
   "module": "ts/miso-native.ts",

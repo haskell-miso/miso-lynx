@@ -11,7 +11,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/master'
     steps:
      - uses: DeterminateSystems/nix-installer-action@main
      - uses: actions/checkout@v3.5.3
@@ -41,6 +40,9 @@ jobs:
 
      - name: (JS) Miso examples (GHCJS 9.12.2)
        run: nix-build -A miso-native-examples-ghcjs9122
+
+     - name: (x86) Bundle miso-native counter example w/ rspack
+       run: nix-build -A counter-bundle && ./result/bin/counter-bundle
 
      - name: (x86) Nix garbage collect
        run: nix-collect-garbage -d

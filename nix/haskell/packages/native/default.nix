@@ -14,7 +14,7 @@ self: super:
   ghcjs-base = self.callCabal2nix "ghcjs-base" source.ghcjs-base {};
 
   /* examples */
-  miso-examples = self.callCabal2nix "miso-native-examples" source.examples {};
+  miso-native-examples = self.callCabal2nix "miso-native-examples" source.examples {};
 
   /* cruft */
   crypton = dontCheck super.crypton;
