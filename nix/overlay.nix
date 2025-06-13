@@ -27,7 +27,7 @@ self: super: {
     bun run js
     cp -v $(nix-build -A miso-native-examples-ghcjs9122)/bin/counter.jsexe/all.js .
     chmod +rw all.js
-    bun build --minify-whitespace all.js --target=bun --outfile=dist/all.js
+    bun build --minify all.js --target=bun --outfile=dist/all.js
     file dist/all.js
     bun run bundle
   '';
