@@ -44,16 +44,17 @@ module Miso.Native
    ) where
 -----------------------------------------------------------------------------
 import Miso (renderComponent, Component)
-import Miso.String (MisoString)
 import Miso.Native.Element
 import Miso.Native.FFI
 import Miso.Native.Event
 -----------------------------------------------------------------------------
 import Control.Monad (void)
+import Language.Javascript.JSaddle (JSM)
 #ifndef GHCJS_BOTH
 import Data.FileEmbed (embedStringFile)
+import Language.Javascript.JSaddle (eval)
+import Miso.String (MisoString)
 #endif
-import Language.Javascript.JSaddle (eval, JSM)
 -----------------------------------------------------------------------------
 native :: Eq model => Component name model action -> JSM ()
 native vcomp = withJS $ renderComponent (Just "native") vcomp (pure ())
