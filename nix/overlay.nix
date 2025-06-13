@@ -30,6 +30,7 @@ self: super: {
     bun build --minify all.js --target=bun --outfile=dist/all.js
     file dist/all.js
     bun run bundle
+    file dist/main.lynx.bundle
   '';
 
   # haskell stuff
