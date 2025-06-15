@@ -33,13 +33,13 @@ in
   miso = fetchFromGitHub {
     owner = "dmjio";
     repo = "miso";
-    rev = "226657930f9a4abbd646a15497bab7a31f370167";
-    hash = "sha256-EVSRRr7YaUOz9cgmsmwwFw08Wai6hxTdQV0/bQQvlfw=";
+    rev = "c694abcce1d0508bb47c409b5de1cf321a714157";
+    hash = "sha256-EL35cm0gCd7KV+48K3pCIfVjoFJ6B0PZD6nbW6UfSX8=";
   };
   ghcjs-base = fetchFromGitHub {
-    owner = "ghcjs";
+    owner = "dmjio";
     repo = "ghcjs-base";
-    rev = "197b8bf05ba60ae0727bea7bcdb45f3c89778889";
-    hash = "sha256-omKtlsevfYAQ9JAgTVwK0N3p7JFMuLs7AMbevF26w44=";
+    rev = "ec79b37aec3d45264aa59306ff950632693c970c";
+    hash = "sha256-0RkakDmeZZYscMfRhpGzKtscYSmE7H1sI2ldlrVksqY=";
   };
 }
