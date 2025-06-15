@@ -13,6 +13,10 @@ globalThis['TextEncoder'] = TextEncoder;
 globalThis['BigInt'] = JSBI.BigInt;
 globalThis['JSBI'] = JSBI;
 
+/* Polyfills global rAF w/ lynx */
+globalThis['requestAnimationFrame'] = lynx['requestAnimationFrame'];
+globalThis['cancelAnimationFrame'] = lynx['cancelAnimationFrame'];
+
 /* export native context globally */
 globalThis['native'] = context;
 
