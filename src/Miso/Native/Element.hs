@@ -24,6 +24,7 @@ module Miso.Native.Element
     -- ** List
   , list_
   , listItem_
+    -- * Text
   , text_
   ) where
 -----------------------------------------------------------------------------
