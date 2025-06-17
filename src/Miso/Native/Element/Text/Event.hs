@@ -83,15 +83,14 @@ onSelectionChange :: (SelectionChangeEvent -> action) -> Attribute action
 onSelectionChange action = on "layout" selectionChangeDecoder (\e _ -> action e)
 -----------------------------------------------------------------------------
 selectionChangeDecoder :: Decoder SelectionChangeEvent
-selectionChangeDecoder = [] `at` parser
+selectionChangeDecoder = ["detail"] `at` parser
   where
     parser :: Value -> Parser SelectionChangeEvent
     parser = withObject "SelectionChangeEvent" $ \o -> do
-      d <- o .: "detail"
       SelectionChangeEvent
-        <$> d .: "start"
-        <*> d .: "end"
-        <*> d .: "direction"
+        <$> o .: "start"
+        <*> o .: "end"
+        <*> o .: "direction"
 -----------------------------------------------------------------------------
 data SelectionChangeEvent
   = SelectionChangeEvent
