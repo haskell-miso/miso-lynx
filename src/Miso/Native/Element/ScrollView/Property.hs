@@ -25,73 +25,65 @@ import           Miso.String (MisoString)
 import           Miso.Types (Attribute)
 import           Miso.Property
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-orientation>
---
--- // DefaultValue: "vertical"
--- scroll-orientation?: string
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-orientation
 --
 -- Set scroll orientation for the scrollable container.
+--
+-- Default Value: "vertical"
 --
 scrollOrientation_ :: MisoString -> Attribute action
 scrollOrientation_ = textProp "scroll-orientation"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#enable-scroll>
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#enable-scroll
 --
--- // DefaultValue: true
--- enable-scroll?: boolean
+-- Sets whether to allow gesture dragging to scroll. Supports dynamic switching
+-- and takes effect on the next gesture. When scrolling is disabled, the
+-- user cannot scroll manually.
 --
--- Set scroll orientation for the scrollable container.
+-- Default Value: True
 --
 enableScroll_ :: Bool -> Attribute action
 enableScroll_ = boolProp "enable-scroll"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-offset>
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-offset
 --
--- // DefaultValue: N/A
--- initial-scroll-offset?: string = ${number}px
---
--- Set scroll orientation for the scrollable container.
+-- Sets the absolute content offset distance during initial rendering
+-- (different from the offset concept in the scrollTo method). The horizontal
+-- or vertical direction is determined by `scroll-orientation`, and it only takes
+-- effect during the first render execution, not responding to subsequent changes.
 --
 initialScrollOffset_ :: MisoString -> Attribute action
 initialScrollOffset_ = textProp "initial-scroll-offset"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-to-index>
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#initial-scroll-to-index
 --
--- // DefaultValue: N/A
--- initial-scroll-to-index?: string = ${number}px
---
--- Set scroll orientation for the scrollable container.
+-- Sets the child node to be positioned during initial rendering, only taking
+-- effect during the first render execution and not responding to subsequent changes.
 --
 initialScrollToIndex_ :: MisoString -> Attribute action
 initialScrollToIndex_ = textProp "initial-scroll-to-index"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#bounces>
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#bounces
 --
--- iOS only.
+-- *iOS* only
 --
--- // DefaultValue: true
--- bounces?: boolean
+-- Declared on the \<list-item\> child node to control whether the node
+-- will be sticky at the bottom.
 --
--- Enable edge bounce effect.
+-- Default value: 'True'
 --
 bounces_ :: Bool -> Attribute action
 bounces_ = boolProp "bounces"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#upper-threshold>
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#upper-threshold
 --
--- // DefaultValue: N/A
--- upper-threshold?: string = ${number}px
---
--- Sets a scroll threshold (unit: px), indicating how far from the top
--- or left before triggering the scrolltoupper event.
+-- Sets a scroll threshold (unit: `px`), indicating how far from the top
+-- or left before triggering the `scrolltoupper` event.
 --
 upperThreshold_ :: MisoString -> Attribute action
 upperThreshold_ = textProp "upper-threshold"
 -----------------------------------------------------------------------------
--- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#lower-threshold>
---
--- // DefaultValue: N/A
--- lower-threshold?: string = ${number}px
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#lower-threshold
 --
 -- Sets a scroll threshold (unit: px), indicating how far from the top
 -- or left before triggering the scrolltolower event.
@@ -101,11 +93,9 @@ lowerThreshold_ = textProp "lower-threshold"
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll-bar-enable>
 --
--- // DefaultValue: N/A
--- lower-threshold?: string = ${number}px
+-- Enables the scrollbar, supporting dynamic switching.
 --
--- Sets a scroll threshold (unit: px), indicating how far from the top
--- or left before triggering the scrolltolower event.
+-- Default Value: False
 --
 scrollBarEnable_ :: Bool -> Attribute action
 scrollBarEnable_ = boolProp "scroll-bar-enable"
