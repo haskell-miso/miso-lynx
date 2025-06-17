@@ -1,4 +1,5 @@
 -----------------------------------------------------------------------------
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 -----------------------------------------------------------------------------
 -- |
@@ -14,10 +15,9 @@ module Miso.Native.Event
     nativeEvents
   ) where
 ----------------------------------------------------------------------------
-import Miso.Event (Events)
-----------------------------------------------------------------------------
-import qualified Data.Map.Strict as M
+import           Miso.Native.Element.View.Event (viewEvents)
+import           Miso.Event (Events)
 ----------------------------------------------------------------------------
 nativeEvents :: Events
-nativeEvents = M.fromList [ ("tap", False) ]
+nativeEvents = viewEvents
 ----------------------------------------------------------------------------
