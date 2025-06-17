@@ -12,7 +12,7 @@
 -- Portability :  non-portable
 ----------------------------------------------------------------------------
 module Miso.Native.Element.View.Event
-  ( -- *** Event
+  ( -- *** Events
     onTouchStart
   , onTouchMove
   , onTouchEnd
@@ -29,17 +29,17 @@ module Miso.Native.Element.View.Event
   , onTransitionStart
   , onTransitionEnd
   , onTransitionCancel
-    -- * Type
+    -- *** Types
   , TouchEvent (..)
   , AnimationEvent (..)
   , LayoutChangeDetailEvent (..)
   , UIAppearanceDetailEvent (..)
-    -- * Decoder
+    -- *** Decoders
   , touchDecoder
   , animationDecoder
   , layoutChangeDetailDecoder
   , uiAppearanceDetailDecoder
-    -- * Events
+    -- *** Event Map
   , viewEvents
   ) where
 ----------------------------------------------------------------------------
