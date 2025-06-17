@@ -1,4 +1,5 @@
 -----------------------------------------------------------------------------
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 -----------------------------------------------------------------------------
 -- |
@@ -11,56 +12,133 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.Text.Event
   ( -- *** Events
-    onBindLayout
+    onLayout
+  , onSelectionChange
     -- *** Types
-  , LineInfo (..)
-  , Size     (..)
+  , LayoutEvent          (..)
+  , LineInfo             (..)
+  , Size                 (..)
+  , SelectionChangeEvent (..)
+  , Direction            (..)
+    -- *** Decoders
+  , layoutDecoder
+  , selectionChangeDecoder
+    -- *** Event Map
+  , textEvents
   ) where
 -----------------------------------------------------------------------------
 import           Data.Aeson
 import           Data.Aeson.Types
 import           Miso.Event
 -----------------------------------------------------------------------------
+import qualified Data.Map.Strict as M
 import           Miso.Types (Attribute)
+----------------------------------------------------------------------------
+textEvents :: Events
+textEvents
+  = M.fromList
+  [ ("layout", False)
+  , ("selectionchange", False)
+  ]
 -----------------------------------------------------------------------------
--- *bindLayout*
+-- | https://lynxjs.org/api/elements/built-in/text.html#layout
 --
--- <https://lynxjs.org/api/elements/built-in/image.html#bindlayout>
+-- The layout event returns the result information after text layout,
+-- including the number of lines of the current text, and the start and
+-- end positions of the text in each line relative to the entire text.
 --
-onBindLayout :: (LineInfo -> action) -> Attribute action
-onBindLayout action = on "bindlayout" lineInfoDecoder (\e _ -> action e)
+-- @
+--
+-- data Action = HandleLayout LayoutEvent
+--
+-- view :: Model -> View Action
+-- view model = text_ [ onLayout HandleLayout ] [ text "hi" ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleLayout LayoutEvent {..}) = io_ (consoleLog "layout event received")
+--
+-- @
+--
+onLayout :: (LayoutEvent -> action) -> Attribute action
+onLayout action = on "layout" layoutDecoder (\e _ -> action e)
+-----------------------------------------------------------------------------
+-- | https://lynxjs.org/api/elements/built-in/text.html#selectionchange
+--
+-- This event is triggered whenever the selected text range changes.
+--
+-- @
+--
+-- data Action = HandleSelectionChange SelectionChangeEvent
+--
+-- view :: Model -> View Action
+-- view model = text_ [ onSelectionChange HandleSelectionChange ] [ text "hi" ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleSelectionChange SelectionChangeEvent {..}) =
+--   io_ (consoleLog "selection change event received")
+--
+-- @
+--
+onSelectionChange :: (SelectionChangeEvent -> action) -> Attribute action
+onSelectionChange action = on "layout" selectionChangeDecoder (\e _ -> action e)
+-----------------------------------------------------------------------------
+selectionChangeDecoder :: Decoder SelectionChangeEvent
+selectionChangeDecoder = [] `at` parser
+  where
+    parser :: Value -> Parser SelectionChangeEvent
+    parser = withObject "SelectionChangeEvent" $ \o -> do
+      d <- o .: "detail"
+      SelectionChangeEvent
+        <$> d .: "start"
+        <*> d .: "end"
+        <*> d .: "direction"
+-----------------------------------------------------------------------------
+data SelectionChangeEvent
+  = SelectionChangeEvent
+  { start, end :: Double
+  , direction :: Direction
+  } deriving (Show, Eq)
+-----------------------------------------------------------------------------
+data Direction = Forward | Backward
+  deriving (Show, Eq)
+-----------------------------------------------------------------------------
+instance FromJSON Direction where
+  parseJSON = withText "Direction" $ \case
+    "forward" -> pure Forward
+    "backward" -> pure Backward
+    x -> typeMismatch "Direction" (String x)
+-----------------------------------------------------------------------------
+data LayoutEvent
+  = LayoutEvent
+  { lineInfoLineCount     :: Double
+  , lineInfoLines         :: [LineInfo]
+  , lineInfoSize          :: Size
+  } deriving (Show, Eq)
+-----------------------------------------------------------------------------
+layoutDecoder :: Decoder LayoutEvent
+layoutDecoder = [] `at` do
+  withObject "LayoutEvent" $ \o ->
+    LayoutEvent
+      <$> o .: "lineCount"
+      <*> o .: "lineInfo"
+      <*> do
+        s <- o .: "size"
+        Size <$> s .: "width" <*> s .: "height"
+-----------------------------------------------------------------------------
+instance FromJSON LineInfo where
+  parseJSON = withObject "lineInfo" $ \o ->
+    LineInfo
+      <$> o .: "start"
+      <*> o .: "end"
+      <*> o .: "ellipsisCount"
 -----------------------------------------------------------------------------
 data LineInfo
   = LineInfo
-  { lineInfoStart :: Int
-  , lineInfoEnd :: Int
-  , lineInfoEllipsisCount :: Int
-  , lineInfoLineCount :: Int
-  , lineInfoLines :: [LineInfo]
-  , lineInfoSize :: Size
+  { lineInfoStart, lineInfoEnd, lineInfoEllipsisCount :: Double
   } deriving (Show, Eq)
------------------------------------------------------------------------------
-instance FromJSON LineInfo where
-  parseJSON = lineInfo
 -----------------------------------------------------------------------------
 data Size
   = Size
-  { sizeWidth :: Int
-  , sizeHeight :: Int
+  { sizeWidth, sizeHeight :: Double
   } deriving (Show, Eq)
------------------------------------------------------------------------------
-lineInfoDecoder :: Decoder LineInfo
-lineInfoDecoder = [] `at` lineInfo
------------------------------------------------------------------------------
-lineInfo :: Value -> Parser LineInfo
-lineInfo = withObject "lineInfo" $ \o ->
-  LineInfo
-    <$> o .: "start"
-    <*> o .: "end"
-    <*> o .: "ellipsisCount"
-    <*> o .: "lineCount"
-    <*> o .: "lineInfo"
-    <*> do
-      s <- o .: "size"
-      Size <$> s .: "width" <*> s .: "height"
 -----------------------------------------------------------------------------
