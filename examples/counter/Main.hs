@@ -8,6 +8,7 @@ module Main where
 -----------------------------------------------------------------------------
 import           Miso
 import           Miso.Native
+import           Miso.Native.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
