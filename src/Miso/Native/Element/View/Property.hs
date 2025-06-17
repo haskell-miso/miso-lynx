@@ -11,8 +11,7 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.View.Property
   ( -- *** Property
-    enableScroll_
-  , name_
+    name_
   , class_
   , className_
   , flatten_
@@ -43,18 +42,6 @@ module Miso.Native.Element.View.Property
 import           Miso.String (MisoString)
 import           Miso.Property
 import           Miso.Types 
------------------------------------------------------------------------------
--- | 'enableScroll_'
---
--- <>
---
--- // DefaultValue: true
--- enable-scroll?: boolean
---
--- Indicates whether the `<list>` component is allowed to scroll.
---
-enableScroll_ :: Bool -> Attribute action
-enableScroll_ = boolProp "enable-scroll"
 -----------------------------------------------------------------------------
 -- | 'name_'
 -- 

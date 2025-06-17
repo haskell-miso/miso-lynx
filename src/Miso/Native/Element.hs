@@ -17,20 +17,14 @@ module Miso.Native.Element
   , page_
     -- ** View
   , view_
-  , module Miso.Native.Element.View
     -- ** Scroll View
   , scrollView_
-  , module Miso.Native.Element.ScrollView
     -- ** Image
   , image_
-  , module Miso.Native.Element.Image
     -- ** List
   , list_
   , listItem_
-  , module Miso.Native.Element.List
-
   , text_
-  , module Miso.Native.Element.Text
   ) where
 -----------------------------------------------------------------------------
 import           Data.Aeson (toJSON)
@@ -38,11 +32,7 @@ import           Data.Aeson (toJSON)
 import           Miso.String (MisoString)
 import           Miso.Types (View, Attribute, node, NS(HTML))
 import           Miso.Property (textProp, prop)
-import           Miso.Native.Element.View hiding (enableScroll_)
-import           Miso.Native.Element.ScrollView hiding (scrollOrientation_)
-import           Miso.Native.Element.Image
-import           Miso.Native.Element.List hiding (enableScroll_)
-import           Miso.Native.Element.Text
+import           Miso.Native.Element.List (ListOptions(..))
 -----------------------------------------------------------------------------
 -- | Smart constructor for constructing a built-in native element.
 --
