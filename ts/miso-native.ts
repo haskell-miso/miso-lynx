@@ -45,10 +45,28 @@ globalThis['processData'] = function () {
 
 }
 
-/* dmj: invoke lynx behaviors */
-globalThis['invokeExec'] = (selector: string, params: Object) => {
-  lynx.createSelectorQuery()
-      .select(selector)
-      .invoke(params)
-      .exec();
+/* dmj: invoke lynx behaviors, convenience function */
+globalThis['invokeExec'] = function
+  ( selector: string,
+    method: string,
+    params: Object,
+    success: (result: any) => void,
+    fail: (result: string) => void
+  )
+
+{
+
+ /* set arguments object */
+ const args = {
+   params: params,
+   method: method,
+   success: success,
+   fail: fail
+ };
+
+ /* invoke exec */
+ return lynx.createSelectorQuery()
+     .select(selector)
+     .invoke(args)
+     .exec();
 }

@@ -1,8 +1,8 @@
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE TypeApplications #-}
 -----------------------------------------------------------------------------
+{-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications    #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Miso.Native.Element.View.FFI
@@ -41,19 +41,18 @@ data Rect
 -----------------------------------------------------------------------------
 instance FromJSVal Rect where
   fromJSVal = \rect -> do
-    x <- readProp rect "x"
-    y <- readProp rect "y"
-    width <- readProp rect "width"
-    height <- readProp rect "height"
-    top <- readProp rect "top"
-    right <- readProp rect "right"
-    bottom <- readProp rect "bottom"
-    left <- readProp rect "left"
-    pure $ Just Rect {..}
-      where
-        readProp rect name =
+    let readProp = \name ->
           fromJSValUnchecked =<<
             rect ! (name :: MisoString)    
+    x      <- readProp "x"
+    y      <- readProp "y"
+    height <- readProp "height"
+    width  <- readProp "width"
+    top    <- readProp "top"
+    right  <- readProp "right"
+    left   <- readProp "left"
+    bottom <- readProp "bottom"
+    pure $ Just Rect {..}
 -----------------------------------------------------------------------------
 data BoundingClientRect action
   = BoundingClientRect
@@ -111,25 +110,28 @@ boundingClientRect
   :: BoundingClientRect action
   -> Effect model action
 boundingClientRect BoundingClientRect {..} = withSink $ \sink -> do
-  lynx <- jsg @MisoString "lynx"
-  query <- lynx # ("createSelectorQuery" :: MisoString) $ ([] :: [JSVal])
-  n <- query # ("select" :: MisoString) $ selector
-  object <- create
-  params <- create
-  set "androidEnableTransformProps" androidEnableTransformProps params
-  set "relativeTo" relativeTo params
-  set "params" params object
-  set @MisoString "method" "boundingClientRect" object
-  flip (set "success") object =<< do
+  selector_ <- toJSVal selector
+  successful_ <- toJSVal =<< do
     syncCallback1 $ \arg -> do
       rect <- fromJSValUnchecked arg
       sink (successful rect)
-  flip (set "error") object =<< do
+  errorful_ <- toJSVal =<< do
     syncCallback1 $ \arg -> do
       rect <- fromJSValUnchecked arg
       sink (errorful rect)
-  method <- n # ("invoke" :: MisoString) =<< toJSVal object
-  void $ method # ("exec" :: MisoString) $ ([] :: [MisoString])
+  params <- create
+  set "androidEnableTransformProps" androidEnableTransformProps params
+  set "relativeTo" relativeTo params
+  params_ <- toJSVal params
+  method__ <- toJSVal ("boundingClientRect" :: MisoString)
+  void $ do
+    jsg ("globalThis" :: MisoString) # ("invokeExec" :: MisoString) $
+      [ selector_
+      , method__
+      , params_
+      , successful_
+      , errorful_
+      ]
 -----------------------------------------------------------------------------
 takeScreenshot :: JSM ()
 takeScreenshot = undefined
