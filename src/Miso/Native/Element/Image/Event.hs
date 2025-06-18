@@ -19,14 +19,24 @@ module Miso.Native.Element.Image.Event
   -- *** Types
   , ImageErrorEvent (..)
   , ImageLoadEvent (..)
+  -- *** Event Map
+  , imageEvents
   ) where
 -----------------------------------------------------------------------------
 import           Data.Aeson
-import           Miso.Event
+import qualified Data.Map as M
 -----------------------------------------------------------------------------
+import           Miso.Event
 import           Miso.String (MisoString)
 import           Miso.Types (Attribute)
 -----------------------------------------------------------------------------
+imageEvents :: Events
+imageEvents
+  = M.fromList
+  [ ("load", False)
+  , ("error", False)
+  ]
+----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/image.html#bindload
 --
 -- Triggered when the image request succeeds, outputting the image's width and height.

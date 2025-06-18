@@ -11,28 +11,147 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.ScrollView.Event
   ( -- *** Event
-    onBindScroll
-  , onBindScrollToUpper
-  , onBindScrollToLower
-  , onBindScrollEnd
-  , onBindContentSizeChanged
+    onScroll
+  , onScrollToUpper
+  , onScrollToLower
+  , onScrollEnd
+  , onContentSizeChanged
+  -- *** Decoders
+  , scrollDecoder
+  -- *** Types
+  , ScrollEvent (..)
+  -- *** Event Map
+  , scrollViewEvents
   ) where
+-----------------------------------------------------------------------------
+import qualified Data.Map as M
+import           Data.Aeson (withObject, (.:), (.:?), (.!=))
 -----------------------------------------------------------------------------
 import           Miso.Types (Attribute)
 import           Miso.Event
+import           Miso.String (MisoString)
 -----------------------------------------------------------------------------
-onBindScroll :: action -> Attribute action
-onBindScroll action = on "bindscroll" emptyDecoder (\_ _ -> action)
+scrollViewEvents :: Events
+scrollViewEvents
+  = M.fromList
+  [ ("scroll", False)
+  , ("scrolltoupper", False)
+  , ("scrolltolower", False)
+  , ("scrollend", False)
+  , ("contentsizechanged", False)
+  ]
 -----------------------------------------------------------------------------
-onBindScrollToUpper :: action -> Attribute action
-onBindScrollToUpper action = on "bindscrolltoupper" emptyDecoder (\_ _ -> action)
+scrollDecoder :: Decoder ScrollEvent
+scrollDecoder = ["detail"] `at` do
+  withObject "ScrollEvent" $ \o ->
+    ScrollEvent
+      <$> o .: "type"
+      <*> o .:? "deltaX" .!= 0
+      <*> o .:? "deltaY" .!= 0
+      <*> o .:? "scrollLeft" .!= 0
+      <*> o .:? "scrollTop" .!= 0
+      <*> o .:? "scrollHeight" .!= 0
+      <*> o .:? "scrollWidth" .!= 0
 -----------------------------------------------------------------------------
-onBindScrollToLower :: action -> Attribute action
-onBindScrollToLower action = on "bindscrolltolower" emptyDecoder (\_ _ -> action)
+data ScrollEvent
+  = ScrollEvent
+  { scrollType :: MisoString
+  , deltaX, deltaY :: Double
+  , scrollLeft, scrollTop, scrollHeight, scrollWidth :: Double
+  } deriving (Show, Eq)
 -----------------------------------------------------------------------------
-onBindScrollEnd :: action -> Attribute action
-onBindScrollEnd action = on "bindscrollend" emptyDecoder (\_ _ -> action)
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#scroll
+--
+-- @
+--
+-- data Action = HandleScroll ScrollEvent
+--
+-- view :: Model -> View Action
+-- view model = scrollView_ [ onScroll HandleScroll ] [ ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleScroll ScrollEvent {..}) =
+--   io_ (consoleLog "handled scroll event")
+--
+-- @
+--
+onScroll :: (ScrollEvent -> action) -> Attribute action
+onScroll action = on "scroll" scrollDecoder (\x _ -> action x)
 -----------------------------------------------------------------------------
-onBindContentSizeChanged :: action -> Attribute action
-onBindContentSizeChanged action = on "bindcontentsizechanged" emptyDecoder (\_ _ -> action)
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#scrolltoupper
+--
+-- @
+--
+-- data Action = HandleScroll ScrollEvent
+--
+-- view :: Model -> View Action
+-- view model = scrollView_ [ onScrollToUpper HnadleScroll ] [ ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleScroll ScrollEvent {..}) =
+--   io_ (consoleLog "handled scroll event")
+--
+-- @
+--
+onScrollToUpper :: (ScrollEvent -> action) -> Attribute action
+onScrollToUpper action = on "scrolltoupper" scrollDecoder (\x _ -> action x)
+-----------------------------------------------------------------------------
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#scrolltolower
+--
+-- @
+--
+-- data Action = HandleScroll ScrollEvent
+--
+-- view :: Model -> View Action
+-- view model = scrollView_ [ onScrollToLower HandleScroll ] [ ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleScroll ScrollEvent {..}) =
+--   io_ (consoleLog "handled scroll event")
+--
+-- @
+--
+onScrollToLower :: (ScrollEvent -> action) -> Attribute action
+onScrollToLower action = on "scrolltolower" scrollDecoder (\x _ -> action x)
+-----------------------------------------------------------------------------
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#scrollend
+--
+-- @
+--
+-- data Action = HandleScroll ScrollEvent
+--
+-- view :: Model -> View Action
+-- view model = scrollView_ [ onScrollToLower HandleScroll ] [ ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleScroll ScrollEvent {..}) =
+--   io_ (consoleLog "handled scroll event")
+--
+-- @
+--
+onScrollEnd :: (ScrollEvent -> action) -> Attribute action
+onScrollEnd action = on "scrollend" scrollDecoder (\x _ -> action x)
+-----------------------------------------------------------------------------
+-- | https://lynxjs.org/api/elements/built-in/scroll-view.html#contentsizechanged
+--
+-- Triggered when the content area comprised of direct child nodes changes in width
+-- or height. This event triggers after the \<scroll-view\> content completes layout.
+-- If updating \<scroll-view\> child nodes, call updated scrolling methods like
+-- `scrollTo` in this event.
+--
+-- @
+--
+-- data Action = HandleContentSizeChanged ScrollEvent
+--
+-- view :: Model -> View Action
+-- view model = scrollView_ [ onContentSizeChanged HandleContentSizeChanged ] [ ]
+--
+-- update :: Action -> Effect Model Action
+-- update (HandleContentSizeChanged ScrollEvent {..}) =
+--   io_ (consoleLog "handled content size changed event")
+--
+-- @
+--
+onContentSizeChanged :: (ScrollEvent -> action) -> Attribute action
+onContentSizeChanged action = on "contentsizechanged" scrollDecoder (\x _ -> action x)
 -----------------------------------------------------------------------------
