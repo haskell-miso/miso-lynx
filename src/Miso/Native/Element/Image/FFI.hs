@@ -17,44 +17,63 @@ module Miso.Native.Element.Image.FFI
   , resumeAnimation
   ) where
 -----------------------------------------------------------------------------
+import           Miso
 import           Miso.String (MisoString)
 import           Miso.Native.FFI (invokeExec)
------------------------------------------------------------------------------
-import           Language.Javascript.JSaddle (JSM)
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html#startanimate>
 --
 -- Starts an animation at the ID selected
 --
--- > startAnimation "someImageId"
+-- > startAnimation "someImageId" AnimationStarted AnimationError
 --
-startAnimation :: MisoString -> JSM ()
-startAnimation selector = invokeExec selector "startAnimate"
+startAnimation
+  :: MisoString
+  -> action
+  -> (MisoString -> action)
+  -> Effect model action
+startAnimation selector action =
+  invokeExec "startAnimate" selector () (\() -> action)
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html#pauseanimation>
 --
 -- Pauses an animation at the ID selected
 --
--- > pauseAnimation "someImageId"
+-- > pauseAnimation "someImageId" AnimationPauseed AnimationError
 --
-pauseAnimation :: MisoString -> JSM ()
-pauseAnimation selector = invokeExec selector "pauseAnimation"
+pauseAnimation
+  :: MisoString
+  -> action
+  -> (MisoString -> action)
+  -> Effect model action
+pauseAnimation selector action =
+  invokeExec "pauseAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html#resumeanimation>
 --
 -- Resumes an animation at the ID selected
 --
--- > resumeAnimation "someImageId"
+-- > resumeAnimation "someImageId" AnimationResumeed AnimationError
 --
-resumeAnimation :: MisoString -> JSM ()
-resumeAnimation selector = invokeExec selector "resumeAnimation"
+resumeAnimation
+  :: MisoString
+  -> action
+  -> (MisoString -> action)
+  -> Effect model action
+resumeAnimation selector action =
+  invokeExec "resumeAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html#stopanimation>
 --
 -- Stops an animation at the ID selected
 --
--- > stopAnimation "someImageId"
+-- > stopAnimation "someImageId" AnimationStoped AnimationError
 --
-stopAnimation :: MisoString -> JSM ()
-stopAnimation selector = invokeExec selector "stopAnimation"
+stopAnimation
+  :: MisoString
+  -> action
+  -> (MisoString -> action)
+  -> Effect model action
+stopAnimation selector action =
+  invokeExec "stopAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------

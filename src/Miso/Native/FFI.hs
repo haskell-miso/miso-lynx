@@ -19,7 +19,7 @@ module Miso.Native.FFI
 import Control.Monad
 import Language.Javascript.JSaddle
 ----------------------------------------------------------------------------
-import Miso.FFI
+import Miso
 import Miso.String
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/set-interval.html>
@@ -71,11 +71,38 @@ clearTimeout timerId = void $ jsg "lynx" # "clearTimeout" $ [timerId]
 --
 -- > invoke
 --
-invokeExec :: MisoString -> MisoString -> JSM ()
-invokeExec elementId params = do
-  params_ <- toJSVal params
-  elementId_ <- toJSVal elementId
-  void
-    $ jsg1 "invokeExec"
-    $ [elementId_, params_]
+invokeExec
+  :: (ToJSVal params, FromJSVal argument)
+  => MisoString
+  -- ^ method
+  -> MisoString
+  -- ^ selector
+  -> params
+  -- ^ params
+  -> (argument -> action)
+  -- ^ successful
+  -> (MisoString -> action)
+  -- ^ errorful
+  -> Effect model action
+invokeExec method selector params successful errorful = do
+  withSink $ \sink -> do
+    selector_ <- toJSVal selector
+    successful_ <- toJSVal =<< do
+      asyncCallback1 $ \arg -> do
+        result <- fromJSValUnchecked arg
+        sink (successful result)
+    errorful_ <- toJSVal =<< do
+      asyncCallback1 $ \arg -> do
+        rect <- fromJSValUnchecked arg
+        sink (errorful rect)
+    params_ <- toJSVal params
+    method__ <- toJSVal method
+    void $ do
+      jsg (ms "globalThis" :: MisoString) # (ms "invokeExec" :: MisoString) $
+        [ selector_
+        , method__
+        , params_
+        , successful_
+        , errorful_
+        ]
 -----------------------------------------------------------------------------
