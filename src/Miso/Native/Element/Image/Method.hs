@@ -2,14 +2,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Miso.Native.Element.Image.FFI
+-- Module      :  Miso.Native.Element.Image.Method
 -- Copyright   :  (C) 2016-2025 David M. Johnson
 -- License     :  BSD3-style (see the file LICENSE)
 -- Maintainer  :  David M. Johnson <code@dmj.io>
 -- Stability   :  experimental
 -- Portability :  non-portable
 ----------------------------------------------------------------------------
-module Miso.Native.Element.Image.FFI
+module Miso.Native.Element.Image.Method
   ( -- *** Methods
     startAnimation
   , pauseAnimation

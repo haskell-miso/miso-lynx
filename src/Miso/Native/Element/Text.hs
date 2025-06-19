@@ -12,10 +12,10 @@
 module Miso.Native.Element.Text
   ( module Miso.Native.Element.Text.Event
   , module Miso.Native.Element.Text.Property
-  , module Miso.Native.Element.Text.FFI
+  , module Miso.Native.Element.Text.Method
   ) where
 -----------------------------------------------------------------------------
 import Miso.Native.Element.Text.Event
 import Miso.Native.Element.Text.Property
-import Miso.Native.Element.Text.FFI
+import Miso.Native.Element.Text.Method
 -----------------------------------------------------------------------------

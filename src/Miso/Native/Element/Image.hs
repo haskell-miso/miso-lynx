@@ -11,11 +11,11 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.Image
   ( module Miso.Native.Element.Image.Event
-  , module Miso.Native.Element.Image.FFI
+  , module Miso.Native.Element.Image.Method
   , module Miso.Native.Element.Image.Property
   ) where
 -----------------------------------------------------------------------------
 import Miso.Native.Element.Image.Event
-import Miso.Native.Element.Image.FFI
+import Miso.Native.Element.Image.Method
 import Miso.Native.Element.Image.Property
 -----------------------------------------------------------------------------

@@ -11,11 +11,11 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.View
   ( module Miso.Native.Element.View.Event
-  , module Miso.Native.Element.View.FFI
+  , module Miso.Native.Element.View.Method
   , module Miso.Native.Element.View.Property
   ) where
 -----------------------------------------------------------------------------
 import Miso.Native.Element.View.Event
-import Miso.Native.Element.View.FFI
+import Miso.Native.Element.View.Method
 import Miso.Native.Element.View.Property
 -----------------------------------------------------------------------------

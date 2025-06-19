@@ -64,23 +64,23 @@ library
     Miso.Native.Element
     Miso.Native.Element.Image
     Miso.Native.Element.Image.Event
-    Miso.Native.Element.Image.FFI
+    Miso.Native.Element.Image.Method
     Miso.Native.Element.Image.Property
     Miso.Native.Element.List
     Miso.Native.Element.List.Event
-    Miso.Native.Element.List.FFI
+    Miso.Native.Element.List.Method
     Miso.Native.Element.List.Property
     Miso.Native.Element.ScrollView
     Miso.Native.Element.ScrollView.Event
-    Miso.Native.Element.ScrollView.FFI
+    Miso.Native.Element.ScrollView.Method
     Miso.Native.Element.ScrollView.Property
     Miso.Native.Element.Text
     Miso.Native.Element.Text.Event
     Miso.Native.Element.Text.Property
-    Miso.Native.Element.Text.FFI
+    Miso.Native.Element.Text.Method
     Miso.Native.Element.View
     Miso.Native.Element.View.Event
-    Miso.Native.Element.View.FFI
+    Miso.Native.Element.View.Method
     Miso.Native.Element.View.Property
     Miso.Native.Event
     Miso.Native.FFI

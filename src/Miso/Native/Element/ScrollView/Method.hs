@@ -3,14 +3,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Miso.Native.Element.ScrollView.FFI
+-- Module      :  Miso.Native.Element.ScrollView.Method
 -- Copyright   :  (C) 2016-2025 David M. Johnson
 -- License     :  BSD3-style (see the file LICENSE)
 -- Maintainer  :  David M. Johnson <code@dmj.io>
 -- Stability   :  experimental
 -- Portability :  non-portable
 ----------------------------------------------------------------------------
-module Miso.Native.Element.ScrollView.FFI
+module Miso.Native.Element.ScrollView.Method
   ( -- *** Methods
     scrollTo
   , autoScroll

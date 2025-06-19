@@ -5,14 +5,14 @@
 {-# LANGUAGE TypeApplications    #-}
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Miso.Native.Element.List.FFI
+-- Module      :  Miso.Native.Element.List.Method
 -- Copyright   :  (C) 2016-2025 David M. Johnson
 -- License     :  BSD3-style (see the file LICENSE)
 -- Maintainer  :  David M. Johnson <code@dmj.io>
 -- Stability   :  experimental
 -- Portability :  non-portable
 ----------------------------------------------------------------------------
-module Miso.Native.Element.List.FFI
+module Miso.Native.Element.List.Method
   ( -- *** Methods
     scrollToPosition
   , autoScroll

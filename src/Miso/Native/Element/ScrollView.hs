@@ -11,11 +11,11 @@
 ----------------------------------------------------------------------------
 module Miso.Native.Element.ScrollView
   ( module Miso.Native.Element.ScrollView.Event
-  , module Miso.Native.Element.ScrollView.FFI
+  , module Miso.Native.Element.ScrollView.Method
   , module Miso.Native.Element.ScrollView.Property
   ) where
 -----------------------------------------------------------------------------
 import Miso.Native.Element.ScrollView.Event
-import Miso.Native.Element.ScrollView.FFI
+import Miso.Native.Element.ScrollView.Method
 import Miso.Native.Element.ScrollView.Property
 -----------------------------------------------------------------------------
