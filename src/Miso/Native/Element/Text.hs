@@ -17,5 +17,5 @@ module Miso.Native.Element.Text
 -----------------------------------------------------------------------------
 import Miso.Native.Element.Text.Event
 import Miso.Native.Element.Text.Property
-  , module Miso.Native.Element.Text.FFI
+import Miso.Native.Element.Text.FFI
 -----------------------------------------------------------------------------
