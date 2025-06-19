@@ -26,10 +26,10 @@ module Miso.Native.Element.View.FFI
   , defaultTakeScreenshot
   ) where
 -----------------------------------------------------------------------------
-import Control.Monad
 import Language.Javascript.JSaddle
 -----------------------------------------------------------------------------
 import Miso
+import Miso.Native.FFI
 import Miso.String
 -----------------------------------------------------------------------------
 -- | Result of calling `getClientBoundingRect`
@@ -45,7 +45,7 @@ instance FromJSVal Rect where
   fromJSVal = \rect -> do
     let readProp = \name ->
           fromJSValUnchecked =<<
-            rect ! (name :: MisoString)    
+            rect ! (name :: MisoString)
     x      <- readProp "x"
     y      <- readProp "y"
     height <- readProp "height"
@@ -64,6 +64,13 @@ data BoundingClientRect
   , relativeTo :: Maybe JSVal
   -- ^ Specify the reference node, relative to LynxView by default.
   }
+-----------------------------------------------------------------------------
+instance ToJSVal BoundingClientRect where
+  toJSVal BoundingClientRect {..} = do
+    o <- create
+    set "androidEnableTransformProps" androidEnableTransformProps o
+    set "relativeTo" relativeTo o
+    toJSVal o
 -----------------------------------------------------------------------------
 -- | Smart constructor for constructing 'boundingClientRect'
 defaultBoundingClientRect :: BoundingClientRect
@@ -95,44 +102,28 @@ defaultBoundingClientRect
 -- @
 --
 boundingClientRect
-  :: BoundingClientRect
-  -> MisoString
+  :: MisoString
+  -> BoundingClientRect
   -> (Rect -> action)
   -> (MisoString -> action)
   -> Effect model action
-boundingClientRect BoundingClientRect {..} selector successful errorful =
-  withSink $ \sink -> do
-    selector_ <- toJSVal selector
-    successful_ <- toJSVal =<< do
-      asyncCallback1 $ \arg -> do
-        rect <- fromJSValUnchecked arg
-        sink (successful rect)
-    errorful_ <- toJSVal =<< do
-      asyncCallback1 $ \arg -> do
-        rect <- fromJSValUnchecked arg
-        sink (errorful rect)
-    params <- create
-    set "androidEnableTransformProps" androidEnableTransformProps params
-    set "relativeTo" relativeTo params
-    params_ <- toJSVal params
-    method__ <- toJSVal ("boundingClientRect" :: MisoString)
-    void $ do
-      jsg ("globalThis" :: MisoString) # ("invokeExec" :: MisoString) $
-        [ selector_
-        , method__
-        , params_
-        , successful_
-        , errorful_
-        ]
+boundingClientRect = invokeExec "boundingClientRect"
 -----------------------------------------------------------------------------
 data TakeScreenshot
   = TakeScreenshot
-  { format_ :: MisoString 
+  { format :: MisoString
   -- ^ e.g. Specify the image format, supports jpeg and png, the default is jpeg
-  , scale_ :: Double
+  , scale :: Double
   -- ^ e.g. Specify the image quality, 0 < scale <= 1, the default is 1,
   -- the smaller the value, the blurrier and smaller the size.
   }
+-----------------------------------------------------------------------------
+instance ToJSVal TakeScreenshot where
+  toJSVal TakeScreenshot {..} = do
+    o <- create
+    set "format" format o
+    set "scale" scale o
+    toJSVal o
 -----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/view.html#takescreenshot
 --
@@ -157,40 +148,19 @@ data TakeScreenshot
 -- @
 --
 takeScreenshot
-  :: TakeScreenshot
-  -> MisoString
-  -> (Image -> action)
+  :: MisoString
+  -> TakeScreenshot
+  -> (JSVal -> action)
   -> (MisoString -> action)
   -> Effect model action
-takeScreenshot TakeScreenshot {..} selector successful errorful = withSink $ \sink -> do
-  selector_ <- toJSVal selector
-  successful_ <- toJSVal =<< do
-    asyncCallback1 $ \arg -> do
-      sink (successful (Image arg))
-  errorful_ <- toJSVal =<< do
-    asyncCallback1 $ \arg -> do
-      rect <- fromJSValUnchecked arg
-      sink (errorful rect)
-  params <- create
-  set "scale" scale_ params
-  set "format" format_ params
-  params_ <- toJSVal params
-  method <- toJSVal ("takeScreenshot" :: MisoString)
-  void $ do
-    jsg ("globalThis" :: MisoString) # ("invokeExec" :: MisoString) $
-      [ selector_
-      , method
-      , params_
-      , successful_
-      , errorful_
-      ]
+takeScreenshot = invokeExec "takeScreenshot"
 -----------------------------------------------------------------------------
 -- | Smart constructor for calling 'TakeScreenshot'
 defaultTakeScreenshot :: TakeScreenshot
 defaultTakeScreenshot
   = TakeScreenshot
-  { scale_ = 0.5
-  , format_ = ".png"
+  { scale = 0.5
+  , format = ".png"
   }
 -----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/view.html#requestaccessibilityfocus
@@ -214,26 +184,9 @@ defaultTakeScreenshot
 --
 requestAccessibilityFocus
   :: MisoString
-  -> (Image -> action)
+  -> (JSVal -> action)
   -> (MisoString -> action)
   -> Effect model action
-requestAccessibilityFocus selector successful errorful = withSink $ \sink -> do
-  selector_ <- toJSVal selector
-  successful_ <- toJSVal =<< do
-    asyncCallback1 $ \arg -> do
-      sink (successful (Image arg))
-  errorful_ <- toJSVal =<< do
-    asyncCallback1 $ \arg -> do
-      error_ <- fromJSValUnchecked arg
-      sink (errorful error_)
-  params_ <- toJSVal =<< create
-  method <- toJSVal ("requestAccessibilityFocus" :: MisoString)
-  void $ do
-    jsg ("globalThis" :: MisoString) # ("invokeExec" :: MisoString) $
-      [ selector_
-      , method
-      , params_
-      , successful_
-      , errorful_
-      ]
+requestAccessibilityFocus selector =
+  invokeExec "requestAccessibilityFocus" selector ()
 -----------------------------------------------------------------------------
