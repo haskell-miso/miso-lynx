@@ -1,4 +1,5 @@
 -----------------------------------------------------------------------------
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 -----------------------------------------------------------------------------
 -- |
@@ -15,22 +16,131 @@ module Miso.Native.Element.ScrollView.FFI
   , autoScroll
   , scrollIntoView
   , scrollBy
+  -- *** Types
+  , ScrollTo (..)
+  , AutoScroll (..)
+  , ScrollIntoView (..)
+  , ScrollBy (..)
+  -- *** Smart constructors
+  , defaultScrollTo
+  , defaultAutoScroll
+  , defaultScrollIntoView
+  , defaultScrollBy
   ) where
 -----------------------------------------------------------------------------
--- import           Miso.String (MisoString)
--- import           Miso.Html (View, Attribute, node, NS(NATIVE))
+import Miso
+import Miso.String hiding (index)
+import Miso.Native.FFI
 -----------------------------------------------------------------------------
-import           Language.Javascript.JSaddle (JSM)
+import Language.Javascript.JSaddle
 -----------------------------------------------------------------------------
-scrollTo :: JSM ()
-scrollTo = undefined
+data ScrollTo
+  = ScrollTo
+  { offset :: Double
+  , index :: Double
+  , smooth :: Bool
+  } deriving (Show, Eq)
 -----------------------------------------------------------------------------
-autoScroll :: JSM ()
-autoScroll = undefined
+instance ToJSVal ScrollTo where
+  toJSVal ScrollTo {..} = do
+    object <- create
+    set "offset" offset object
+    set "index" index object
+    set "smooth" smooth object
+    toJSVal object 
 -----------------------------------------------------------------------------
-scrollIntoView :: JSM ()
-scrollIntoView = undefined
+defaultScrollTo :: ScrollTo
+defaultScrollTo = ScrollTo 0 1 True
 -----------------------------------------------------------------------------
-scrollBy :: JSM ()
-scrollBy = undefined
+scrollTo
+  :: MisoString
+  -> ScrollTo
+  -> (JSVal -> action)
+  -> (MisoString -> action)
+  -> Effect model action
+scrollTo = invokeExec "scrollTo"
+-----------------------------------------------------------------------------
+data AutoScroll
+  = AutoScroll
+  { rate :: Double
+  , start :: Bool
+  } deriving (Show, Eq)
+-----------------------------------------------------------------------------
+instance ToJSVal AutoScroll where
+  toJSVal AutoScroll {..} = do
+    object <- create
+    set "rate" rate object
+    set "start" start object
+    toJSVal object 
+-----------------------------------------------------------------------------
+defaultAutoScroll :: AutoScroll
+defaultAutoScroll = AutoScroll 120 True
+-----------------------------------------------------------------------------
+autoScroll
+  :: MisoString
+  -> AutoScroll
+  -> (JSVal -> action)
+  -> (MisoString -> action)
+  -> Effect model action
+autoScroll = invokeExec "autoScroll"
+-----------------------------------------------------------------------------
+data ScrollIntoView
+  = ScrollIntoView
+  { block :: MisoString
+    -- ^ Vertical alignment options: "start" aligns top | "center" centers | "end" aligns bottom
+  , inline :: MisoString
+    -- ^ Horizontal alignment options: "start" aligns left | "center" centers | "end" aligns right
+  , behavior :: MisoString
+    -- ^ "smooth" | "none" whether to animate scrolling
+  } deriving (Show, Eq)
+-----------------------------------------------------------------------------
+instance ToJSVal ScrollIntoView where
+  toJSVal ScrollIntoView {..} = do
+    object <- create
+    set "block" block object
+    set "inline" inline object
+    set "behavior" behavior object
+    scrollIntoViewOptions <- create
+    set "scrollIntoViewOptions" object scrollIntoViewOptions
+    toJSVal scrollIntoViewOptions
+-----------------------------------------------------------------------------
+defaultScrollIntoView :: ScrollIntoView
+defaultScrollIntoView
+  = ScrollIntoView
+  { block = "center"
+  , inline = "start"
+  , behavior = "smooth"
+  }
+-----------------------------------------------------------------------------
+scrollIntoView
+  :: MisoString
+  -> ScrollIntoView
+  -> (JSVal -> action)
+  -> (MisoString -> action)
+  -> Effect model action
+scrollIntoView = invokeExec "scrollIntoView"
+-----------------------------------------------------------------------------
+newtype ScrollBy
+  = ScrollBy
+  { scrollByOffset :: Double
+  } deriving (Show, Eq)
+-----------------------------------------------------------------------------
+instance ToJSVal ScrollBy where
+  toJSVal ScrollBy {..} = do
+    object <- create
+    set "offset" scrollByOffset object
+    toJSVal object
+-----------------------------------------------------------------------------
+defaultScrollBy :: ScrollBy
+defaultScrollBy = ScrollBy
+  { scrollByOffset = 0
+  }
+-----------------------------------------------------------------------------
+scrollBy
+  :: MisoString
+  -> ScrollBy
+  -> (JSVal -> action)
+  -> (MisoString -> action)
+  -> Effect model action
+scrollBy = invokeExec "scrollBy"
 -----------------------------------------------------------------------------
