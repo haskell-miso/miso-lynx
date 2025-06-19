@@ -65,24 +65,24 @@ instance ToJSVal ScrollToPosition where
     set "smooth" smooth object
     toJSVal object 
 -----------------------------------------------------------------------------
--- | https://lynxjs.org/api/elements/built-in/view.html#boundingclientrect
+-- | https://lynxjs.org/api/elements/built-in/list.html#scrolltoposition
 --
 -- The front end can execute 'boundingClientRect' through the SelectorQuery API.
 --
 -- @
 --
 -- data Action
---   = Success Rect
+--   = Success MisoString
 --   | Failure MisoString
 --   | GetRect
 --
 -- update :: Action -> Effect model Action
 -- update GetRect =
---   boundingClientRect defaultBoundingClientRect "#box" Success Failure
--- update (Succes Rect {..}) =
---   consoleLog "Successfuly got Rect"
+--   scrollToPosition defaultscrollToPosition "#box" Success Failure
+-- update (Succes _) =
+--   consoleLog "Successfuly got position"
 -- update (Failure errorMsg) =
---   consoleLog ("Failed to call getClientBoundingRect: " <> errorMsg)
+--   consoleLog ("Failed to call scrollToPosition: " <> errorMsg)
 --
 -- @
 --
