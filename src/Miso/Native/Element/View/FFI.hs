@@ -112,11 +112,11 @@ boundingClientRect
 boundingClientRect BoundingClientRect {..} = withSink $ \sink -> do
   selector_ <- toJSVal selector
   successful_ <- toJSVal =<< do
-    syncCallback1 $ \arg -> do
+    asyncCallback1 $ \arg -> do
       rect <- fromJSValUnchecked arg
       sink (successful rect)
   errorful_ <- toJSVal =<< do
-    syncCallback1 $ \arg -> do
+    asyncCallback1 $ \arg -> do
       rect <- fromJSValUnchecked arg
       sink (errorful rect)
   params <- create
