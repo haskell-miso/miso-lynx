@@ -33,6 +33,9 @@ self: super: {
     file dist/main.lynx.bundle
   '';
 
+  # for the flake.nix
+  ghc-native = self.haskell.packages.ghcNative.ghc;
+
   # haskell stuff
   haskell = super.haskell // {
     packages = super.haskell.packages // {
