@@ -15,9 +15,19 @@ module Miso.Native.Event
     nativeEvents
   ) where
 ----------------------------------------------------------------------------
-import           Miso.Native.Element.View.Event (viewEvents)
-import           Miso.Event (Events)
+import           Miso.Native.Element.Image.Event      (imageEvents)
+import           Miso.Native.Element.List.Event       (listEvents)
+import           Miso.Native.Element.ScrollView.Event (scrollViewEvents)
+import           Miso.Native.Element.Text.Event       (textEvents)
+import           Miso.Native.Element.View.Event       (viewEvents)
+import           Miso.Event                           (Events)
 ----------------------------------------------------------------------------
 nativeEvents :: Events
-nativeEvents = viewEvents
+nativeEvents = mconcat
+  [ imageEvents
+  , listEvents
+  , scrollViewEvents
+  , textEvents
+  , viewEvents
+  ]
 ----------------------------------------------------------------------------
