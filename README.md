@@ -26,25 +26,38 @@
   </a>
 </p>
 
-**Miso native** 🍜 is a small, production-ready, component-oriented, [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/) [Haskell](https://www.haskell.org/) mobile framework for quickly building highly interactive iOS and Android applications. **Miso native** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
+**Miso Lynx** 🍜 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) 🐈 for building iOS and Android applications. **Miso Lynx** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
 ## Table of Contents
+## Table of Contents
+- [Demo](#demo)
 - [Quick Start](#quick-start)
 - [Setup](#setup)
 - [Hot Reload](#hot-reload)
 - [Compilation](#compilation)
 - [Haddocks](#haddocks)
-- [Architecture](#architecture)
-- [Internals](#internals)
-- [Examples](#examples)
-- [Fetch](#fetch)
-- [Isomorphic](#isomorphic)
 - [Nix](#nix)
   - [Pinning nixpkgs](#pinning-nixpkgs)
   - [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Demo
+
+Demo video goes here
+
+## Preview
+
+To run the example locally execute the following
+
+```bash
+$ git clone git@github.com:dmjio/miso-lynx.git
+$ http-server ./miso-lynx/examples
+```
+
+This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer` for interactive development.
+
 
 ## Quick start
 To start developing applications with `miso-native` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
@@ -68,7 +81,7 @@ This file contains a simple `miso-native` counter application.
 module Main where
 -----------------------------------------------------------------------------
 import           Miso
-import           Miso.Native
+import           Miso.Lynx
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
@@ -190,51 +203,23 @@ Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-Coming soon ! 
+This entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package from [@hamishmack](https://github.com/hamishmack).
 
 ## Compilation
 
 Coming soon ! 
 
-## JavaScript
-
-Coming soon !
-
 ## Haddocks
 
-Coming soon !
+```bash
+$ cabal haddock-project
+```
 
-## Architecture
-
-Coming soon !
-
-## Internals
-
-Coming soon ! 
+ - [GHC](https://github.com/hamishmack)
 
 ## Examples
 
-Coming soon !
-
-## Building examples
-
-Coming soon !
-
-## Fetch
-
-Coming soon !
-
-## Isomorphic
-
-Coming soon !
-
-## Nix
-
-Coming soon !
-
-### Pinning nixpkgs
-
-Coming soon !
+- [Examples](https://github.com/dmjio/miso-lynx/tree/master/examples)
 
 ### Binary cache
 
