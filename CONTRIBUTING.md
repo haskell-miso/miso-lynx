@@ -19,7 +19,7 @@ A good guideline for going about contributing to a Haskell project is [Neil Mitc
   - Do have fun, use emojis :ramen:
 
 ## Call for participation
-#### Things `miso-native` really needs help with
+#### Things `miso-lynx` really needs help with
   - Better Documentation
      - More [Haddocks](https://haddocks.haskell-miso.org)
      - Better "Quick Start" guides
@@ -33,5 +33,5 @@ A good guideline for going about contributing to a Haskell project is [Neil Mitc
      - Get the word out, blog, etc.
   - Testimonials
      - Are you using `miso` in any capacity? Please let us know!
-  - Anything listed as `low-hanging-fruit` / `help-wanted` in the [issues](https://github.com/dmjio/miso-native/issues)
+  - Anything listed as `low-hanging-fruit` / `help-wanted` in the [issues](https://github.com/dmjio/miso-lynx/issues)
   - Anything you think this project would benefit greatly from

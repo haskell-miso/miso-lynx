@@ -7,8 +7,8 @@
 module Main where
 -----------------------------------------------------------------------------
 import           Miso
-import           Miso.Native
-import           Miso.Native.Element.View.Event (onTap)
+import           Miso.Lynx
+import           Miso.Lynx.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
@@ -30,8 +30,8 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run $ native counterComponent
-  { events = nativeEvents
+main = run $ lynx counterComponent
+  { events = lynxEvents
   , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------

@@ -9,26 +9,26 @@ with pkgs.haskell.lib;
   # hackage release
   release =
     with pkgs.haskell.packages.ghc9122;
-    sdistTarball (buildStrictly miso-native);
+    sdistTarball (buildStrictly miso-lynx);
 
   # hackage release examples
   release-examples =
     with pkgs.haskell.packages.ghc9122;
-    sdistTarball (buildStrictly miso-native-examples);
+    sdistTarball (buildStrictly miso-lynx-examples);
 
-  # native (iOS and Android)
+  # lynx (iOS and Android)
   #
-  # (pkgsCross.ghcs....ghcNative is just pkgsCross.ghcjs...ghc9122,
+  # (pkgsCross.ghcs....ghcLynx is just pkgsCross.ghcjs...ghc9122,
   # but compiled w/ -sENVIRONMENT=shell).
-  miso-native-examples-ghcjs9122 =
-    pkgs.pkgsCross.ghcjs.haskell.packages.ghcNative.miso-native-examples;
+  miso-lynx-examples-ghcjs9122 =
+    pkgs.pkgsCross.ghcjs.haskell.packages.ghcNative.miso-lynx-examples;
 
-  # dmj: Build native iOS and Android apps with Haskell and Lynx
-  miso-native =
-    pkgs.pkgsCross.ghcjs.haskell.packages.ghcNative.miso-native;
+  # dmj: Build lynx iOS and Android apps with Haskell and Lynx
+  miso-lynx =
+    pkgs.pkgsCross.ghcjs.haskell.packages.ghcNative.miso-lynx;
 
-  miso-native-ghc9122 =
-    pkgs.haskell.packages.ghc9122.miso-native;
+  miso-lynx-ghc9122 =
+    pkgs.haskell.packages.ghc9122.miso-lynx;
 
   # haddocks
   inherit (pkgs)
