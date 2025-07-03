@@ -8,6 +8,12 @@
 -- Maintainer  :  David M. Johnson <code@dmj.io>
 -- Stability   :  experimental
 -- Portability :  non-portable
+--
+-- [/<image/>](https://lynxjs.org/api/elements/built-in/image.html)
+--
+-- Used to display different types of images, including web images,
+-- static resources, and locally stored images.
+--
 ----------------------------------------------------------------------------
 module Miso.Native.Element.Image
   ( module Miso.Native.Element.Image.Event
