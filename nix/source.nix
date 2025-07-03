@@ -22,7 +22,7 @@ let
     };
 in
 {
-  miso-native = make-src-filter ../.;
+  miso-lynx = make-src-filter ../.;
   examples = make-src-filter ../examples;
   jsaddle = fetchFromGitHub {
     owner = "ghcjs";

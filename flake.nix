@@ -41,7 +41,7 @@
         };
         devShells.default =
           pkgs.mkShell {
-            name = "miso-native shell";
+            name = "miso-lynx shell";
             buildInputs = with pkgs; [
               pkgs.pkgsCross.ghcjs.haskell.packages.ghcNative.ghc
             ];

@@ -1,19 +1,19 @@
 {
-  "name": "miso-native",
+  "name": "miso-lynx",
   "version": "1.9.0",
-  "description": "miso: A tasty Haskell mobile framework",
+  "description": "miso-lynx: A tasty Haskell mobile framework",
   "scripts": {
     "clean": "tsc --build --clean && find ts -name '*~' -or -name '*.js' -delete",
     "watch": "tsc --project tsconfig.lib.json --watch",
-    "build": "bun build --outfile=js/miso-native.js ./ts/miso-native.ts --target=browser --minify-whitespace",
+    "build": "bun build --outfile=js/miso-lynx.js ./ts/miso-lynx.ts --target=browser --minify-whitespace",
     "js": "bun run build",
     "bundle": "rspack build"
   },
   "type": "module",
-  "module": "ts/miso-native.ts",
+  "module": "ts/miso-lynx.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dmjio/miso-native.git"
+    "url": "git+https://github.com/dmjio/miso-lynx.git"
   },
   "keywords": [
     "miso",
@@ -23,7 +23,7 @@
   "author": "dmijo",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/dmjio/miso-native/issues"
+    "url": "https://github.com/dmjio/miso-lynx/issues"
   },
   "prettier": {
     "singleQuote": true,
@@ -37,8 +37,8 @@
     "@types/bun": "latest"
   },
   "files": [
-    "ts/miso-native.ts",
-    "ts/miso/context/native.ts",
+    "ts/miso-lynx.ts",
+    "ts/miso/context/lynx.ts",
     "ts/miso/types.ts",
     "package.json",
     "README.md"

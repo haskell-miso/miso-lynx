@@ -1,4 +1,4 @@
-name: miso-native CI
+name: miso-lynx CI
 on:
   push:
     branches:
@@ -32,20 +32,20 @@ jobs:
      - name: Bun install
        run: nix-env -iA bun -f . && bun install
 
-     - name: (JS) Miso Native GHCJS (GHC 9.12.2)
-       run: nix-build -A miso-native
+     - name: (JS) Miso Lynx GHCJS (GHC 9.12.2)
+       run: nix-build -A miso-lynx
 
-     - name: (x86) Miso Native GHC (GHC 9.12.2)
-       run: nix-build -A miso-native-ghc9122
+     - name: (x86) Miso Lynx GHC (GHC 9.12.2)
+       run: nix-build -A miso-lynx-ghc9122
 
-     - name: (JS) Miso Native examples (GHCJS 9.12.2)
-       run: nix-build -A miso-native-examples-ghcjs9122
+     - name: (JS) Miso Lynx examples (GHCJS 9.12.2)
+       run: nix-build -A miso-lynx-examples-ghcjs9122
 
-     - name: (x86) Bundle miso-native counter example w/ rspack
+     - name: (x86) Bundle miso-lynx counter example w/ rspack
        run: nix-build -A counter-bundle && ./result/bin/counter-bundle
 
      - name: (x86) Nix garbage collect
        run: nix-collect-garbage -d
 
-     - name: Miso Native Haddocks
+     - name: Miso Lynx Haddocks
        run: nix-shell --run 'cabal update && cabal haddock-project'
