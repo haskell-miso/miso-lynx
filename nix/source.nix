@@ -33,8 +33,8 @@ in
   miso = fetchFromGitHub {
     owner = "dmjio";
     repo = "miso";
-    rev = "cc3dd45067b7f1668207e4e6f0f95a2bdc435e3a";
-    hash = "sha256-AG1W3sD+neR4r0GbrsxJm7XbubjzhRhi4T2ey+eh+TQ=";
+    rev = "51c590d83259ec2301e4883c3b263001a88dbe58";
+    hash = "sha256-0usz4vU0JcJvukG6ZCu/r8R+//36FfRgwrUfLEPMQys=";
   };
   ghcjs-base = fetchFromGitHub {
     owner = "dmjio";

@@ -95,8 +95,8 @@ main = run $ native counterComponent
   , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
-counterComponent :: Component "counter" Model Action
-counterComponent = defaultComponent (Model 0) updateModel viewModel
+counterComponent :: Component Model Action
+counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action

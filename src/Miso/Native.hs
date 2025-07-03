@@ -56,7 +56,7 @@ import Language.Javascript.JSaddle (eval)
 import Miso.String (MisoString)
 #endif
 -----------------------------------------------------------------------------
-native :: Eq model => Component name model action -> JSM ()
+native :: Eq model => Component model action -> JSM ()
 native vcomp = withJS $ renderComponent (Just "native") vcomp (pure ())
 -----------------------------------------------------------------------------
 -- | Used when compiling with jsaddle to make miso's JavaScript present in
