@@ -28,19 +28,14 @@
 
 **Miso Lynx** 🍜 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) 🐈 for building iOS and Android applications. **Miso Lynx** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
-The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology 🦾 companies like [ByteDance](https://github.com/bytedance), creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈 technologies, to advance native mobile app development in the functional programming space.
+The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/bytedance) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈 technologies, to advance native mobile app development in the functional programming space.
 
 ## Table of Contents
 - [React Summit](#react-summit)
 - [Demo](#demo)
 - [Quick Start](#quick-start)
 - [Setup](#setup)
-- [Hot Reload](#hot-reload)
-- [Compilation](#compilation)
-- [Haddocks](#haddocks)
-- [Nix](#nix)
-  - [Pinning nixpkgs](#pinning-nixpkgs)
-  - [Binary cache](#binary-cache)
+- [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
@@ -55,8 +50,7 @@ The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUT
 
 ## Demo
 
-
-
+<img src="https://github.com/user-attachments/assets/385d8686-849c-4be8-99d9-f43a40f5fb43" width="40%" />
 
 ## Preview
 
@@ -67,19 +61,17 @@ $ git clone git@github.com:dmjio/miso-lynx.git
 $ http-server ./miso-lynx/examples
 ```
 
-> [!TIP] Note you will need to have the LynxExplorer installed which works with the iOS simulator.
-
-> Please see the [LynxJS](https://lynxjs.org) getting started guide for installation.
-
 This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer` for interactive development.
+
+> [!NOTE] 
+> You will need to have the LynxExplorer installed which works with the iOS simulator. Please see the [LynxJS](https://lynxjs.org) getting started guide for installation.
+
+## Quick start
 
 > [!WARNING]
 > `miso-lynx` depends on the latest version of `miso` (version `1.9`), this includes custom renderers (ala React Renderer) and Components as well.
 > Currently all event handling and drawing are performed on the main thread. Selectively scheduling Haskell code on the Lynx MTS / BTS is ongoing research.
 > This project is under heavy development.
-
-
-## Quick start
 
 To start developing applications with `miso-lynx` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
