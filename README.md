@@ -1,8 +1,8 @@
-<h1 align="center">miso-native</h1>
+<h1 align="center">miso-lynx</h1>
 <p align="center">
 
 <a href="https://native.haskell-miso.org">
-<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 </p>
+<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 📱 </p>
 </p>
 
 <p align="center">
@@ -28,28 +28,35 @@
 
 **Miso Lynx** 🍜 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) 🐈 for building iOS and Android applications. **Miso Lynx** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
+The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/bytedance) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈, to advance native mobile app development 📱 in the functional programming space.
+
 ## Table of Contents
-## Table of Contents
+- [React Summit](#react-summit)
 - [Demo](#demo)
+- [Preview](#preview)
 - [Quick Start](#quick-start)
 - [Setup](#setup)
 - [Hot Reload](#hot-reload)
-- [Compilation](#compilation)
-- [Haddocks](#haddocks)
-- [Nix](#nix)
-  - [Pinning nixpkgs](#pinning-nixpkgs)
-  - [Binary cache](#binary-cache)
+- [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
 
+## React Summit
+
+As seen at [ReactSummit](https://reactsummit.com/) by [@huxpro](https://github.com/huxpro) !
+
+[![Alt text](https://img.youtube.com/vi/l2dByiwiQcM/0.jpg)](https://www.youtube.com/watch?v=l2dByiwiQcM)
+ 
+The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUTRryYAyb7SK&t=1712).
+
 ## Demo
 
-Demo video goes here
+<img src="https://github.com/user-attachments/assets/385d8686-849c-4be8-99d9-f43a40f5fb43" width="40%" />
 
 ## Preview
 
-To run the example locally execute the following
+To run the example locally execute the following command
 
 ```bash
 $ git clone git@github.com:dmjio/miso-lynx.git
@@ -58,9 +65,17 @@ $ http-server ./miso-lynx/examples
 
 This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer` for interactive development.
 
+> [!NOTE] 
+> You will need to have the LynxExplorer installed which works with the iOS simulator. Please see the [LynxJS](https://lynxjs.org) getting started guide for installation.
 
-## Quick start
-To start developing applications with `miso-native` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
+## Quick Start
+
+> [!WARNING]
+> `miso-lynx` depends on the latest version of `miso` (version `1.9`), this includes custom renderers (ala React Renderer) and Components as well.
+> Currently all event handling and drawing are performed on the main thread. Selectively scheduling Haskell code on the Lynx MTS / BTS is ongoing research.
+> This project is under heavy development and is considered experimental.
+
+To start developing applications with `miso-lynx` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
 > [!TIP]
 > For new Haskell users we recommend using [GHCup](https://www.haskell.org/ghcup/) to acquire both [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/)
@@ -69,7 +84,7 @@ To start developing applications with `miso-native` you will need to acquire [GH
 
 ### `Main.hs`
 
-This file contains a simple `miso-native` counter application.
+This file contains a simple `miso-lynx` counter application.
 
 ```haskell
 -----------------------------------------------------------------------------
@@ -203,19 +218,7 @@ Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-This entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package from [@hamishmack](https://github.com/hamishmack).
-
-## Compilation
-
-Coming soon ! 
-
-## Haddocks
-
-```bash
-$ cabal haddock-project
-```
-
- - [GHC](https://github.com/hamishmack)
+This will entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package. This will require using [rspack](https://rspack.rs/) and the BTS to access WebSockets via the `lynx` object.
 
 ## Examples
 
@@ -238,9 +241,9 @@ $ cachix use haskell-miso-cachix
 
 ## Contributing
 
-Feel free to dive in! [Open an issue](https://github.com/dmjio/miso-native/issues/new) or a submit [Pull Request](https://github.com/dmjio/miso-native/pulls).
+Feel free to dive in! [Open an issue](https://github.com/dmjio/miso-lynx/issues/new) or a submit [Pull Request](https://github.com/dmjio/miso-lynx/pulls).
 
-See [CONTRIBUTING](https://github.com/dmjio/miso-native/blob/master/CONTRIBUTING.md) for more info.
+See [CONTRIBUTING](https://github.com/dmjio/miso-lynx/blob/master/CONTRIBUTING.md) for more info.
 
 ## License
 
