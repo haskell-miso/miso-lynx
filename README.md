@@ -2,7 +2,7 @@
 <p align="center">
 
 <a href="https://native.haskell-miso.org">
-<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 </p>
+<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 📱 </p>
 </p>
 
 <p align="center">
@@ -28,13 +28,15 @@
 
 **Miso Lynx** 🍜 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) 🐈 for building iOS and Android applications. **Miso Lynx** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
-The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/bytedance) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈 technologies, to advance native mobile app development in the functional programming space.
+The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/bytedance) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈, to advance native mobile app development 📱 in the functional programming space.
 
 ## Table of Contents
 - [React Summit](#react-summit)
 - [Demo](#demo)
+- [Preview](#preview)
 - [Quick Start](#quick-start)
 - [Setup](#setup)
+- [Hot Reload](#hot-reload)
 - [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
@@ -66,12 +68,12 @@ This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer
 > [!NOTE] 
 > You will need to have the LynxExplorer installed which works with the iOS simulator. Please see the [LynxJS](https://lynxjs.org) getting started guide for installation.
 
-## Quick start
+## Quick Start
 
 > [!WARNING]
 > `miso-lynx` depends on the latest version of `miso` (version `1.9`), this includes custom renderers (ala React Renderer) and Components as well.
 > Currently all event handling and drawing are performed on the main thread. Selectively scheduling Haskell code on the Lynx MTS / BTS is ongoing research.
-> This project is under heavy development.
+> This project is under heavy development and is considered experimental.
 
 To start developing applications with `miso-lynx` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
@@ -216,19 +218,7 @@ Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-This entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package.
-
-## Compilation
-
-Coming soon ! 
-
-## Haddocks
-
-```bash
-$ cabal haddock-project
-```
-
- - [GHC](https://github.com/hamishmack)
+This will entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package. This will require using [rspack](https://rspack.rs/) and the BTS to access WebSockets via the `lynx` object.
 
 ## Examples
 
