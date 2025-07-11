@@ -23,7 +23,7 @@ self: super:
   string-interpolate = doJailbreak super.string-interpolate;
   servant-server = doJailbreak super.servant-server;
 
-  /* correct emscripten options to target Quick/PrimJS */
+  /* Includes BigInt patch to support the jsbi polyfill, for Quick/PrimJS */
   ghc = super.ghc.overrideAttrs (drv: drv // {
     patches = (drv.patches or []) ++ [ ../../../patches/jsbi.patch ];
   });

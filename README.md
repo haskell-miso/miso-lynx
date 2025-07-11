@@ -15,13 +15,13 @@
   <a href="https://haskell-miso-cachix.cachix.org">
     <img src="https://img.shields.io/badge/build-cachix-yellow.svg?style=flat-square" alt="Cachix">
   </a>
-  <a href="https://actions-badge.atrox.dev/dmjio/miso/goto?ref=master">
-    <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fdmjio%2Fmiso%2Fbadge%3Fref%3Dmaster&style=flat-square" />
+  <a href="https://actions-badge.atrox.dev/haskell-miso/miso-lynx/goto?ref=master">
+    <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fhaskell-miso%2Fmiso-lynx%2Fbadge%3Fref%3Dmaster&style=flat-square" />
   </a>
-  <a href="http://hackage.haskell.org/package/miso-native">
-    <img src="https://img.shields.io/hackage/v/miso-native.svg?style=flat-square" alt="Hackage">
+  <a href="http://hackage.haskell.org/package/miso-lynx">
+    <img src="https://img.shields.io/hackage/v/miso-lynx.svg?style=flat-square" alt="Hackage">
   </a>
-  <a href="https://github.com/dmjio/miso-native/blob/master/LICENSE">
+  <a href="https://github.com/haskell-miso/miso-lynx/blob/master/LICENSE">
     <img src="http://img.shields.io/badge/license-BSD3-blueviolet.svg?style=flat-square" alt="LICENSE">
   </a>
 </p>
@@ -59,7 +59,7 @@ The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUT
 To run the example locally execute the following command
 
 ```bash
-$ git clone git@github.com:dmjio/miso-lynx.git
+$ git clone git@github.com:haskell-miso/miso-lynx.git
 $ http-server ./miso-lynx/examples
 ```
 
