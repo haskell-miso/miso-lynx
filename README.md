@@ -44,7 +44,7 @@ The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to b
 
 ## React Summit
 
-As seen at [ReactSummit](https://reactsummit.com/) by [@huxpro](https://github.com/huxpro) !
+As seen @ [React Summit](https://reactsummit.com/) by [@huxpro](https://github.com/huxpro) !
 
 [![Alt text](https://img.youtube.com/vi/l2dByiwiQcM/0.jpg)](https://www.youtube.com/watch?v=l2dByiwiQcM)
  
