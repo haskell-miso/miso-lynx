@@ -32,6 +32,7 @@ The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to b
 
 ## Table of Contents
 - [React Summit](#react-summit)
+- [Fire Ship](#fire-ship)
 - [Demo](#demo)
 - [Preview](#preview)
 - [Quick Start](#quick-start)
@@ -49,6 +50,10 @@ As seen @ [React Summit](https://reactsummit.com/) by [@huxpro](https://github.c
 [![Alt text](https://img.youtube.com/vi/l2dByiwiQcM/0.jpg)](https://www.youtube.com/watch?v=l2dByiwiQcM)
  
 The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUTRryYAyb7SK&t=1712).
+
+## Fire Ship
+
+See orignial [Fireship](https://www.youtube.com/watch?v=-qjE8JkIVoQ) 🔥 video
 
 ## Demo
 
