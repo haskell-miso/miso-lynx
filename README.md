@@ -28,7 +28,7 @@
 
 **Miso Lynx** 🍜 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) 🐈 for building iOS and Android applications. **Miso Lynx** uses [LynxJS](https://lynxjs.org) 🐈 to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [ViewGroup](https://developer.android.com/reference/android/view/ViewGroup), and for interacting with APIs on the device.
 
-The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/bytedance) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈, to advance native mobile app development 📱 in the functional programming space.
+The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/lynx-family) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈, to advance native mobile app development 📱 in the functional programming space.
 
 ## Table of Contents
 - [React Summit](#react-summit)
