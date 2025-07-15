@@ -1,5 +1,4 @@
 -----------------------------------------------------------------------------
-{-# LANGUAGE DataKinds                   #-}
 {-# LANGUAGE RecordWildCards             #-}
 {-# LANGUAGE OverloadedStrings           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving  #-}
@@ -14,7 +13,7 @@ import           Miso.Lens
 import           Miso.String
 import qualified Miso.Style as CSS
 -----------------------------------------------------------------------------
--- | Type synonym for an application model
+-- | Application model
 newtype Model = Model { _value :: Int }
   deriving (Show, Eq, ToMisoString)
 -----------------------------------------------------------------------------
@@ -42,15 +41,13 @@ updateModel
   :: Action
   -> Effect Model Action
 updateModel SayHelloWorld =
-  io_ (consoleLog "Inside Say Hello World!")
-updateModel AddOne = do
-  io_ (consoleLog "Inside AddOne")
+  io_ (consoleLog "Hello World!")
+updateModel AddOne =
   value += 1
-updateModel SubtractOne = do
-  io_ (consoleLog "Inside SubtractOne")
+updateModel SubtractOne =
   value -= 1
 updateModel (Tap x) =
-  io_ $ consoleLog ("tapped: " <> ms (show x))
+  io_ $ consoleLog ("Tapped: " <> ms (show x))
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
 viewModel :: Model -> View Action
