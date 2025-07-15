@@ -1,0 +1,96 @@
+cabal-version:       2.2
+name:                miso-lynx
+version:             1.9.0.0
+category:            Web, Miso, Data Structures
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              David M. Johnson <code@dmj.io>
+maintainer:          David M. Johnson <code@dmj.io>
+homepage:            http://github.com/dmjio/miso-lynx
+copyright:           Copyright (c) 2016-2025 David M. Johnson
+bug-reports:         https://github.com/dmjio/miso-lynx/issues
+build-type:          Simple
+extra-source-files:  README.md
+synopsis:            A tasty Haskell mobile framework
+description:
+            Miso-lynx is a small, production-ready, component-oriented, isomorphic Haskell mobile framework featuring a virtual-dom, recursive diffing / patching algorithm, event delegation, event batching, SVG, Server-sent events, Websockets, type-safe servant-style routing and an extensible Subscription-based subsystem. Inspired by Elm and React. Miso is pure by default, but side effects can be introduced into the system via the Effect data type. Miso makes heavy use of the GHC FFI and therefore has minimal dependencies.
+
+extra-source-files:
+  README.md
+
+source-repository head
+   type: git
+   location: https://github.com/dmjio/miso-lynx.git
+
+common cpp
+  if impl(ghcjs) || arch(javascript)
+    cpp-options:
+      -DGHCJS_BOTH
+
+  if arch(javascript)
+    cpp-options:
+      -DGHCJS_NEW
+
+  if !(impl(ghcjs) || arch(javascript))
+    build-depends:
+      file-embed < 0.1
+
+common jsaddle
+  if !(impl(ghcjs) || arch(javascript) || arch(wasm32))
+    build-depends:
+      jsaddle-warp < 0.10
+
+  if !(impl(ghcjs) || arch(javascript))
+    build-depends:
+      file-embed < 0.1
+
+common client
+  if arch(javascript)
+    js-sources:
+      -- dmj: by default this is in prod. mode (aka. bun build --minify)
+      -- new JS backend has large payloads so we must use --minify.
+      -- 10MB to 2MB reduction w/ --minify in hello world cases, :shrug:
+      js/miso-lynx.js
+
+library
+  import:
+    jsaddle,
+    client,
+    cpp,
+  default-language:
+    Haskell2010
+  exposed-modules:
+    Miso.Lynx
+    Miso.Lynx.Element
+    Miso.Lynx.Element.Image
+    Miso.Lynx.Element.Image.Event
+    Miso.Lynx.Element.Image.Method
+    Miso.Lynx.Element.Image.Property
+    Miso.Lynx.Element.List
+    Miso.Lynx.Element.List.Event
+    Miso.Lynx.Element.List.Method
+    Miso.Lynx.Element.List.Property
+    Miso.Lynx.Element.ScrollView
+    Miso.Lynx.Element.ScrollView.Event
+    Miso.Lynx.Element.ScrollView.Method
+    Miso.Lynx.Element.ScrollView.Property
+    Miso.Lynx.Element.Text
+    Miso.Lynx.Element.Text.Event
+    Miso.Lynx.Element.Text.Property
+    Miso.Lynx.Element.Text.Method
+    Miso.Lynx.Element.View
+    Miso.Lynx.Element.View.Event
+    Miso.Lynx.Element.View.Method
+    Miso.Lynx.Element.View.Property
+    Miso.Lynx.Event
+    Miso.Lynx.FFI
+  ghc-options:
+    -Wall
+  hs-source-dirs:
+    src
+  build-depends:
+    aeson      < 2.3,
+    base       < 5,
+    containers < 0.9,
+    jsaddle    < 0.10,
+    miso       >= 1.9 && < 2.0

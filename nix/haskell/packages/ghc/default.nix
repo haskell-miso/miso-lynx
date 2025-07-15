@@ -7,10 +7,10 @@ self: super:
 {
   /* miso */
   miso = self.callCabal2nix "miso" source.miso {};
-  miso-native = self.callCabal2nix "miso-native" source.miso-native {};
+  miso-lynx = self.callCabal2nix "miso-lynx" source.miso-lynx {};
 
   /* examples */
-  miso-native-examples = self.callCabal2nix "miso-native-examples" source.examples {};
+  miso-lynx-examples = self.callCabal2nix "miso-lynx-examples" source.examples {};
   jsaddle = self.callCabal2nix "jsaddle" "${source.jsaddle}/jsaddle" {};
   jsaddle-warp =
     dontCheck (self.callCabal2nix "jsaddle-warp" "${source.jsaddle}/jsaddle-warp" {});

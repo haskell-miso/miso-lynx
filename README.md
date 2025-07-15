@@ -123,8 +123,8 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run $ native counterComponent
-  { events = nativeEvents
+main = run $ lynx counterComponent
+  { events = lynxEvents
   , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
