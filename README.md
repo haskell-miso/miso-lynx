@@ -26,7 +26,9 @@
   </a>
 </p>
 
-**Miso Lynx** is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview) and Android [View](https://developer.android.com/reference/android/view/View), and for interacting with APIs on the device. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative technology companies like [ByteDance](https://github.com/lynx-family), creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
+##
+
+**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://lynxjs.org) to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview), Android [View](https://developer.android.com/reference/android/view/View), and for interacting with APIs on the device. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative technology companies like [ByteDance](https://github.com/lynx-family), creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
 
 ## Why Lynx
 
