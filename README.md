@@ -30,6 +30,23 @@
 
 The [Haskell miso project](https://github.com/haskell-miso) 🍜 is excited to be an open-source technology partner with innovative China 🇨🇳 technology companies like [ByteDance](https://github.com/lynx-family) 🦾, creators of the #1 global app 🌎 [TikTok](https://www.tiktok.com) and [LynxJS](https://lynxjs.org/) 🐈, to advance native mobile app development 📱 in the functional programming space.
 
+## Why Lynx
+
+[Since 2017](https://github.com/dmjio/miso/issues/314), `miso` has sought ways to run on mobile devices that take advantage of native drawing facilities. [Flutter](https://flutter.dev/), [SwiftUI](https://developer.apple.com/swiftui/) produce stunning, performant user experiences but are not necessarily designed for integration with open standards, are effectively only usable with a specific IDE / choice languages, and can lack in cross-platform capability. [React Native](https://reactnative.dev/) improves upon this situation by allowing open web standards for development and cross-platform capability, but wasn't designed for easy integration with /any/ web framework (rather for use specifically with [react](https://reactjs.dev)). [React Native](https://reactnative.dev/) also can regress in performance relative to `SwiftUI` / `Flutter` in certain scenarios.
+
+[Lynx](https://lynxjs.org/) addresses the aforementioned issues with a new architectural approach.
+
+ - #### Dual-threaded interpreter runtime
+   The [Lynx](https://lynxjs.org) engine uses [two embedded JavaScript interpreters](https://lynxjs.org/react/thinking-in-reactlynx.html#your-code-runs-on-two-threads) to selectively schedule / offload computation to free up the render thread. This avoids drawing lag as commonly seen with scroll events in react native applications.
+
+ - #### Element PAPI (PrimJS API)
+   Exposing a [DOM API](https://lynxjs.org/api/engine/element-api.html) for rendering allows any JavaScript (or compile-to-JavaScript 🍜) web framework to produce cross-platfom mobile applications. [Seen here](https://github.com/haskell-miso/miso-lynx/blob/master/ts/miso/context/lynx.ts) in `miso-lynx`.
+
+ - #### Cross platform capability
+   Lynx targets iOS, Android, Web by default, and has [a roadmap](https://lynxjs.org/blog/lynx-open-source-roadmap-2025) that mentions Desktop UI as well (OSX, etc.)
+
+For framework implementors, this is a dream come true, and we hope `miso-lynx` can be an ideal development environment for building [Lynx](https://lynxjs.org) applications with [miso](https://haskell-miso.org).
+
 ## Table of Contents
 - [React Summit](#react-summit)
 - [Fireship](#fireship)
