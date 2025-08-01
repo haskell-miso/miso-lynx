@@ -58,6 +58,7 @@ For framework implementors, this is a dream come true, and we hope `miso-lynx` c
 - [Quick Start](#quick-start)
 - [Setup](#setup)
 - [Hot Reload](#hot-reload)
+- [Haddocks](#haddocks)
 - [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
@@ -241,6 +242,10 @@ Now that your project files are populated, development can begin.
 ## Hot Reload
 
 This entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package. This will require using [rspack](https://rspack.rs/) and the BTS to access WebSockets via the `lynx` object.
+
+## Haddocks
+
+See the official [Haskell documentation](https://lynx-haddocks.haskell-miso.org)
 
 ## Examples
 
