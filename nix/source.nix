@@ -1,5 +1,6 @@
 { lib, fetchFromGitHub, fetchgit, fetchzip, ... }:
 with lib;
+with (builtins.fromJSON (builtins.readFile ../flake.lock));
 let
   make-src-filter = src: with lib;
     cleanSourceWith {
@@ -20,22 +21,18 @@ let
          (type == "directory" && baseName != "examples") ||
          (type == "directory" && baseName != "dist"));
     };
+  # fetch from flake
+  fetchFromFlake = args:
+    fetchFromGitHub {
+      inherit (args.locked) owner repo rev;
+      hash = args.locked.narHash;
+    };
 in
 {
   miso-lynx = make-src-filter ../.;
   examples = make-src-filter ../examples;
-  jsaddle = fetchFromGitHub {
-    owner = "ghcjs";
-    repo = "jsaddle";
-    rev = "0d5e427cb99391179b143dc93dfbac9c1019237b";
-    sha256 = "sha256-jyJ7bdz0gNLOSzRxOWcv7eWGIwo3N/O4PcY7HyNF8Fo=";
-  };
-  miso = fetchFromGitHub {
-    owner = "dmjio";
-    repo = "miso";
-    rev = "51c590d83259ec2301e4883c3b263001a88dbe58";
-    hash = "sha256-0usz4vU0JcJvukG6ZCu/r8R+//36FfRgwrUfLEPMQys=";
-  };
+  miso = fetchFromFlake (nodes.miso);
+  jsaddle = fetchFromFlake (nodes.jsaddle);
   ghcjs-base = fetchFromGitHub {
     owner = "dmjio";
     repo = "ghcjs-base";
