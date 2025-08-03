@@ -76,7 +76,7 @@ instance ToJSVal ScrollToPosition where
 --   | Failure MisoString
 --   | GetRect
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent model Action
 -- update GetRect =
 --   scrollToPosition defaultscrollToPosition "#box" Success Failure
 -- update (Succes _) =
@@ -91,7 +91,7 @@ scrollToPosition
   -> ScrollToPosition
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 scrollToPosition = invokeExec "scrollToPosition"
 --------------------------------------------------------------------
 data AutoScroll
@@ -117,14 +117,14 @@ autoScroll
   -> AutoScroll
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 autoScroll = invokeExec "scrollToPosition"
 --------------------------------------------------------------------
 getVisibleCells
   :: MisoString
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 getVisibleCells name = invokeExec "getVisibleCells" name ()
 --------------------------------------------------------------------
 data ScrollBy
@@ -146,7 +146,7 @@ scrollBy
   -> ScrollBy
   -> (Consumed -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 scrollBy = invokeExec "scrollBy"
 --------------------------------------------------------------------
 data Consumed

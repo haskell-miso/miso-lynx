@@ -17,7 +17,7 @@
 -- import Miso
 -- import Miso.Lynx
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view m =
 --   view_
 --   []
@@ -43,7 +43,7 @@ module Miso.Lynx
    , module Miso.Lynx.Event
    ) where
 -----------------------------------------------------------------------------
-import Miso (renderComponent, Component)
+import Miso (renderApp, App)
 import Miso.Lynx.Element
 import Miso.Lynx.FFI
 import Miso.Lynx.Event
@@ -56,8 +56,8 @@ import Language.Javascript.JSaddle (eval)
 import Miso.String (MisoString)
 #endif
 -----------------------------------------------------------------------------
-lynx :: Eq model => Component model action -> JSM ()
-lynx vcomp = withJS $ renderComponent (Just "native") vcomp (pure [])
+lynx :: Eq model => App model action -> JSM ()
+lynx vcomp = withJS $ renderApp (Just "native") vcomp (pure [])
 -----------------------------------------------------------------------------
 -- | Used when compiling with jsaddle to make miso's JavaScript present in
 -- the execution context.

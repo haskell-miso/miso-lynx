@@ -57,7 +57,7 @@ scrollTo
   -> ScrollTo
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 scrollTo = invokeExec "scrollTo"
 -----------------------------------------------------------------------------
 data AutoScroll
@@ -81,7 +81,7 @@ autoScroll
   -> AutoScroll
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 autoScroll = invokeExec "autoScroll"
 -----------------------------------------------------------------------------
 data ScrollIntoView
@@ -117,7 +117,7 @@ scrollIntoView
   -> ScrollIntoView
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 scrollIntoView = invokeExec "scrollIntoView"
 -----------------------------------------------------------------------------
 newtype ScrollBy
@@ -141,6 +141,6 @@ scrollBy
   -> ScrollBy
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 scrollBy = invokeExec "scrollBy"
 -----------------------------------------------------------------------------

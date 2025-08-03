@@ -37,7 +37,7 @@ import           Miso.Lynx.Element.List (ListOptions(..))
 -----------------------------------------------------------------------------
 -- | Smart constructor for constructing a built-in lynx element.
 --
-lynx_ :: MisoString -> [Attribute action] -> [View action] -> View action
+lynx_ :: MisoString -> [Attribute action] -> [View model action] -> View model action
 lynx_ = node HTML
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/page.html>
@@ -51,7 +51,7 @@ lynx_ = node HTML
 -- only be one 'page' present at at time. We include it here for completeness,
 -- and because 'page' functionality might change in the future.
 --
-page_ :: [Attribute action] -> [View action] -> View action
+page_ :: [Attribute action] -> [View model action] -> View model action
 page_ = lynx_ "page"
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/scroll-view.html>
@@ -60,7 +60,7 @@ page_ = lynx_ "page"
 -- for all other elements; its attributes, events, and methods can be
 -- used in other elements.
 --
-scrollView_ :: [Attribute action] -> [View action] -> View action
+scrollView_ :: [Attribute action] -> [View model action] -> View model action
 scrollView_ = lynx_ "scroll-view"
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/view.html>
@@ -69,7 +69,7 @@ scrollView_ = lynx_ "scroll-view"
 -- for all other elements; its attributes, events, and methods can be
 -- used in other elements.
 --
-view_ :: [Attribute action] -> [View action] -> View action
+view_ :: [Attribute action] -> [View model action] -> View model action
 view_ = lynx_ "view"
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html>
@@ -91,17 +91,17 @@ view_ = lynx_ "view"
 --
 -- > image_ "https://url.com/image.png" []
 --
-image_ :: MisoString -> [Attribute action] -> View action
+image_ :: MisoString -> [Attribute action] -> View model action
 image_ url attrs = lynx_ "image" (textProp "src" url : attrs) []
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/list.html>
 --
-listItem_ :: [Attribute action] -> [View action] -> View action
+listItem_ :: [Attribute action] -> [View model action] -> View model action
 listItem_ = lynx_ "list-item"
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/list.html>
 --
-list_ :: ListOptions -> [Attribute action] -> [View action] -> View action
+list_ :: ListOptions -> [Attribute action] -> [View model action] -> View model action
 list_ ListOptions {..} attrs = lynx_ "list" (defaults <> attrs)
   where
     defaults =
@@ -117,6 +117,6 @@ list_ ListOptions {..} attrs = lynx_ "list" (defaults <> attrs)
 -- nest <text>, <image>, and <view> components to achieve relatively complex
 -- text and image content presentation.
 --
-text_ :: [Attribute action] -> [View action] -> View action
+text_ :: [Attribute action] -> [View model action] -> View model action
 text_ = lynx_ "text"
 -----------------------------------------------------------------------------

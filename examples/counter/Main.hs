@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------
 module Main where
 -----------------------------------------------------------------------------
-import           Miso
+import           Miso hiding (text_)
 import           Miso.Lynx
 import           Miso.Lynx.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
@@ -34,12 +34,12 @@ main = run $ lynx counterComponent
   , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
-counterComponent :: Component Model Action
+counterComponent :: App Model Action
 counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Effect Model Action
+  -> Transition Model Action
 updateModel SayHelloWorld =
   io_ (consoleLog "Hello World!")
 updateModel AddOne =
@@ -50,7 +50,7 @@ updateModel (Tap x) =
   io_ $ consoleLog ("Tapped: " <> ms (show x))
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: Model -> View Action
+viewModel :: Model -> View Model Action
 viewModel m = view_
   [ CSS.style_
     [ CSS.height "200px"
