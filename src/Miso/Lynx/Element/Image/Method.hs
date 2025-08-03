@@ -31,7 +31,7 @@ startAnimation
   :: MisoString
   -> action
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 startAnimation selector action =
   invokeExec "startAnimate" selector () (\() -> action)
 -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ pauseAnimation
   :: MisoString
   -> action
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 pauseAnimation selector action =
   invokeExec "pauseAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ resumeAnimation
   :: MisoString
   -> action
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 resumeAnimation selector action =
   invokeExec "resumeAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ stopAnimation
   :: MisoString
   -> action
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 stopAnimation selector action =
   invokeExec "stopAnimation" selector () (\() -> action)
 -----------------------------------------------------------------------------

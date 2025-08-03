@@ -68,7 +68,7 @@ setTextSelection
   -> SetTextSelection
   -> action
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 setTextSelection selector params action =
   invokeExec "setTextSelection" selector params (\() -> action)
 -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ getTextBoundingRect
   -> GetTextBoundingRect
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 getTextBoundingRect = invokeExec "getTextBoundingRect"
 -----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/text.html#getselectedtext
@@ -130,6 +130,6 @@ getSelectedText
   :: MisoString
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect model action
+  -> Effect parent model action
 getSelectedText selector = invokeExec "getSelectedText" selector ()
 -----------------------------------------------------------------------------

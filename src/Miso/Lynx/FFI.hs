@@ -83,7 +83,7 @@ invokeExec
   -- ^ successful
   -> (MisoString -> action)
   -- ^ errorful
-  -> Effect model action
+  -> Effect parent model action
 invokeExec method selector params successful errorful = do
   withSink $ \sink -> do
     selector_ <- toJSVal selector
