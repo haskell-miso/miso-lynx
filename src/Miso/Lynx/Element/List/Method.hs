@@ -31,7 +31,6 @@ module Miso.Lynx.Element.List.Method
 import Language.Javascript.JSaddle
 -----------------------------------------------------------------------------
 import Miso
-import Miso.String
 import Miso.Lynx.FFI
 -----------------------------------------------------------------------------
 data ScrollToPosition
