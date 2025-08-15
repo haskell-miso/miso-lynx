@@ -20,7 +20,6 @@ import Control.Monad
 import Language.Javascript.JSaddle
 ----------------------------------------------------------------------------
 import Miso
-import Miso.String
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/set-interval.html>
 --
