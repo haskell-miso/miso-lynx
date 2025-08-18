@@ -30,7 +30,6 @@ import Language.Javascript.JSaddle
 -----------------------------------------------------------------------------
 import Miso
 import Miso.Lynx.FFI
-import Miso.String
 -----------------------------------------------------------------------------
 -- | Result of calling `getClientBoundingRect`
 data Rect
