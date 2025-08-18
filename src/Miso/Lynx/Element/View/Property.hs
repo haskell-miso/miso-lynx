@@ -48,7 +48,6 @@ module Miso.Lynx.Element.View.Property
   , lynxTimingFlag_
   ) where
 -----------------------------------------------------------------------------
-import           Miso.String (MisoString)
 import           Miso.Property
 import           Miso.Types 
 -----------------------------------------------------------------------------

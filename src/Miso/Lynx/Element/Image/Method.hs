@@ -18,7 +18,6 @@ module Miso.Lynx.Element.Image.Method
   ) where
 -----------------------------------------------------------------------------
 import           Miso
-import           Miso.String (MisoString)
 import           Miso.Lynx.FFI (invokeExec)
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/elements/built-in/image.html#startanimate>

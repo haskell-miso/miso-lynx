@@ -22,7 +22,6 @@ module Miso.Lynx.Element.Text.Method
   ) where
 -----------------------------------------------------------------------------
 import           Miso
-import           Miso.String (MisoString)
 import           Miso.Lynx.FFI (invokeExec)
 -----------------------------------------------------------------------------
 import           Language.Javascript.JSaddle

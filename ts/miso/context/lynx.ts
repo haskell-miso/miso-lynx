@@ -72,11 +72,11 @@ const context : Context = {
     if (key === 'id') return __GetID(node);
     return __GetAttributeByName(node,key);
   },
-  setStyle : (cCss, nCss, node) => {
+  setInlineStyle : (cCss, nCss, node) => {
     if (cCss != nCss)
       return __SetInlineStyles(node, nCss)
   },
-  getStyle : (node, key) => {
+  getInlineStyle : (node, key) => {
     return __GetInlineStyles(node)[key]
   },
   getTag : (node) => {

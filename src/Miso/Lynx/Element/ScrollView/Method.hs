@@ -29,7 +29,6 @@ module Miso.Lynx.Element.ScrollView.Method
   ) where
 -----------------------------------------------------------------------------
 import Miso
-import Miso.String hiding (index)
 import Miso.Lynx.FFI
 -----------------------------------------------------------------------------
 import Language.Javascript.JSaddle
