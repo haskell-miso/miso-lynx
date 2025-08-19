@@ -74,7 +74,7 @@ The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUT
 
 ## Fireship
 
-See [Fireship](https://www.youtube.com/watch?v=-qjE8JkIVoQ) 🔥 video
+See [Fireship](https://www.youtube.com/watch?v=-qjE8JkIVoQ) 🔥 🚀 video
 
 ## Demo
 
