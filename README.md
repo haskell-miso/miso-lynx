@@ -127,7 +127,6 @@ import           Miso.Lens
 import           Miso.String
 import qualified Miso.Style as CSS
 -----------------------------------------------------------------------------
--- | Type synonym for an application model
 newtype Model = Model { _value :: Int }
   deriving (Show, Eq, ToMisoString)
 -----------------------------------------------------------------------------
@@ -141,7 +140,7 @@ data Action
   | Tap Int
   deriving (Show, Eq)
 -----------------------------------------------------------------------------
--- | Entry point for a miso application
+-- | Entry point for a miso-lynx application
 main :: IO ()
 main = run $ lynx counterComponent
   { events = lynxEvents
