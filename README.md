@@ -120,13 +120,15 @@ This file contains a simple `miso-lynx` counter application.
 -----------------------------------------------------------------------------
 module Main where
 -----------------------------------------------------------------------------
-import           Miso
+import           Miso hiding (text_)
 import           Miso.Lynx
+import           Miso.Lynx.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
-import qualified Miso.Style as CSS
+import qualified Miso.CSS as CSS
 -----------------------------------------------------------------------------
+-- | Application model
 newtype Model = Model { _value :: Int }
   deriving (Show, Eq, ToMisoString)
 -----------------------------------------------------------------------------
@@ -136,15 +138,12 @@ value = lens _value $ \m v -> m { _value = v }
 data Action
   = AddOne
   | SubtractOne
-  | SayHelloWorld
-  | Tap Int
   deriving (Show, Eq)
 -----------------------------------------------------------------------------
--- | Entry point for a miso-lynx application
+-- | Entry point for a miso application
 main :: IO ()
 main = run $ lynx counterComponent
   { events = lynxEvents
-  , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
 counterComponent :: App Model Action
@@ -153,14 +152,11 @@ counterComponent = component (Model 0) updateModel viewModel
 updateModel
   :: Action
   -> Transition Model Action
-updateModel SayHelloWorld =
-  io_ (consoleLog "Hello World!")
-updateModel AddOne =
-  value += 1
-updateModel SubtractOne =
-  value -= 1
-updateModel (Tap x) =
-  io_ $ consoleLog ("Tapped: " <> ms (show x))
+updateModel = \case
+  AddOne ->
+    value += 1
+  SubtractOne ->
+    value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
 viewModel :: Model -> View Model Action
