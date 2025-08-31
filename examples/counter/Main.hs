@@ -56,7 +56,6 @@ viewModel m = view_
   ]
   [ view_
     [ onTap AddOne
-    , id_ "plus"
     , CSS.style_
         [ CSS.backgroundColor CSS.yellow
         , CSS.width "100px"
@@ -95,7 +94,6 @@ viewModel m = view_
     ]
   , view_
     [ onTap SubtractOne
-    , id_ "minus"
     , CSS.style_
         [ CSS.backgroundColor CSS.pink
         , CSS.width "100px"
