@@ -30,7 +30,6 @@ data Action
 main :: IO ()
 main = run $ lynx counterComponent
   { events = lynxEvents
-  , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
 counterComponent :: App Model Action
