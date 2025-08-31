@@ -1,4 +1,5 @@
 -----------------------------------------------------------------------------
+{-# LANGUAGE LambdaCase                  #-}
 {-# LANGUAGE RecordWildCards             #-}
 {-# LANGUAGE OverloadedStrings           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving  #-}
@@ -11,7 +12,7 @@ import           Miso.Lynx.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
-import qualified Miso.Style as CSS
+import qualified Miso.CSS as CSS
 -----------------------------------------------------------------------------
 -- | Application model
 newtype Model = Model { _value :: Int }
@@ -23,15 +24,12 @@ value = lens _value $ \m v -> m { _value = v }
 data Action
   = AddOne
   | SubtractOne
-  | SayHelloWorld
-  | Tap Int
   deriving (Show, Eq)
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
 main = run $ lynx counterComponent
   { events = lynxEvents
-  , initialAction = Just SayHelloWorld
   }
 -----------------------------------------------------------------------------
 counterComponent :: App Model Action
@@ -40,14 +38,11 @@ counterComponent = component (Model 0) updateModel viewModel
 updateModel
   :: Action
   -> Transition Model Action
-updateModel SayHelloWorld =
-  io_ (consoleLog "Hello World!")
-updateModel AddOne =
-  value += 1
-updateModel SubtractOne =
-  value -= 1
-updateModel (Tap x) =
-  io_ $ consoleLog ("Tapped: " <> ms (show x))
+updateModel = \case
+  AddOne ->
+    value += 1
+  SubtractOne ->
+    value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
 viewModel :: Model -> View Model Action
@@ -61,7 +56,6 @@ viewModel m = view_
   ]
   [ view_
     [ onTap AddOne
-    , id_ "plus"
     , CSS.style_
         [ CSS.backgroundColor CSS.yellow
         , CSS.width "100px"
@@ -100,7 +94,6 @@ viewModel m = view_
     ]
   , view_
     [ onTap SubtractOne
-    , id_ "minus"
     , CSS.style_
         [ CSS.backgroundColor CSS.pink
         , CSS.width "100px"
