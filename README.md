@@ -48,6 +48,9 @@
  - #### Instant first-frame rendering - [IFR](https://lynxjs.org/guide/interaction/ifr.html#ifr-is-one-of-the-advantages-of-lynx)
    The flagship isomorphic (server side rendering) feature in `miso` can be repurposed as IFR in `miso-lynx` (one of the flagship features of [lynx](https://lynxjs.org)).
 
+ - #### Extensibility 
+   Custom native components can be written in Objective-C, Swift, Kotlin or Java and accessed via the [Lynx Native Module](https://lynxjs.org/guide/use-native-modules.html) system.
+
 For framework implementors, this is a dream come true, and we hope `miso-lynx` can be an ideal development environment for building [Lynx](https://lynxjs.org) applications with [miso](https://haskell-miso.org).
 
 ## Table of Contents
