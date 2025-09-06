@@ -18,17 +18,17 @@
   <a href="https://actions-badge.atrox.dev/haskell-miso/miso-lynx/goto?ref=master">
     <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fhaskell-miso%2Fmiso-lynx%2Fbadge%3Fref%3Dmaster&style=flat-square" />
   </a>
-  <a href="http://hackage.haskell.org/package/miso-lynx">
+  <!-- <a href="http://hackage.haskell.org/package/miso-lynx">
     <img src="https://img.shields.io/hackage/v/miso-lynx.svg?style=flat-square" alt="Hackage">
-  </a>
+  </a> -->
   <a href="https://github.com/haskell-miso/miso-lynx/blob/master/LICENSE">
-    <img src="http://img.shields.io/badge/license-BSD3-blueviolet.svg?style=flat-square" alt="LICENSE">
+    <img src="http://img.shields.io/badge/license-BSD3-blue.svg?style=flat-square" alt="LICENSE">
   </a>
 </p>
 
 ##
 
-**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing to native iOS [UIView](https://developer.apple.com/documentation/uikit/uiview), Android [View](https://developer.android.com/reference/android/view/View), and for interacting with APIs on the device. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative companies like [ByteDance](https://www.bytedance.com/en/) 🇨🇳 🦾 , creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
+**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction for [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative companies like [ByteDance](https://www.bytedance.com/en/) 🇨🇳 🦾 , creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
 
 ## Why Lynx
 
