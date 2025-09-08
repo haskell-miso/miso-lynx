@@ -43,7 +43,7 @@
    Exposing a [DOM API](https://lynxjs.org/api/engine/element-api.html) for rendering allows any JavaScript (or compile-to-JavaScript 🍜) web framework to produce cross-platfom mobile applications. [Seen here](https://github.com/haskell-miso/miso-lynx/blob/master/ts/miso/context/lynx.ts) in `miso-lynx`.
 
  - #### Cross platform capability
-   Lynx targets iOS, Android, Web by default, and has [a roadmap](https://lynxjs.org/blog/lynx-open-source-roadmap-2025) that mentions Desktop UI as well (OSX, etc.)
+   Lynx targets iOS, Android, HarmonyOS, Web by default, and has [a roadmap](https://lynxjs.org/blog/lynx-open-source-roadmap-2025) that mentions Desktop UI as well (OSX, etc.)
 
  - #### Instant first-frame rendering - [IFR](https://lynxjs.org/guide/interaction/ifr.html#ifr-is-one-of-the-advantages-of-lynx)
    The flagship isomorphic (server side rendering) feature in `miso` can be repurposed as IFR in `miso-lynx` (one of the flagship features of [lynx](https://lynxjs.org)).
