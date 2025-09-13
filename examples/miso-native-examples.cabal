@@ -19,7 +19,7 @@ common options
 
   if arch(javascript)
     ld-options:
-      -sENVIRONMENT=shell -sWASM=0
+      -sENVIRONMENT=shell -sWASM=0 -sEXPORTED_RUNTIME_METHODS=HEAP8 
 
 executable counter
   import:
