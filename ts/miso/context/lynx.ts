@@ -38,6 +38,9 @@ const context : Context = {
           case 'image':
               return __CreateImage(pageId);
               break;
+          case 'frame':
+              return __CreateFrame(pageId, null);
+              break;
           default:
               return __CreateElement(tag, pageId);
               break;

@@ -26,6 +26,8 @@ module Miso.Lynx.Element
   , listItem_
     -- * Text
   , text_
+    -- * Frame
+  , frame_
   ) where
 -----------------------------------------------------------------------------
 import           Data.Aeson (toJSON)
@@ -119,4 +121,12 @@ list_ ListOptions {..} attrs = lynx_ "list" (defaults <> attrs)
 --
 text_ :: [Attribute action] -> [View model action] -> View model action
 text_ = lynx_ "text"
+-----------------------------------------------------------------------------
+-- | <https://lynxjs.org/api/elements/built-in/frame.html>
+--
+-- A page element similar to HTML's \<iframe\>, which can embed a Lynx page
+-- into the current page.
+--
+frame_ :: [Attribute action] -> View model action
+frame_ attrs = lynx_ "frame" attrs []
 -----------------------------------------------------------------------------
