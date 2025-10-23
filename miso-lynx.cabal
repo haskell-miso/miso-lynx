@@ -62,6 +62,8 @@ library
   exposed-modules:
     Miso.Lynx
     Miso.Lynx.Element
+    Miso.Lynx.Element.Frame
+    Miso.Lynx.Element.Frame.Property
     Miso.Lynx.Element.Image
     Miso.Lynx.Element.Image.Event
     Miso.Lynx.Element.Image.Method
