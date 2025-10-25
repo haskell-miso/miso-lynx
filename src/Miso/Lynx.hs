@@ -57,7 +57,7 @@ import Miso.String (MisoString)
 #endif
 -----------------------------------------------------------------------------
 lynx :: Eq model => App model action -> JSM ()
-lynx vcomp = withJS $ renderApp "native" vcomp (pure [])
+lynx vcomp = withJS (renderApp "native" vcomp)
 -----------------------------------------------------------------------------
 -- | Used when compiling with jsaddle to make miso's JavaScript present in
 -- the execution context.

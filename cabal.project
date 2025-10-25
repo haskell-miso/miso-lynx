@@ -10,4 +10,4 @@ allow-newer:
 source-repository-package
   type: git
   location: https://github.com/dmjio/miso.git
-  tag: 3ffffd9620b3f1d6aafe3d04663e01f3eadeb26c
+  tag: 490127420095cf94664490be204c9c8105f91163
