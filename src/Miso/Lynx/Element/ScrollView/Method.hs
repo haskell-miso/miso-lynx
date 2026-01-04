@@ -31,8 +31,6 @@ module Miso.Lynx.Element.ScrollView.Method
 import Miso
 import Miso.Lynx.FFI
 -----------------------------------------------------------------------------
-import Language.Javascript.JSaddle
------------------------------------------------------------------------------
 data ScrollTo
   = ScrollTo
   { offset :: Double

@@ -24,8 +24,6 @@ module Miso.Lynx.Element.Text.Method
 import           Miso
 import           Miso.Lynx.FFI (invokeExec)
 -----------------------------------------------------------------------------
-import           Language.Javascript.JSaddle
------------------------------------------------------------------------------
 data SetTextSelection
   = SetTextSelection
   { startX, startY :: Double

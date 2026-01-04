@@ -33,8 +33,8 @@ import           Miso.Types (Attribute)
 imageEvents :: Events
 imageEvents
   = M.fromList
-  [ ("load", False)
-  , ("error", False)
+  [ ("load", BUBBLE)
+  , ("error", BUBBLE)
   ]
 ----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/image.html#bindload

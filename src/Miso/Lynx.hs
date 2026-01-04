@@ -49,22 +49,16 @@ import Miso.Lynx.FFI
 import Miso.Lynx.Event
 -----------------------------------------------------------------------------
 import Control.Monad (void)
-import Language.Javascript.JSaddle (JSM)
-#ifndef GHCJS_BOTH
-import Data.FileEmbed (embedStringFile)
-import Language.Javascript.JSaddle (eval)
-import Miso.String (MisoString)
-#endif
 -----------------------------------------------------------------------------
-lynx :: Eq model => App model action -> JSM ()
+lynx :: Eq model => App model action -> IO ()
 lynx vcomp = withJS (renderApp "native" vcomp)
 -----------------------------------------------------------------------------
 -- | Used when compiling with jsaddle to make miso's JavaScript present in
 -- the execution context.
-withJS :: JSM a -> JSM ()
+withJS :: IO a -> IO ()
 withJS action = void $ do
-#ifndef GHCJS_BOTH
-  _ <- eval ($(embedStringFile "js/miso-lynx.js") :: MisoString)
+#ifdef WASM
+  $(evalFile "js/miso-lynx.js")
 #endif
   action
 -----------------------------------------------------------------------------

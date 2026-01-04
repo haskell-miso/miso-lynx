@@ -49,27 +49,27 @@ import qualified Data.Map.Strict as M
 -----------------------------------------------------------------------------
 import           Miso.Types (Attribute)
 import           Miso.String (MisoString)
-import           Miso.Event (on, Decoder(..), DecodeTarget(..), Events, emptyDecoder)
+import           Miso.Event (on, Decoder(..), DecodeTarget(..), Events, emptyDecoder, Phase(BUBBLE))
 ----------------------------------------------------------------------------
 viewEvents :: Events
 viewEvents
   = M.fromList
-  [ ("touchstart", False)
-  , ("touchmove", False)
-  , ("touchend", False)
-  , ("touchcancel", False)
-  , ("tap", False)
-  , ("longpress", False)
-  , ("layoutchange", False)
-  , ("uiappear", False)
-  , ("uidisappear", False)
-  , ("animationstart", False)
-  , ("animationend", False)
-  , ("animationcancel", False)
-  , ("animationiteration", False)
-  , ("transitionstart", False)
-  , ("transitionend", False)
-  , ("transitioncancel", False)
+  [ ("touchstart", BUBBLE)
+  , ("touchmove", BUBBLE)
+  , ("touchend", BUBBLE)
+  , ("touchcancel", BUBBLE)
+  , ("tap", BUBBLE)
+  , ("longpress", BUBBLE)
+  , ("layoutchange", BUBBLE)
+  , ("uiappear", BUBBLE)
+  , ("uidisappear", BUBBLE)
+  , ("animationstart", BUBBLE)
+  , ("animationend", BUBBLE)
+  , ("animationcancel", BUBBLE)
+  , ("animationiteration", BUBBLE)
+  , ("transitionstart", BUBBLE)
+  , ("transitionend", BUBBLE)
+  , ("transitioncancel", BUBBLE)
   ]
 ----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/lynx-api/event/touch-event.html

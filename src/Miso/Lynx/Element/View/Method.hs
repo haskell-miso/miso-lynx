@@ -26,8 +26,6 @@ module Miso.Lynx.Element.View.Method
   , defaultTakeScreenshot
   ) where
 -----------------------------------------------------------------------------
-import Language.Javascript.JSaddle
------------------------------------------------------------------------------
 import Miso
 import Miso.Lynx.FFI
 -----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { context } from './miso/context/lynx';
+import { drawingContext, eventContext } from './miso/context/lynx';
 
 import {
  TextDecoder,
@@ -18,7 +18,8 @@ globalThis['requestAnimationFrame'] = lynx['requestAnimationFrame'];
 globalThis['cancelAnimationFrame'] = lynx['cancelAnimationFrame'];
 
 /* export native context globally */
-globalThis['native'] = context;
+globalThis['native']['drawingContext'] = drawingContext;
+globalThis['native']['eventContext'] = eventContext;
 
 /* Used for event handling on main thread */
 globalThis['runWorklet'] = (worklet, params) => {
@@ -41,9 +42,9 @@ globalThis['renderPage'] = function() {
   dmj: this is for something, not sure what, can be exposed to Haskell layer if need be.
   For now let's just log out the lynx object.
  */
-globalThis['processData'] = function () {
+// globalThis['processData'] = function () {
 
-}
+// }
 
 /* dmj: invoke lynx behaviors, convenience function */
 globalThis['invokeExec'] = function

@@ -34,11 +34,11 @@ import           Miso.String (MisoString)
 scrollViewEvents :: Events
 scrollViewEvents
   = M.fromList
-  [ ("scroll", False)
-  , ("scrolltoupper", False)
-  , ("scrolltolower", False)
-  , ("scrollend", False)
-  , ("contentsizechanged", False)
+  [ ("scroll", BUBBLE)
+  , ("scrolltoupper", BUBBLE)
+  , ("scrolltolower", BUBBLE)
+  , ("scrollend", BUBBLE)
+  , ("contentsizechanged", BUBBLE)
   ]
 -----------------------------------------------------------------------------
 scrollDecoder :: Decoder ScrollEvent
