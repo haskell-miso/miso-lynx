@@ -41,5 +41,5 @@ export type DrawingContext<T> = {
 
 
 export {
-   EventContext, DrawingContext
+  EventContext, DrawingContext
 };
