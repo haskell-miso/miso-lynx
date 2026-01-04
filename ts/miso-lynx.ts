@@ -1,4 +1,4 @@
-import { context } from './miso/context/lynx';
+import { drawingContext, eventContext } from './miso/context/lynx';
 
 import {
  TextDecoder,
@@ -18,7 +18,9 @@ globalThis['requestAnimationFrame'] = lynx['requestAnimationFrame'];
 globalThis['cancelAnimationFrame'] = lynx['cancelAnimationFrame'];
 
 /* export native context globally */
-globalThis['native'] = context;
+globalThis['native'] = {};
+globalThis['native']['drawingContext'] = drawingContext;
+globalThis['native']['eventContext'] = eventContext;
 
 /* Used for event handling on main thread */
 globalThis['runWorklet'] = (worklet, params) => {

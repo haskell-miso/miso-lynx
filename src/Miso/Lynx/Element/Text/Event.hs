@@ -37,8 +37,8 @@ import           Miso.Types (Attribute)
 textEvents :: Events
 textEvents
   = M.fromList
-  [ ("layout", False)
-  , ("selectionchange", False)
+  [ ("layout", BUBBLE)
+  , ("selectionchange", BUBBLE)
   ]
 -----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/text.html#layout

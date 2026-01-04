@@ -35,15 +35,6 @@ common cpp
     build-depends:
       file-embed < 0.1
 
-common jsaddle
-  if !(impl(ghcjs) || arch(javascript) || arch(wasm32))
-    build-depends:
-      jsaddle-warp < 0.10
-
-  if !(impl(ghcjs) || arch(javascript))
-    build-depends:
-      file-embed < 0.1
-
 common client
   if arch(javascript)
     js-sources:
@@ -54,7 +45,6 @@ common client
 
 library
   import:
-    jsaddle,
     client,
     cpp,
   default-language:
@@ -94,5 +84,4 @@ library
     aeson      < 2.3,
     base       < 5,
     containers < 0.9,
-    jsaddle    < 0.10,
     miso       >= 1.9 && < 2.0

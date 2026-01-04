@@ -1,18 +1,28 @@
-import { Context } from '../types';
+import { DrawingContext, EventContext } from '../types';
 import { ElementRef } from '@lynx-js/type-element-api';
 
-const context : Context = {
+const eventContext : EventContext<Node> = {
   addEventListener : (mount : Element, event : string, listener, capture : boolean) => {
     return __AddEvent(mount, 'catchEvent', event, { type : 'worklet', value : listener });
   },
-  firstChild : (node: Element) => {
-    return __FirstElement(node);
+  removeEventListener : (mount : Element, event : string, listener, capture : boolean) => {
+      /* dmj: todo implement */
+     return;
   },
-  lastChild : (node: Element) => {
-    return __LastElement(node);
+  isEqual : (x, y) => {
+    return __ElementIsEqual(x,y);
+  },
+  getTarget : (e) => {
+    return e.target.elementRefptr;
   },
   parentNode : (node: Element) => {
     return __GetParent(node);
+  }
+};
+
+const drawingContext : DrawingContext<Node> = {
+  nextSibling : (x) => {
+    return x.nextSibling.domRef;
   },
   createTextNode : (s: string) => {
     return __CreateRawText(s);
@@ -61,31 +71,12 @@ const context : Context = {
   swapDOMRefs: (a: Node, b: Node, p: Node): void => {
     return __SwapElement(a,b);
   },
-  querySelectorAll: (sel: string) => {
-    return lynx.querySelectorAll(sel);
-  },
-  removeAttribute : (node : ElementRef, key: string) => {
-    return __SetAttribute(node, key, '');
-  },
   setAttribute : (node, key, value) => {
     if (key === 'id') return __SetID(node, value);
     return __SetAttribute(node,key,value);
   },
-  getAttribute : (node, key) => {
-    if (key === 'id') return __GetID(node);
-    return __GetAttributeByName(node,key);
-  },
-  setInlineStyle : (cCss, nCss, node) => {
-    if (cCss != nCss)
-      return __SetInlineStyles(node, nCss)
-  },
-  getInlineStyle : (node, key) => {
-    return __GetInlineStyles(node)[key]
-  },
-  getTag : (node) => {
-    var s = __GetTag(node);
-    if (s === "text") return "#text";     
-    return s;
+  removeAttribute : (node : ElementRef, key: string) => {
+    return __SetAttribute(node, key, '');
   },
   setAttributeNS : (node, ns, key, value) => {
     return __SetAttribute(node,key,value);
@@ -93,33 +84,22 @@ const context : Context = {
   setTextContent : (node, text) => {
     return __SetAttribute(node,'text',text);
   },
-  getTextContent : (node: ElementRef) => {
-    return __GetAttributeByName(node, 'textContext');
-  },
-  isEqual : (x, y) => {
-    return __ElementIsEqual(x,y);
-  },
-  children : (node: ElementRef) => {
-    return __GetChildren(node);
-  },
-  getTarget : (e) => {
-    return e.target.elementRefptr;
-  },
-  setComponentId : (id: string) => {
-    return __SetDataset(globalThis['page'], { 'component-id' : id })
-  },
-  requestAnimationFrame : (callback: (number) => void): void => {
-     lynx.requestAnimationFrame (callback);
+  setInlineStyle : (cCss, nCss, node) => {
+    if (cCss != nCss)
+      return __SetInlineStyles(node, nCss)
   },
   flush : (): void => {
     return __FlushElementTree();
   },
   getRoot : (): ElementRef => {
      return globalThis['page'];
+  },
+  getHead : (): ElementRef => {
+    /* dmj: todo implement */
+    return null;
   }
-}
-
-export {
- context
 };
 
+export {
+  drawingContext, eventContext
+}

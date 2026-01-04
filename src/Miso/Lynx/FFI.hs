@@ -1,4 +1,6 @@
 -----------------------------------------------------------------------------
+{-# LANGUAGE OverloadedStrings #-}
+-----------------------------------------------------------------------------
 -- |
 -- Module      :  Miso.Lynx.FFI
 -- Copyright   :  (C) 2016-2025 David M. Johnson
@@ -17,13 +19,12 @@ module Miso.Lynx.FFI
   ) where
 ----------------------------------------------------------------------------
 import Control.Monad
-import Language.Javascript.JSaddle
-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 import Miso
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/set-interval.html>
 --
-setInterval :: Double -> JSM () -> JSM Double
+setInterval :: Double -> IO () -> IO Double
 setInterval delay f = do
   cb <- toJSVal =<< asyncCallback f
   v <- toJSVal delay
@@ -32,14 +33,14 @@ setInterval delay f = do
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/clear-interval.html>
 --
-clearInterval :: Double -> JSM Double
+clearInterval :: Double -> IO Double
 clearInterval intervalId = do
   result <- jsg "lynx" # "clearInterval" $ [intervalId]
   fromJSValUnchecked result
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/set-timeout.html>
 --
-setTimeout :: Double -> JSM () -> JSM Double
+setTimeout :: Double -> IO () -> IO Double
 setTimeout delay f = do
   cb <- toJSVal (asyncCallback f)
   v <- toJSVal delay
@@ -48,7 +49,7 @@ setTimeout delay f = do
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/global/clear-timeout.html>
 --
-clearTimeout :: Double -> JSM ()
+clearTimeout :: Double -> IO ()
 clearTimeout timerId = void $ jsg "lynx" # "clearTimeout" $ [timerId]
 -----------------------------------------------------------------------------
 -- | <https://lynxjs.org/api/lynx-api/nodes-ref/nodes-ref-invoke.html>
@@ -57,7 +58,7 @@ clearTimeout timerId = void $ jsg "lynx" # "clearTimeout" $ [timerId]
 -- We use this internally to implement the various 'Method' sections
 -- per the lynx docs.
 --
--- > invokeExec "gifs" "startAnimate" :: JSM ()
+-- > invokeExec "gifs" "startAnimate" :: IO ()
 --
 -- @ 
 -- lynx.createSelectorQuery()
@@ -97,7 +98,7 @@ invokeExec method selector params successful errorful = do
     params_ <- toJSVal params
     method__ <- toJSVal method
     void $ do
-      jsg (ms "globalThis" :: MisoString) # (ms "invokeExec" :: MisoString) $
+      jsg "globalThis" # "invokeExec" $
         [ selector_
         , method__
         , params_
