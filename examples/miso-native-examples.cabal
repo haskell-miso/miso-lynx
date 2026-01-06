@@ -35,7 +35,6 @@ executable counter
   hs-source-dirs:
     counter
   build-depends:
-    aeson,
     base < 5,
     containers,
     miso,

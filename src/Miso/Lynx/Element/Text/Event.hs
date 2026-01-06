@@ -27,10 +27,9 @@ module Miso.Lynx.Element.Text.Event
   , textEvents
   ) where
 -----------------------------------------------------------------------------
-import           Data.Aeson
-import           Data.Aeson.Types
 import           Miso.Event
------------------------------------------------------------------------------
+import           Miso.JSON
+----------------------------------------------------------------------------
 import qualified Data.Map.Strict as M
 import           Miso.Types (Attribute)
 ----------------------------------------------------------------------------

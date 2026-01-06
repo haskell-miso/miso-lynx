@@ -30,12 +30,11 @@ module Miso.Lynx.Element
   , frame_
   ) where
 -----------------------------------------------------------------------------
-import           Data.Aeson (toJSON)
------------------------------------------------------------------------------
+import           Miso.JSON (toJSON)
+import           Miso.Lynx.Element.List (ListOptions(..))
+import           Miso.Property (textProp, prop)
 import           Miso.String (MisoString)
 import           Miso.Types (View, Attribute, node, NS(HTML))
-import           Miso.Property (textProp, prop)
-import           Miso.Lynx.Element.List (ListOptions(..))
 -----------------------------------------------------------------------------
 -- | Smart constructor for constructing a built-in lynx element.
 --

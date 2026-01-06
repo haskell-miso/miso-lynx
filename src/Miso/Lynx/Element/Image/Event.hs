@@ -23,10 +23,10 @@ module Miso.Lynx.Element.Image.Event
   , imageEvents
   ) where
 -----------------------------------------------------------------------------
-import           Data.Aeson
 import qualified Data.Map as M
 -----------------------------------------------------------------------------
 import           Miso.Event
+import           Miso.JSON
 import           Miso.String (MisoString)
 import           Miso.Types (Attribute)
 -----------------------------------------------------------------------------

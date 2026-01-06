@@ -25,10 +25,10 @@ module Miso.Lynx.Element.ScrollView.Event
   ) where
 -----------------------------------------------------------------------------
 import qualified Data.Map as M
-import           Data.Aeson (withObject, (.:), (.:?), (.!=))
 -----------------------------------------------------------------------------
 import           Miso.Types (Attribute)
 import           Miso.Event
+import           Miso.JSON (withObject, (.:), (.:?), (.!=))
 import           Miso.String (MisoString)
 -----------------------------------------------------------------------------
 scrollViewEvents :: Events

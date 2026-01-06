@@ -43,13 +43,12 @@ module Miso.Lynx.Element.View.Event
   , viewEvents
   ) where
 ----------------------------------------------------------------------------
-import           Data.Aeson (FromJSON (..), (.:), withObject, withText)
-import           Data.Aeson.Types (typeMismatch, Value(String), Object)
 import qualified Data.Map.Strict as M
 -----------------------------------------------------------------------------
-import           Miso.Types (Attribute)
-import           Miso.String (MisoString)
 import           Miso.Event (on, Decoder(..), DecodeTarget(..), Events, emptyDecoder, Phase(BUBBLE))
+import           Miso.JSON
+import           Miso.String (MisoString)
+import           Miso.Types (Attribute)
 ----------------------------------------------------------------------------
 viewEvents :: Events
 viewEvents
