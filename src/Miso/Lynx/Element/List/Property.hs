@@ -46,12 +46,11 @@ module Miso.Lynx.Element.List.Property
   , estimatedMainAxisSizePx_
   ) where
 -----------------------------------------------------------------------------
-import Data.Aeson
------------------------------------------------------------------------------
+import Miso.JSON
+import Miso.Property
 import Miso.String (MisoString)
 import Miso.Types (Attribute)
-import Miso.Property
------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 -- | ListOptions
 data ListOptions
   = ListOptions

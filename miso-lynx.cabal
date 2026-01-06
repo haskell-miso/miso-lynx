@@ -31,10 +31,6 @@ common cpp
     cpp-options:
       -DGHCJS_NEW
 
-  if !(impl(ghcjs) || arch(javascript))
-    build-depends:
-      file-embed < 0.1
-
 common client
   if arch(javascript)
     js-sources:
@@ -81,7 +77,6 @@ library
   hs-source-dirs:
     src
   build-depends:
-    aeson      < 2.3,
     base       < 5,
     containers < 0.9,
     miso       >= 1.9 && < 2.0

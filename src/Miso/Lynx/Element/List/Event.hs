@@ -35,11 +35,10 @@ module Miso.Lynx.Element.List.Event
   ) where
 -----------------------------------------------------------------------------
 import qualified Data.Map as M
-import           Data.Aeson
-import           Data.Aeson.Types
 -----------------------------------------------------------------------------
-import           Miso.Types (Attribute)
 import           Miso.Event
+import           Miso.JSON
+import           Miso.Types (Attribute)
 import           Miso.String (MisoString)
 -----------------------------------------------------------------------------
 listEvents :: Events
