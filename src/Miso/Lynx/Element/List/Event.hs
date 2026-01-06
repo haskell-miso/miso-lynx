@@ -112,7 +112,7 @@ data ListEventSource
   deriving (Show, Eq, Enum)
 -----------------------------------------------------------------------------
 instance FromJSON ListEventSource where
-  parseJSON = withScientific "ListEventSource" $ \case
+  parseJSON = withNumber "ListEventSource" $ \case
     0 -> pure DIFF
     1 -> pure LAYOUT
     2 -> pure SCROLL
@@ -126,7 +126,7 @@ data ScrollStateChange
   deriving (Show, Eq, Enum)
 -----------------------------------------------------------------------------
 instance FromJSON ScrollStateChange where
-  parseJSON = withScientific "ScrollStateChange" $ \case
+  parseJSON = withNumber "ScrollStateChange" $ \case
     1 -> pure Stationary
     2 -> pure Dragging
     3 -> pure InertialScrolling
