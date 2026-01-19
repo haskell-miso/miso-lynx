@@ -28,9 +28,7 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run $ lynx counterComponent
-  { events = lynxEvents
-  }
+main = run (lynx lynxEvents counterComponent)
 -----------------------------------------------------------------------------
 counterComponent :: App Model Action
 counterComponent = component (Model 0) updateModel viewModel

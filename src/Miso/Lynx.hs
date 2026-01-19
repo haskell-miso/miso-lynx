@@ -43,15 +43,15 @@ module Miso.Lynx
    , module Miso.Lynx.Event
    ) where
 -----------------------------------------------------------------------------
-import Miso (renderApp, App)
+import Miso (renderApp, App, Events)
 import Miso.Lynx.Element
 import Miso.Lynx.FFI
 import Miso.Lynx.Event
 -----------------------------------------------------------------------------
 import Control.Monad (void)
 -----------------------------------------------------------------------------
-lynx :: Eq model => App model action -> IO ()
-lynx vcomp = withJS (renderApp "native" vcomp)
+lynx :: Eq model => Events -> App model action -> IO ()
+lynx events vcomp = withJS (renderApp events "native" vcomp)
 -----------------------------------------------------------------------------
 -- | Used when compiling with jsaddle to make miso's JavaScript present in
 -- the execution context.

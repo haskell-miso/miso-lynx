@@ -28,7 +28,7 @@ module Miso.Lynx.Element.ScrollView.Method
   , defaultScrollBy
   ) where
 -----------------------------------------------------------------------------
-import Miso
+import Miso hiding (scrollIntoView, inline)
 import Miso.Lynx.FFI
 -----------------------------------------------------------------------------
 data ScrollTo
