@@ -117,6 +117,7 @@ This file contains a simple `miso-lynx` counter application.
 
 ```haskell
 -----------------------------------------------------------------------------
+{-# LANGUAGE LambdaCase                  #-}
 {-# LANGUAGE RecordWildCards             #-}
 {-# LANGUAGE OverloadedStrings           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving  #-}
@@ -145,9 +146,7 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a miso application
 main :: IO ()
-main = run $ lynx counterComponent
-  { events = lynxEvents
-  }
+main = run (lynx lynxEvents counterComponent)
 -----------------------------------------------------------------------------
 counterComponent :: App Model Action
 counterComponent = component (Model 0) updateModel viewModel
@@ -173,7 +172,6 @@ viewModel m = view_
   ]
   [ view_
     [ onTap AddOne
-    , id_ "plus"
     , CSS.style_
         [ CSS.backgroundColor CSS.yellow
         , CSS.width "100px"
@@ -212,7 +210,6 @@ viewModel m = view_
     ]
   , view_
     [ onTap SubtractOne
-    , id_ "minus"
     , CSS.style_
         [ CSS.backgroundColor CSS.pink
         , CSS.width "100px"
