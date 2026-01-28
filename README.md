@@ -236,7 +236,7 @@ Now that your project files are populated, development can begin.
 
 ## Hot Reload
 
-This entails creating a [LynxExplorer](https://lynxjs.org) application with the [jsaddle-warp](https://hackage.haskell.org/package/jsaddle-warp) hot-reload package. This will require using [rspack](https://rspack.rs/) and the BTS to access WebSockets via the Native Module system. For more information on accessing native device APIs (like `WebSocket`) via the BTS please see the [Sphynx](https://github.com/dmjio/sphynx) project.
+This entails creating a [LynxExplorer](https://lynxjs.org) application with GHC WASM browser hot reload. This will require using [rspack](https://rspack.rs/) and the BTS to access WebSockets via the Native Module system. For more information on accessing native device APIs (like `WebSocket`) via the BTS please see the [Sphynx](https://github.com/dmjio/sphynx) project.
 
 ## Haddocks
 
