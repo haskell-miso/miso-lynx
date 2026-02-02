@@ -39,7 +39,3 @@ export type DrawingContext<T> = {
   getRoot : () => T;
 };
 
-
-export {
-  EventContext, DrawingContext
-};
