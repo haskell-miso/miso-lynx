@@ -101,8 +101,11 @@ function processMessage (msg, runtime) {
       break;
     case "createElement":
       /* lazy init component state */
-      runtime.component[msg.componentId] = runtime.component[msg.componentId] || {};
       runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.tag);
+      break;
+    case "createTextNode":
+      /* lazy init component state */
+      runtime.nodes[msg.nodeId] = drawingContext.createTextNode (msg.text);
       break;
     case "createElementNS":
       /* lazy init component state */
@@ -267,14 +270,12 @@ export type SwapDOMRefs = {
 };
 
 export type CreateElement = {
-  componentId: ComponentId,
   nodeId: number,
   tag: string,
   type: "createElement"
 };
 
 export type CreateElementNS = {
-  componentId: ComponentId,
   nodeId: number,
   tag: string,
   namespace: string,
@@ -282,7 +283,6 @@ export type CreateElementNS = {
 };
 
 export type CreateTextNode = {
-  componentId: ComponentId,
   nodeId: number,
   text: string,
   type: "createTextNode"
