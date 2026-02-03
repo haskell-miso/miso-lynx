@@ -145,6 +145,12 @@ function processMessage (m, runtime) {
     case "setInlineStyle":
       drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
       break;
+    case "addClass":
+      drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
+      break;
+    case "removeClass":
+      drawingContext.removeClass (m.key, runtime.nodes[m.nodeId]);
+      break;
     case "flush":
       drawingContext.flush ();
       break;
@@ -366,14 +372,12 @@ export type RemoveAttribute = {
 };
 
 export type RemoveClass = {
-  componentId: ComponentId,
   type: "removeClass",
   nodeId: number,
   key: string,
 };
 
 export type AddClass = {
-  componentId: ComponentId,
   type: "addClass",
   nodeId: number,
   key: string,
