@@ -139,6 +139,9 @@ function processMessage (m, runtime) {
     case "removeAttribute":
       drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
       break;
+    case "setTextContent":
+      drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
+      break;
     case "flush":
       drawingContext.flush ();
       break;
