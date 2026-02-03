@@ -116,6 +116,9 @@ function processMessage (msg, runtime) {
       drawingContext.insertBefore
         (runtime.nodes[msg.parent], runtime.nodes[msg.child], runtime.nodes[msg.node]);
       break;
+    case "setAttribute":
+      drawingContext.setAttribute (runtime.nodes[msg.nodeId], msg.key, msg.value);
+      break;
     default:
       console.error('Unknown message received', msg);
       break;
@@ -287,7 +290,6 @@ export type CreateTextNode = {
 };
 
 export type SetAttribute = {
-  componentId: ComponentId,
   key: string,
   value: any,
   nodeId: number,
