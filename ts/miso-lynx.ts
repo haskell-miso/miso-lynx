@@ -101,12 +101,15 @@ function processMessage (m, runtime) {
       break;
     case "createElement":
       runtime.nodes[m.nodeId] = drawingContext.createElement (m.tag);
+      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
       break;
     case "createTextNode":
       runtime.nodes[m.nodeId] = drawingContext.createTextNode (m.text);
+      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
       break;
     case "createElementNS":
-      runtime.nodes[m.nodeId] = drawingContext.createElement (m.namespace, m.tag);
+      runtime.nodes[m.nodeId] = drawingContext.createElementNS (m.namespace, m.tag);
+      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
       break;
     case "swapDOMRefs":
       drawingContext.swapDOMRefs
