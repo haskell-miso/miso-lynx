@@ -125,6 +125,12 @@ function processMessage (m, runtime) {
     case "setTextContent":
       drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
+    case "appendChild":
+      drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      break;
+    case "flush":
+      drawingContext.flush ();
+      break;
     default:
       console.error('Unknown message received', m);
       break;
@@ -311,7 +317,6 @@ export type SetAttributeNS = {
 };
 
 export type AppendChild = {
-  componentId: ComponentId,
   parent: number,
   child: number,
   type: "appendChild"
@@ -368,7 +373,6 @@ export type SetInlineStyle = {
 };
 
 export type Flush = {
-  componentId: ComponentId,
   type: "flush"
 };
 
