@@ -136,6 +136,9 @@ function processMessage (m, runtime) {
       drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
       dropChildren (runtime.nodes, runtime.nodes[m.current]);
       break;
+    case "removeAttribute":
+      drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
+      break;
     case "flush":
       drawingContext.flush ();
       break;
@@ -352,7 +355,6 @@ export type RemoveChild = {
 };
 
 export type RemoveAttribute = {
-  componentId: ComponentId,
   type: "removeAttribute",
   nodeId: number,
   key: string,
