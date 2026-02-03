@@ -128,6 +128,11 @@ function processMessage (m, runtime) {
     case "appendChild":
       drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       break;
+    case "removeChild":
+      /* TODO: walk the children, drop all children from runtime.nodes */
+      dropChildren (runtime.nodes, runtime.nodes[m.child]);
+      drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      break;
     case "flush":
       drawingContext.flush ();
       break;
@@ -135,6 +140,14 @@ function processMessage (m, runtime) {
       console.error('Unknown message received', m);
       break;
   }
+}
+
+/* this purges all descendants from runtime.nodes map */
+function dropChildren (nodeMap, node) {
+   delete nodeMap[node.nodeId];
+   for (const child of node.children) {
+      dropChildren(nodeMap, child);
+   }
 }
 
 /* Initialize global event delegation on main thread
@@ -331,7 +344,6 @@ export type ReplaceChild = {
 };
 
 export type RemoveChild = {
-  componentId: ComponentId,
   parent: number,
   child: number,
   type: "removeChild"
