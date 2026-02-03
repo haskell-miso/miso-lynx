@@ -142,6 +142,9 @@ function processMessage (m, runtime) {
     case "setTextContent":
       drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
+    case "setInlineStyle":
+      drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
+      break;
     case "flush":
       drawingContext.flush ();
       break;
@@ -280,7 +283,6 @@ export type ModelHydration = {
 export type MountComponent = {
   type: "mount",
   componentId: ComponentId,
-  events: Array<EventCapture>,
   model: Object,
   mountPoint: number
 };
@@ -384,7 +386,6 @@ export type SetTextContent = {
 };
 
 export type SetInlineStyle = {
-  componentId: ComponentId,
   new : Record<string, any>,
   current : Record<string, any>,
   nodeId: number,
