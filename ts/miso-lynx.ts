@@ -93,34 +93,37 @@ function initMainThreadProcessing () {
 }
 
 /* main thread message processing */
-function processMessage (msg, runtime) {
+function processMessage (m, runtime) {
   'main thread';
-  switch (msg.type) {
+  switch (m.type) {
     case "addEventListeners":
-      addListeners (msg.events);
+      addListeners (m.events);
       break;
     case "createElement":
-      runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.tag);
+      runtime.nodes[m.nodeId] = drawingContext.createElement (m.tag);
       break;
     case "createTextNode":
-      runtime.nodes[msg.nodeId] = drawingContext.createTextNode (msg.text);
+      runtime.nodes[m.nodeId] = drawingContext.createTextNode (m.text);
       break;
     case "createElementNS":
-      runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.namespace, msg.tag);
+      runtime.nodes[m.nodeId] = drawingContext.createElement (m.namespace, m.tag);
       break;
     case "swapDOMRefs":
       drawingContext.swapDOMRefs
-        (runtime.nodes[msg.nodeA], runtime.nodes[msg.nodeB], runtime.nodes[msg.parent]);
+        (runtime.nodes[m.nodeA], runtime.nodes[m.nodeB], runtime.nodes[m.parent]);
       break;
     case "insertBefore":
       drawingContext.insertBefore
-        (runtime.nodes[msg.parent], runtime.nodes[msg.child], runtime.nodes[msg.node]);
+        (runtime.nodes[m.parent], runtime.nodes[m.child], runtime.nodes[m.node]);
       break;
     case "setAttribute":
-      drawingContext.setAttribute (runtime.nodes[msg.nodeId], msg.key, msg.value);
+      drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
+      break;
+    case "setAttributeNS":
+      drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
       break;
     default:
-      console.error('Unknown message received', msg);
+      console.error('Unknown message received', m);
       break;
   }
 }
@@ -297,7 +300,6 @@ export type SetAttribute = {
 };
 
 export type SetAttributeNS = {
-  componentId: ComponentId,
   key: string,
   value: any,
   nodeId: number,
