@@ -122,6 +122,9 @@ function processMessage (m, runtime) {
     case "setAttributeNS":
       drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
       break;
+    case "setTextContent":
+      drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
+      break;
     default:
       console.error('Unknown message received', m);
       break;
@@ -351,7 +354,6 @@ export type AddClass = {
 };
 
 export type SetTextContent = {
-  componentId: ComponentId,
   type: "setTextContent",
   nodeId: number,
   text: string,
