@@ -109,6 +109,13 @@ function processMessage (msg, runtime) {
       runtime.component[msg.componentId] = runtime.component[msg.componentId] || {};
       runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.namespace, msg.tag);
       break;
+    case "insertBefore":
+      /* invariant: all nodes exist in runtime.nodes */
+      const parent = runtime.nodes[msg.parent];
+      const child = runtime.nodes[msg.child];
+      const node = runtime.nodes[msg.node];
+      runtime.nodes[msg.nodeId] = drawingContext.insertBefore (parent, child, node);
+      break;
     default:
       console.error('Unknown message received', msg);
       break;
@@ -118,11 +125,11 @@ function processMessage (msg, runtime) {
 /* Initialize global event delegation on main thread
    This should only be invoked once on application load.
  */
-function addListeners (listeners : Record <string, boolean>) {
+function addListeners (events : Record <string, boolean>) {
     'main thread';
     const page = drawingContext.getRoot();
     /* delegate on page */
-    Object.entries(listeners).forEach (([event, capture]) => {
+    Object.entries(events).forEach (([event, capture]) => {
        /* dmj: TODO, incorporate `capture` */
         __AddEvent(page, 'catchEvent', event, { type : 'worklet', value : eventListener });
     });
@@ -245,7 +252,6 @@ export type UnmountComponent = {
 };
 
 export type InsertBefore = {
-  componentId: ComponentId,
   type: "insertBefore",
   parent: number,
   child: number,
