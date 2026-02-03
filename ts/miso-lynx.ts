@@ -100,16 +100,12 @@ function processMessage (msg, runtime) {
       addListeners (msg.events);
       break;
     case "createElement":
-      /* lazy init component state */
       runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.tag);
       break;
     case "createTextNode":
-      /* lazy init component state */
       runtime.nodes[msg.nodeId] = drawingContext.createTextNode (msg.text);
       break;
     case "createElementNS":
-      /* lazy init component state */
-      runtime.component[msg.componentId] = runtime.component[msg.componentId] || {};
       runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.namespace, msg.tag);
       break;
     case "insertBefore":
@@ -186,8 +182,10 @@ export type Component = {
   /* updated model sent from bg to main */
   componentModel: Object,
   /* component model */
-  mainThreadEvents : Record <string, ((o:Object) => void)>
+  mainThreadEvents : Record <string, ((o:Object) => void)>,
   /* dmj: these will need to be sent from bg to main on app load*/
+  rootId : number,
+  /* the root node to diff from */ 
 }
 
 /* Process event
@@ -262,7 +260,6 @@ export type InsertBefore = {
 };
 
 export type SwapDOMRefs = {
-  componentId: ComponentId,
   nodeA: number,
   nodeB: number,
   parent: number,
