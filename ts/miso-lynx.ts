@@ -108,12 +108,13 @@ function processMessage (msg, runtime) {
     case "createElementNS":
       runtime.nodes[msg.nodeId] = drawingContext.createElement (msg.namespace, msg.tag);
       break;
+    case "swapDOMRefs":
+      drawingContext.swapDOMRefs
+        (runtime.nodes[msg.nodeA], runtime.nodes[msg.nodeB], runtime.nodes[msg.parent]);
+      break;
     case "insertBefore":
-      /* invariant: all nodes exist in runtime.nodes */
-      const parent = runtime.nodes[msg.parent];
-      const child = runtime.nodes[msg.child];
-      const node = runtime.nodes[msg.node];
-      runtime.nodes[msg.nodeId] = drawingContext.insertBefore (parent, child, node);
+      drawingContext.insertBefore
+        (runtime.nodes[msg.parent], runtime.nodes[msg.child], runtime.nodes[msg.node]);
       break;
     default:
       console.error('Unknown message received', msg);
