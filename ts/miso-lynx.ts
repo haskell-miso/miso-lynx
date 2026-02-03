@@ -129,9 +129,12 @@ function processMessage (m, runtime) {
       drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       break;
     case "removeChild":
-      /* TODO: walk the children, drop all children from runtime.nodes */
-      dropChildren (runtime.nodes, runtime.nodes[m.child]);
       drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      dropChildren (runtime.nodes, runtime.nodes[m.child]);
+      break;
+    case "replaceChild":
+      drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
+      dropChildren (runtime.nodes, runtime.nodes[m.current]);
       break;
     case "flush":
       drawingContext.flush ();
@@ -336,7 +339,6 @@ export type AppendChild = {
 };
 
 export type ReplaceChild = {
-  componentId: ComponentId,
   current: number,
   new: number,
   parent: number,
