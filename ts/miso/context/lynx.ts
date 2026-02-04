@@ -1,4 +1,4 @@
-import { getDOMRef, VComp, DrawingContext, EventContext, VTree } from 'haskell-miso';
+import { NodeId, getDOMRef, VComp, DrawingContext, EventContext, VTree } from 'haskell-miso';
 import { ElementRef } from '@lynx-js/type-element-api';
 
 const eventContext : EventContext<ElementRef> = {
@@ -33,7 +33,7 @@ const drawingContext : DrawingContext<ElementRef> = {
           __SetClasses(domRef, classes.join(' '));
       }
   },
-  nextSibling : (x : VComp<ElementRef>) => {
+  nextSibling : (x : VComp<NodeId>) => {
       return getDOMRef(x.nextSibling);
   },
   createTextNode : (s: string) => {
