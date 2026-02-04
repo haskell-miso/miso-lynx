@@ -1,13 +1,26 @@
-import { drawingContext, eventContext } from './miso/context/lynx';
+import
+  { drawingContext,
+    eventContext
+  } from './miso/context/lynx';
 
-import { EventContext } from "haskell-miso/ts/miso";
+import
+  { EventContext,
+    PATCH,
+    ComponentId,
+    ProcessEvent,
+  } from "haskell-miso";
+
+import
+  { ElementRef
+  } from '@lynx-js/type-element-api';
 
 import {
  TextDecoder,
  TextEncoder,
 } from "text-encoding";
 
-import JSBI from "jsbi";
+import JSBI
+  from "jsbi";
 
 /* polyfills for native, these come first */
 globalThis['TextDecoder'] = TextDecoder;
@@ -36,9 +49,9 @@ globalThis['renderPage'] = function() {
   globalThis['native']['currentPageId'] = pageId;
   globalThis['page'] = page;
 
-  /* sets page as root node to document, like body */
-  globalThis['document'] = {};
-  globalThis['document']['body'] = page;
+  /* sets page as root node in document */
+  globalThis['document'] = {} as any;
+  globalThis['document']['body'] = page as any;
   initMainThreadProcessing();
 }
 
@@ -81,13 +94,14 @@ function initMainThreadProcessing () {
   const context = lynx.getJSContext();
 
   /* initialize runtime state */
-  const runtime : Runtime = {};
-  runtime.components = {};
-  runtime.nodes = {};
+  const runtime : Runtime = {
+    components : {},
+    nodes : {}
+  };
 
   /* Receive messages from BG */
-  context.addEventListener("message", (payload) => {
-    const messages : Array<PATCH> = JSON.parse(payload);
+  context.addEventListener("message", (payload : MessageEvent) => {
+      const messages : Array<PATCH> = JSON.parse(payload.toString()); /* .toString()? */
 
     /* process patch messages in order as received */
     messages.forEach ((m) => processMessage(m,runtime));
@@ -159,13 +173,22 @@ function processMessage (m, runtime) {
     case "flush":
       drawingContext.flush ();
       break;
+    case "mount":
+      /* dmj: TODO */
+      break;
+    case "unmount":
+      /* dmj: TODO */
+      break;
+    case "modelHydration":
+      /* dmj: TODO */
+      break;
     default:
       console.error('Unknown message received', m);
       break;
   }
 }
 
-/* this purges all descendants from runtime.nodes map */
+/* This purges all descendants from runtime.nodes map */
 function dropChildren (nodeMap, node) {
    delete nodeMap[node.nodeId];
    for (const child of node.children) {
@@ -181,8 +204,7 @@ function addListeners (events : Record <string, boolean>) {
     const page = drawingContext.getRoot();
     /* delegate on page */
     Object.entries(events).forEach (([event, capture]) => {
-       /* dmj: TODO, incorporate `capture` */
-        __AddEvent(page, 'catchEvent', event, { type : 'worklet', value : eventListener });
+       eventContext.addEventListener (page, event, eventListener, capture);
     });
 }
 
@@ -193,7 +215,7 @@ function eventListener (events : Array<Event> | Event) : void {
     if (Array.isArray(events))
       return events.forEach (dispatch);
     else
-      return dispatch (e);
+      return dispatch (events);
 }
 
 /* POST outgoing background thread event to BTS */
@@ -201,19 +223,19 @@ function dispatch (event: Event) : void {
   'main thread';
    const stack = buildStack(drawingContext.getRoot(), eventContext.getTarget(event));
    const context = lynx.getJSContext();
-   const outgoingMessage : ProcessEvent = { event, stack };
+   const outgoingMessage : ProcessEvent = { event, stack, type : "processEvent" };
    return context.postMessage (JSON.stringify(outgoingMessage));
 }
 
 /* walk physical DOM, mark the path */
-function buildStack(element: T, target: T): Array<number> {
+function buildStack(element: ElementRef, target: ElementRef): Array<number> {
   'main thread';
   var stack = [];
-  while (!drawingContext.isEqual(element, target)) {
+  while (!eventContext.isEqual(element, target)) {
     stack.unshift(target.nodeId);
     /* dmj: ^ nodeId is what is accumulated */
-    if (target && drawingContext.parentNode(target)) {
-      target = drawingContext.parentNode(target);
+    if (target && eventContext.parentNode(target)) {
+      target = eventContext.parentNode(target);
     } else {
       return stack;
     }
@@ -225,7 +247,7 @@ function buildStack(element: T, target: T): Array<number> {
 */
 
 export type Runtime = {
-  nodes : Record <NodeId, ElementRef>,
+  nodes : Record <number, ElementRef>,
   components : Record <ComponentId, Component>
 }
 
@@ -239,172 +261,6 @@ export type Component = {
   rootId : number,
   /* the root node to diff from */ 
 }
-
-/* Process event
-   Used to send BG events to Main thread
- */
-export type ProcessEvent = {
-  stack: Array<number>,
-  event: Object, /* Event object, will be JSON'ified */
-  type: "processEvent"
-};
-
-/* Message protocol for bidirectional synchronization between MTS / BTS */
-export type PATCH
-  = InsertBefore
-  | SwapDOMRefs
-  | CreateElement
-  | CreateElementNS
-  | CreateTextNode
-  | SetAttribute
-  | SetAttributeNS
-  | AppendChild
-  | RemoveChild
-  | ReplaceChild
-  | RemoveAttribute
-  | SetTextContent
-  | SetInlineStyle
-  | MountComponent
-  | UnmountComponent
-  | ModelHydration
-  | AddClass
-  | RemoveClass
-  | AddEventListeners
-  | ProcessEvent
-  | Flush;
-
-export type ProcessEvent = {
-  stack: Array<number>,
-  event: string, /* JSON'ified event */
-  type: "processEvent"
-};
-
-
-export type AddEventListeners = {
-  events: Record<string, boolean>,
-  type: "addEventListeners"
-};
-
-export type ModelHydration = {
-  componentId: ComponentId,
-  model: Object,
-  type: "modelHydration"
-};
-
-export type MountComponent = {
-  type: "mount",
-  componentId: ComponentId,
-  model: Object,
-  mountPoint: number
-};
-
-export type UnmountComponent = {
-  type: "unmount",
-  componentId: ComponentId,
-};
-
-export type InsertBefore = {
-  type: "insertBefore",
-  parent: number,
-  child: number,
-  node: number
-};
-
-export type SwapDOMRefs = {
-  nodeA: number,
-  nodeB: number,
-  parent: number,
-  type: "swapDOMRefs"
-};
-
-export type CreateElement = {
-  nodeId: number,
-  tag: string,
-  type: "createElement"
-};
-
-export type CreateElementNS = {
-  nodeId: number,
-  tag: string,
-  namespace: string,
-  type: "createElementNS"
-};
-
-export type CreateTextNode = {
-  nodeId: number,
-  text: string,
-  type: "createTextNode"
-};
-
-export type SetAttribute = {
-  key: string,
-  value: any,
-  nodeId: number,
-  type: "setAttribute"
-};
-
-export type SetAttributeNS = {
-  key: string,
-  value: any,
-  nodeId: number,
-  type: "setAttributeNS",
-  namespace: string,
-};
-
-export type AppendChild = {
-  parent: number,
-  child: number,
-  type: "appendChild"
-};
-
-export type ReplaceChild = {
-  current: number,
-  new: number,
-  parent: number,
-  type: "replaceChild"
-};
-
-export type RemoveChild = {
-  parent: number,
-  child: number,
-  type: "removeChild"
-};
-
-export type RemoveAttribute = {
-  type: "removeAttribute",
-  nodeId: number,
-  key: string,
-};
-
-export type RemoveClass = {
-  type: "removeClass",
-  nodeId: number,
-  key: string,
-};
-
-export type AddClass = {
-  type: "addClass",
-  nodeId: number,
-  key: string,
-};
-
-export type SetTextContent = {
-  type: "setTextContent",
-  nodeId: number,
-  text: string,
-};
-
-export type SetInlineStyle = {
-  new : Record<string, any>,
-  current : Record<string, any>,
-  nodeId: number,
-  type: "setInlineStyle"
-};
-
-export type Flush = {
-  type: "flush"
-};
-
 
 /* dmj: This is for something.
  */
@@ -421,15 +277,15 @@ globalThis['invokeExec'] = function
 
  /* Set arguments Object */
  const args = {
-   params: params,
-   method: method,
-   success: success,
-   fail: fail
+   params,
+   method,
+   success,
+   fail
  };
 
  /* Invoke Exec */
  return lynx.createSelectorQuery()
      .select(selector)
-     .invoke(args)
+     .invoke(args as any)
      .exec();
 }

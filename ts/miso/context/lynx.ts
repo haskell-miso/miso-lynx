@@ -1,28 +1,40 @@
-import { DrawingContext, EventContext } from '../types';
+import { getDOMRef, VComp, DrawingContext, EventContext, VTree } from 'haskell-miso';
 import { ElementRef } from '@lynx-js/type-element-api';
 
-const eventContext : EventContext<Node> = {
-  addEventListener : (mount : Element, event : string, listener, capture : boolean) => {
-    return __AddEvent(mount, 'catchEvent', event, { type : 'worklet', value : listener });
+const eventContext : EventContext<ElementRef> = {
+  delegator : () => {
+    /* dmj: implement */
   },
-  removeEventListener : (mount : Element, event : string, listener, capture : boolean) => {
-      /* dmj: todo implement */
-     return;
+  addEventListener : (mount : ElementRef, event : string, listener, capture : boolean) => {
+    /* use capture */
+    return __AddEvent(mount, 'catchEvent', event, { type : 'worklet', value : listener });
   },
   isEqual : (x, y) => {
     return __ElementIsEqual(x,y);
   },
   getTarget : (e) => {
-    return e.target.elementRefptr;
+    /* BASE_STATIC_STRING_DECL(kElementRefptr, "elementRefptr"); */
+    return (e.target as any).elementRefptr as ElementRef;
   },
-  parentNode : (node: Element) => {
+  parentNode : (node: ElementRef) => {
     return __GetParent(node);
   }
 };
 
-const drawingContext : DrawingContext<Node> = {
-  nextSibling : (x) => {
-    return x.nextSibling.domRef;
+const drawingContext : DrawingContext<ElementRef> = {
+  addClass : (className : string, domRef : ElementRef) => {
+      __AddClass(domRef, className);
+  },
+  removeClass : (className : string, domRef : ElementRef) => {
+      /* dmj: PR a __RemoveClass PAPI call to lynx ? */
+      const classes = __GetClasses(domRef);
+      if (!(classes.includes(className))) {
+          classes.push(className);
+          __SetClasses(domRef, classes.join(' '));
+      }
+  },
+  nextSibling : (x : VComp<ElementRef>) => {
+      return getDOMRef(x.nextSibling);
   },
   createTextNode : (s: string) => {
     return __CreateRawText(s);
@@ -68,7 +80,7 @@ const drawingContext : DrawingContext<Node> = {
   insertBefore : (parent, child, node) => {
     return __InsertElementBefore (parent, child, node);
   },
-  swapDOMRefs: (a: Node, b: Node, p: Node): void => {
+  swapDOMRefs: (a: ElementRef, b: ElementRef, p: ElementRef): void => {
     return __SwapElement(a,b);
   },
   setAttribute : (node, key, value) => {
@@ -88,13 +100,13 @@ const drawingContext : DrawingContext<Node> = {
     if (cCss != nCss)
       return __SetInlineStyles(node, nCss)
   },
-  flush : (): void => {
+  flush : () => {
     return __FlushElementTree();
   },
-  getRoot : (): ElementRef => {
+  getRoot : () => {
      return globalThis['page'];
   },
-  getHead : (): ElementRef => {
+  getHead : () => {
     /* dmj: todo implement */
     return null;
   }
