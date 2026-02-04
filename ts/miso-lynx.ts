@@ -1,5 +1,7 @@
 import { drawingContext, eventContext } from './miso/context/lynx';
 
+import { EventContext } from "haskell-miso/ts/miso";
+
 import {
  TextDecoder,
  TextEncoder,

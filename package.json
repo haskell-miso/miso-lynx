@@ -33,8 +33,8 @@
   "homepage": "https://haskell-miso.org",
   "devDependencies": {
     "@happy-dom/global-registrator": "^17.6.3",
-    "prettier": "3.5.3",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "3.5.3"
   },
   "files": [
     "ts/miso-lynx.ts",
@@ -51,6 +51,7 @@
     "@lynx-js/types": "^3.6.0",
     "@rspack/cli": "^1.7.4",
     "@rspack/core": "^1.7.4",
+    "haskell-miso": "^0.0.2",
     "jsbi": "^4.3.2",
     "text-encoding": "^0.7.0",
     "typescript": "^5.9.3"

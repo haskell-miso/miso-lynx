@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
-    "target": "es6",
+    "target": "es2017",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
