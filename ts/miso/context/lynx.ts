@@ -28,9 +28,9 @@ const drawingContext : DrawingContext<ElementRef> = {
   removeClass : (className : string, domRef : ElementRef) => {
       /* dmj: PR a __RemoveClass PAPI call to lynx ? */
       const classes = __GetClasses(domRef);
-      if (!(classes.includes(className))) {
-          classes.push(className);
-          __SetClasses(domRef, classes.join(' '));
+      if (classes.includes(className)) {
+          const updated = classes.filter((x) => x !== className);
+          __SetClasses(domRef, updated.join(' '));
       }
   },
   nextSibling : (x : VComp<NodeId>) => {
