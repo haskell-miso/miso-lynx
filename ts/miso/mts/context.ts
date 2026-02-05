@@ -6,8 +6,8 @@ const eventContext : EventContext<ElementRef> = {
     /* dmj: implement */
   },
   addEventListener : (mount : ElementRef, event : string, listener, capture : boolean) => {
-    /* use capture */
-    return __AddEvent(mount, 'catchEvent', event, { type : 'worklet', value : listener });
+    const eventType = capture ? 'capture-catch' : 'catchEvent';
+    return __AddEvent(mount, eventType, event, { type : 'worklet', value : listener });
   },
   isEqual : (x, y) => {
     return __ElementIsEqual(x,y);
