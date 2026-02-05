@@ -25,6 +25,7 @@ import {
   UnmountComponent,
   ModelHydration,
   RemoveClass,
+  AddEventListeners,
 } from 'haskell-miso';
 
 import {
@@ -42,11 +43,18 @@ function addPatch (patch : PATCH) : void {
 }
 
 const eventContext : EventContext<NodeId> = {
-  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree, debug: boolean, context) => void {
-    /*
-      1) Send events to MTS from BTS
-      2) Setup listener, parse event stack, map NodeId, call delegateEvent.
-    */
+  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree, debug: boolean, eventContext) => {
+    /* 1) Send events to MTS from BTS */
+    const context = lynx.getCoreContext();
+    context.postMessage ([{
+      type: "addEventListeners",
+      events
+    } as AddEventListeners]);
+
+    /* 2) Setup listener, parse event stack, map NodeId, call delegateEvent. */
+    context.addEventListener('message', (m) => {
+
+    });
   },
   addEventListener : (mount : NodeId, event : string, listener, capture : boolean) => {
       /* dmj: `addEventListener` is not used on BTS ...
