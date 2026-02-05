@@ -66,7 +66,7 @@ export function bts () {
       success: (result: any) => void,
       fail: (result: string) => void
     ) {
-    'background only';
+//    'background only';
 
    /* Set arguments Object */
    const args = {

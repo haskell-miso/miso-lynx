@@ -35,12 +35,12 @@ import {
 } from '@lynx-js/type-element-api';
 
 function nextNodeId () : number {
-  'background only'
+//  'background only'
   return globalThis['nodeId']++;
 }
 
 function addPatch (patch : PATCH) : void {
-  'background only'
+//  'background only'
   globalThis['patches'].push(patch);
 }
 
@@ -251,7 +251,7 @@ const drawingContext : DrawingContext<NodeId> = {
 };
 
 function areEqual(a: Object, b: Object) : boolean {
-  'background only';
+//  'background only';
   const keysA = Object.keys(a);
   const keysB = Object.keys(b);
   if (keysA.length !== keysB.length) return false;
