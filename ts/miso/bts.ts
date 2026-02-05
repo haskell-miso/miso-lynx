@@ -52,7 +52,7 @@ export function bts () {
   
   /* Init BTS state */
   globalThis['patches'] = [];
-  globalThis['nodeId'] = 0;
+  globalThis['nodeId'] = 1;
 
   /* Used for event handling on main thread */
   globalThis['runWorklet'] = (worklet, params) => {
