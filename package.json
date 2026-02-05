@@ -1,6 +1,6 @@
 {
   "name": "miso-lynx",
-  "version": "1.9.0",
+  "version": "0.0.1",
   "description": "miso-lynx: A tasty Haskell mobile framework",
   "scripts": {
     "clean": "tsc --build --clean && find ts -name '*~' -or -name '*.js' -delete",
@@ -9,11 +9,9 @@
     "js": "bun run build",
     "bundle": "rspack build"
   },
-  "type": "module",
-  "module": "ts/miso-lynx.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dmjio/miso-lynx.git"
+    "url": "git+https://github.com/haskell-miso/miso-lynx.git"
   },
   "keywords": [
     "miso",
@@ -23,7 +21,7 @@
   "author": "dmijo",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/dmjio/miso-lynx/issues"
+    "url": "https://github.com/haskell-miso/miso-lynx/issues"
   },
   "prettier": {
     "singleQuote": true,
@@ -36,12 +34,31 @@
     "@types/bun": "latest",
     "prettier": "3.5.3"
   },
+  "main": "./js/miso-lynx.js",
+  "module": "./ts/miso-lynx.ts",
+  "types": "./ts/miso-lynx.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./ts/miso-lynx.ts",
+        "default": "./ts/miso-lynx.ts"
+      },
+      "require": {
+        "types": "./ts/miso-lynx.ts",
+        "default": "./js/miso-lynx.js"
+      },
+      "default": "./ts/miso-lynx.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "ts/miso-lynx.ts",
-    "ts/miso/context/lynx.ts",
-    "ts/miso/types.ts",
+    "./ts/miso-lynx.ts",
+    "./ts/bts/context.ts",
+    "./ts/mts/context.ts",
+    "./ts/bts.ts",
+    "./ts/mts.ts",
     "package.json",
-    "README.md"
+    "README.md",
   ],
   "dependencies": {
     "@lcov-viewer/cli": "^1.3.0",

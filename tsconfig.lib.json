@@ -1,4 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "files": ["./ts/miso-lynx.ts"]
+  "files": [ "./ts/miso-lynx.ts",
+             "./ts/miso/bts/context.ts",
+             "./ts/miso/mts/context.ts",
+             "./ts/miso/bts.ts",
+             "./ts/miso/mts.ts",
+           ]
 }

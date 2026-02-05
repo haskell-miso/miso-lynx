@@ -21,6 +21,7 @@ const eventContext : EventContext<ElementRef> = {
   }
 };
 
+/* Apply patches from BTS on MTS via PAPI calls */
 const drawingContext : DrawingContext<ElementRef> = {
   addClass : (className : string, domRef : ElementRef) => {
       __AddClass(domRef, className);
