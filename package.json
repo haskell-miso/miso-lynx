@@ -58,7 +58,7 @@
     "./ts/bts.ts",
     "./ts/mts.ts",
     "package.json",
-    "README.md",
+    "README.md"
   ],
   "dependencies": {
     "@lcov-viewer/cli": "^1.3.0",
@@ -68,7 +68,7 @@
     "@lynx-js/types": "^3.6.0",
     "@rspack/cli": "^1.7.4",
     "@rspack/core": "^1.7.4",
-    "haskell-miso": "^0.0.4",
+    "haskell-miso": "^0.0.5",
     "jsbi": "^4.3.2",
     "text-encoding": "^0.7.0",
     "typescript": "^5.9.3"

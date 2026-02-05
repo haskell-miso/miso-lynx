@@ -45,7 +45,7 @@ function addPatch (patch : PATCH) : void {
 }
 
 const eventContext : EventContext<NodeId> = {
-  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree : ((vtree : VTree<NodeId>) => void), debug: boolean, eventContext) => {
+  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree : (callback: (vtree: VTree<NodeId>) => void) => void, debug: boolean, eventContext) => {
     /* 1) Send events to MTS from BTS */
     const context = lynx.getCoreContext();
     context.postMessage ([{
@@ -56,7 +56,7 @@ const eventContext : EventContext<NodeId> = {
     /* 2) Setup listener, parse event stack, map NodeId, call delegateEvent. */
     context.addEventListener('message', (m : MessageEvent<ProcessEvent>) => {
       let stack : Array<NodeId> = m.data.stack.map (function (x) { return { nodeId : x }});
-      getVTree((obj) => {
+      getVTree((obj: VTree<NodeId>) => {
         return delegateEvent(m.data.event as Event, obj, stack, debug, eventContext);
       });
     });
