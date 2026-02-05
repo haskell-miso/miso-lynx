@@ -22,6 +22,7 @@ import
     Component,
     Runtime,
     ProcessEvent,
+    EventCapture,
   } from "haskell-miso";
 
 import
@@ -64,7 +65,7 @@ function initMainThreadProcessing () {
 }
 
 /* main thread message processing */
-function processMessage (m, runtime) {
+function processMessage (m : PATCH, runtime) {
   'main thread';
   switch (m.type) {
     case "addEventListeners":
@@ -158,13 +159,15 @@ function dropChildren (nodeMap, node) {
 
 /* Initialize global event delegation on main thread
    This should only be invoked once on application load.
- */
-function addListeners (events : Record <string, boolean>) {
+*/
+function addListeners (events : Array <EventCapture>) {
     'main thread';
     const page = drawingContext.getRoot();
+
     /* delegate on page */
-    Object.entries(events).forEach (([event, capture]) => {
-       eventContext.addEventListener (page, event, eventListener, capture);
+    events.forEach ((event : EventCapture) => {
+      const { name, capture } = event;
+      eventContext.addEventListener (page, name, eventListener, capture);
     });
 }
 

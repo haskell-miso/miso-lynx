@@ -30,8 +30,7 @@ import {
  TextEncoder,
 } from "text-encoding";
 
-import JSBI
-  from "jsbi";
+import JSBI from "jsbi";
 
 export function bts () {
   'background only'
