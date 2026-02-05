@@ -38,7 +38,10 @@ export function mts () {
   console.log('inside mts!');
   var page = __CreatePage("0", 0);
   var pageId = __GetElementUniqueID(page);
+  globalThis['native'] = {};
   globalThis['native']['currentPageId'] = pageId;
+  globalThis['native']['drawingContext'] = drawingContext;
+  globalThis['native']['eventContext'] = eventContext;
   globalThis['page'] = page;
 
   /* sets page as root node in document */
