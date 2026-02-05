@@ -57,11 +57,9 @@ function initMainThreadProcessing () {
   };
 
   /* Receive messages from BG */
-  context.addEventListener("message", (payload : MessageEvent) => {
-      const messages : Array<PATCH> = JSON.parse(payload.toString()); /* .toString()? */
-
+  context.addEventListener("message", (messages : MessageEvent<Array<PATCH>>) => {
     /* process patch messages in order as received */
-    messages.forEach ((m) => processMessage(m,runtime));
+    messages.data.forEach ((m) => processMessage(m,runtime));
   });
 }
 
