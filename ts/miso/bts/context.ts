@@ -35,12 +35,12 @@ import {
 } from '@lynx-js/type-element-api';
 
 function nextNodeId () : number {
-//  'background only'
+  'background only'
   return globalThis['nodeId']++;
 }
 
 function addPatch (patch : PATCH) : void {
-//  'background only'
+  'background only'
   globalThis['patches'].push(patch);
 }
 
@@ -48,6 +48,7 @@ const eventContext : EventContext<NodeId> = {
   delegator : (mount: NodeId, events: Array<EventCapture>, getVTree : (callback: (vtree: VTree<NodeId>) => void) => void, debug: boolean, eventContext) => {
     /* 1) Send events to MTS from BTS */
     const context = lynx.getCoreContext();
+    console.log('sending events', events);
     context.postMessage ([{
       type: "addEventListeners",
       events
@@ -56,6 +57,7 @@ const eventContext : EventContext<NodeId> = {
     /* 2) Setup listener, parse event stack, map NodeId, call delegateEvent. */
     context.addEventListener('message', (m : MessageEvent<ProcessEvent>) => {
       let stack : Array<NodeId> = m.data.stack.map (function (x) { return { nodeId : x }});
+      console.log('got message on bts', m.data);
       getVTree((obj: VTree<NodeId>) => {
         return delegateEvent(m.data.event as Event, obj, stack, debug, eventContext);
       });
@@ -251,7 +253,7 @@ const drawingContext : DrawingContext<NodeId> = {
 };
 
 function areEqual(a: Object, b: Object) : boolean {
-//  'background only';
+  'background only';
   const keysA = Object.keys(a);
   const keysB = Object.keys(b);
   if (keysA.length !== keysB.length) return false;

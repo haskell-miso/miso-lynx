@@ -34,6 +34,8 @@ import JSBI from "jsbi";
 
 export function bts () {
   'background only'
+
+  console.log('hey inside bts');
   /* Polyfills for native, these come first */
   globalThis['TextDecoder'] = TextDecoder;
   globalThis['TextEncoder'] = TextEncoder;
@@ -54,9 +56,9 @@ export function bts () {
   globalThis['nodeId'] = 1;
 
   /* Used for event handling on main thread */
-  globalThis['runWorklet'] = (worklet, params) => {
-    return worklet(params);
-  }
+  // globalThis['runWorklet'] = (worklet, params) => {
+  //   return worklet(params);
+  // }
 
   /* invoke exec */
   globalThis['invokeExec'] = function
@@ -66,7 +68,6 @@ export function bts () {
       success: (result: any) => void,
       fail: (result: string) => void
     ) {
-//    'background only';
 
    /* Set arguments Object */
    const args = {

@@ -35,6 +35,7 @@ import
   } from '@lynx-js/type-element-api';
 
 export function mts () {
+  console.log('inside mts!');
   var page = __CreatePage("0", 0);
   var pageId = __GetElementUniqueID(page);
   globalThis['native']['currentPageId'] = pageId;
@@ -48,7 +49,6 @@ export function mts () {
 
 /* Method to initialize main thread event handling / processing */
 function initMainThreadProcessing () {
-//  'main thread';
   const context = lynx.getJSContext();
 
   /* initialize runtime state */
@@ -66,7 +66,6 @@ function initMainThreadProcessing () {
 
 /* main thread message processing */
 function processMessage (m : PATCH, runtime) {
-//  'main thread';
   switch (m.type) {
     case "addEventListeners":
       addListeners (m.events);
@@ -150,7 +149,6 @@ function processMessage (m : PATCH, runtime) {
 
 /* This purges all descendants from runtime.nodes map */
 function dropChildren (nodeMap, node) {
-//  'main thread';
    delete nodeMap[node.nodeId];
    for (const child of node.children) {
       dropChildren(nodeMap, child);
@@ -161,7 +159,6 @@ function dropChildren (nodeMap, node) {
    This should only be invoked once on application load.
 */
 function addListeners (events : Array <EventCapture>) {
-//    'main thread';
     const page = drawingContext.getRoot();
 
     /* delegate on page */
@@ -173,7 +170,6 @@ function addListeners (events : Array <EventCapture>) {
 
 /* function eventListener */
 function eventListener (events : Array<Event> | Event) : void {
-//   'main thread';
     /* dmj: lynx events can be arrays */
     if (Array.isArray(events))
       return events.forEach (dispatch);
@@ -183,7 +179,6 @@ function eventListener (events : Array<Event> | Event) : void {
 
 /* POST outgoing background thread event to BTS */
 function dispatch (event: Event) : void {
-//  'main thread';
    const stack = buildStack(drawingContext.getRoot(), eventContext.getTarget(event));
    const context = lynx.getJSContext();
    const outgoingMessage : ProcessEvent = { event, stack, type : "processEvent" };
@@ -192,7 +187,6 @@ function dispatch (event: Event) : void {
 
 /* walk physical DOM, mark the path */
 function buildStack(element: ElementRef, target: ElementRef): Array<number> {
-//  'main thread';
   var stack = [];
   while (!eventContext.isEqual(element, target)) {
     stack.unshift(target.nodeId);
