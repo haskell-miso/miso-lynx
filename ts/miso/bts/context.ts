@@ -45,7 +45,7 @@ function addPatch (patch : PATCH) : void {
 }
 
 const eventContext : EventContext<NodeId> = {
-  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree, debug: boolean, eventContext) => {
+  delegator : (mount: NodeId, events: Array<EventCapture>, getVTree : ((vtree : VTree<NodeId>) => void), debug: boolean, eventContext) => {
     /* 1) Send events to MTS from BTS */
     const context = lynx.getCoreContext();
     context.postMessage ([{
@@ -55,11 +55,10 @@ const eventContext : EventContext<NodeId> = {
 
     /* 2) Setup listener, parse event stack, map NodeId, call delegateEvent. */
     context.addEventListener('message', (m : MessageEvent<ProcessEvent>) => {
-      let array : Array<NodeId> = m.data.stack.map (function (x) { return { nodeId : x }});
-//      getVTree (function (vtree) {
-//        delegateEvent(vtree);
-//      }
-      return;
+      let stack : Array<NodeId> = m.data.stack.map (function (x) { return { nodeId : x }});
+      getVTree((obj) => {
+        return delegateEvent(m.data.event as Event, obj, stack, debug, eventContext);
+      });
     });
   },
   addEventListener : (mount : NodeId, event : string, listener, capture : boolean) => {
@@ -71,15 +70,15 @@ const eventContext : EventContext<NodeId> = {
       return;
   },
   isEqual : (x, y) => {
-    /* dmj: not required, everything is used in `delegator`. */
+    /* dmj: required */
     return x === y;
   },
   getTarget : (_ : Event) => {
-    /* dmj: not required, everything is used in `delegator`. */
+    /* dmj: not required. */
     return { nodeId: 0 };
   },
   parentNode : (_: NodeId) => {
-    /* dmj: not required, everything is used in `delegator`. */
+    /* dmj: not required, uses parent (remove this method?) */
     return { nodeId: 0 };
   }
 };
