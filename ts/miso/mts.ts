@@ -184,7 +184,7 @@ function dispatch (event: Event) : void {
    const stack = buildStack(drawingContext.getRoot(), eventContext.getTarget(event));
    const context = lynx.getJSContext();
    const outgoingMessage : ProcessEvent = { event, stack, type : "processEvent" };
-   return context.postMessage (JSON.stringify(outgoingMessage));
+   return context.postMessage (outgoingMessage);
 }
 
 /* walk physical DOM, mark the path */
