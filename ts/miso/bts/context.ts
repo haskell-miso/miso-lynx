@@ -5,12 +5,14 @@ import {
   DrawingContext,
   EventContext,
   EventCapture,
+  delegateEvent,
   VTree,
   AddClass,
   PATCH,
   CreateTextNode,
   CreateElement,
   InsertBefore,
+  ProcessEvent,
   CreateElementNS,
   SetAttribute,
   SetAttributeNS,
@@ -52,8 +54,12 @@ const eventContext : EventContext<NodeId> = {
     } as AddEventListeners]);
 
     /* 2) Setup listener, parse event stack, map NodeId, call delegateEvent. */
-    context.addEventListener('message', (m) => {
-
+    context.addEventListener('message', (m : MessageEvent<ProcessEvent>) => {
+      let array : Array<NodeId> = m.data.stack.map (function (x) { return { nodeId : x }});
+//      getVTree (function (vtree) {
+//        delegateEvent(vtree);
+//      }
+      return;
     });
   },
   addEventListener : (mount : NodeId, event : string, listener, capture : boolean) => {
