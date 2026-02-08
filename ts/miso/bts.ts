@@ -55,11 +55,6 @@ export function bts () {
   globalThis['patches'] = [];
   globalThis['nodeId'] = 1;
 
-  /* Used for event handling on main thread */
-  // globalThis['runWorklet'] = (worklet, params) => {
-  //   return worklet(params);
-  // }
-
   /* invoke exec */
   globalThis['invokeExec'] = function
     ( selector: string,
