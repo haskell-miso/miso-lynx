@@ -103,7 +103,7 @@ function processMessage (m : PATCH, runtime) {
       drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
     case "appendChild":
-      drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      drawingContext.appendChild (runtime.nodes[m.parent] ?? globalThis['page'], runtime.nodes[m.child]);
       break;
     case "removeChild":
       drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);

@@ -238,7 +238,7 @@ const drawingContext : DrawingContext<NodeId> = {
   },
   flush : () => {
      /* send patches from BTS to MTS for application */ 
-     const context = lynx.getJSContext();
+     const context = lynx.getCoreContext();
      context.postMessage(globalThis['patches'] as Array<PATCH>);
      globalThis['patches'] = [];
   },
