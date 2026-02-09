@@ -35,13 +35,9 @@ import
   } from '@lynx-js/type-element-api';
 
 export function mts () {
-  console.log('inside mts!');
   var page = __CreatePage("0", 0);
   var pageId = __GetElementUniqueID(page);
-  globalThis['native'] = {};
   globalThis['native']['currentPageId'] = pageId;
-  globalThis['native']['drawingContext'] = drawingContext;
-  globalThis['native']['eventContext'] = eventContext;
   globalThis['page'] = page;
 
   /* sets page as root node in document */
@@ -52,6 +48,7 @@ export function mts () {
 
 /* Method to initialize main thread event handling / processing */
 function initMainThreadProcessing () {
+  console.log ('inside initMainThreadProcessing');
   const context = lynx.getJSContext();
 
   /* initialize runtime state */
@@ -61,30 +58,38 @@ function initMainThreadProcessing () {
   };
 
   runtime.nodes[0] = globalThis['page'];
+
   /* Receive messages from BG */
   context.addEventListener("message", (messages : MessageEvent<Array<PATCH>>) => {
     /* process patch messages in order as received */
-    messages.data.forEach ((m) => processMessage(m,runtime));
+    for (const m of messages.data) {
+       processMessage(m,runtime);
+    }
+    if (messages.data.length > 0) {
+       native.drawingContext.flush();
+    }
   });
 }
 
 /* main thread message processing */
 function processMessage (m : PATCH, runtime) {
+  let node = null;
   switch (m.type) {
     case "addEventListeners":
       addListeners (m.events);
       break;
     case "createElement":
-      runtime.nodes[m.nodeId] = drawingContext.createElement (m.tag);
-      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
+      node = native.drawingContext.createElement (m.tag);
+      __SetConfig (node, { nodeId : m.nodeId });
+      runtime.nodes[m.nodeId] = node;
       break;
     case "createTextNode":
-      runtime.nodes[m.nodeId] = drawingContext.createTextNode (m.text);
-      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
+      runtime.nodes[m.nodeId] = native.drawingContext.createTextNode (m.text);
       break;
     case "createElementNS":
-      runtime.nodes[m.nodeId] = drawingContext.createElementNS (m.namespace, m.tag);
-      runtime.nodes[m.nodeId]['nodeId'] = m.nodeId;
+      node = native.drawingContext.createElementNS (m.namespace, m.tag);
+      __SetConfig (node, { nodeId : m.nodeId });
+      runtime.nodes[m.nodeId] = node;
       break;
     case "swapDOMRefs":
       drawingContext.swapDOMRefs
@@ -95,7 +100,7 @@ function processMessage (m : PATCH, runtime) {
         (runtime.nodes[m.parent], runtime.nodes[m.child], runtime.nodes[m.node]);
       break;
     case "setAttribute":
-      drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
+      native.drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
       break;
     case "setAttributeNS":
       drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
@@ -104,7 +109,7 @@ function processMessage (m : PATCH, runtime) {
       drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
     case "appendChild":
-      drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      native.drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       break;
     case "removeChild":
       drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
@@ -121,7 +126,7 @@ function processMessage (m : PATCH, runtime) {
       drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
     case "setInlineStyle":
-      drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
+      native.drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
       break;
     case "addClass":
       drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
@@ -153,6 +158,7 @@ function processMessage (m : PATCH, runtime) {
 
 /* This purges all descendants from runtime.nodes map */
 function dropChildren (nodeMap, node) {
+   console.log ('dropChildren');
    delete nodeMap[node.nodeId];
    for (const child of node.children) {
       dropChildren(nodeMap, child);
@@ -163,40 +169,47 @@ function dropChildren (nodeMap, node) {
    This should only be invoked once on application load.
 */
 function addListeners (events : Array <EventCapture>) {
-    const page = drawingContext.getRoot();
+    console.log ('addListeners');
 
+    const page = native.drawingContext.getRoot();
     /* delegate on page */
-    events.forEach ((event : EventCapture) => {
-      const { name, capture } = event;
-      eventContext.addEventListener (page, name, eventListener, capture);
-    });
+    for (const { name, capture } of events) {
+      native.eventContext['addEventListener'] (page, name, listen, capture);
+    }
 }
 
 /* function eventListener */
-function eventListener (events : Array<Event> | Event) : void {
-    /* dmj: lynx events can be arrays */
-    if (Array.isArray(events))
-      return events.forEach (dispatch);
-    else
-      return dispatch (events);
-}
-
-/* POST outgoing background thread event to BTS */
-function dispatch (event: Event) : void {
-   const stack = buildStack(drawingContext.getRoot(), eventContext.getTarget(event));
-   const context = lynx.getJSContext();
-   const outgoingMessage : ProcessEvent = { event, stack, type : "processEvent" };
-   return context.postMessage (outgoingMessage);
+function listen (events : Array<Event> | Event) : void {
+  console.log ('listen!', events);
+  /* dmj: lynx events can be arrays */
+  console.log ('dispatching!');
+  console.log ('target', events[0].target, 'config', __GetConfig(events[0].target.elementRefptr));
+  const context = lynx.getJSContext();
+  const root = native.drawingContext.getRoot();
+  console.log ('did i make it here?!');
+  if (Array.isArray(events)) {
+    for (const e of events) {
+      const stack = buildStack(root, e.target.elementRefptr);
+      stack.pop()
+      const outgoingMessage : ProcessEvent = { event: e, stack, type : "processEvent" };
+      return context.postMessage (outgoingMessage);
+    }
+  } else {
+      const stack = buildStack(root, events.target.elementRefptr);
+      const outgoingMessage : ProcessEvent = { event: events, stack, type : "processEvent" };
+      return context.postMessage (outgoingMessage);
+  }
 }
 
 /* walk physical DOM, mark the path */
 function buildStack(element: ElementRef, target: ElementRef): Array<number> {
   var stack = [];
-  while (!eventContext.isEqual(element, target)) {
-    stack.unshift(target.nodeId);
+  console.log ('config', __GetConfig (target));
+  while (!__ElementIsEqual(element, target)) {
+    stack.unshift(__GetConfig (target)['nodeId']);
     /* dmj: ^ nodeId is what is accumulated */
-    if (target && eventContext.parentNode(target)) {
-      target = eventContext.parentNode(target);
+    if (target && __GetParent(target)) {
+      target = __GetParent(target);
     } else {
       return stack;
     }

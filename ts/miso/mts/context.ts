@@ -1,9 +1,9 @@
 import { NodeId, getDOMRef, VComp, DrawingContext, EventContext, VTree } from 'haskell-miso';
 import { ElementRef } from '@lynx-js/type-element-api';
 
-const eventContext : EventContext<ElementRef> = {
+export const eventContext : EventContext<ElementRef> = {
   delegator : () => {
-    /* dmj: implement */
+    /* dmj: noop */
   },
   addEventListener : (mount : ElementRef, event : string, listener, capture : boolean) => {
     const eventType = capture ? 'capture-catch' : 'catchEvent';
@@ -22,7 +22,7 @@ const eventContext : EventContext<ElementRef> = {
 };
 
 /* Apply patches from BTS on MTS via PAPI calls */
-const drawingContext : DrawingContext<ElementRef> = {
+export const drawingContext : DrawingContext<ElementRef> = {
   addClass : (className : string, domRef : ElementRef) => {
       __AddClass(domRef, className);
   },
@@ -113,6 +113,3 @@ const drawingContext : DrawingContext<ElementRef> = {
   }
 };
 
-export {
-  drawingContext, eventContext
-}

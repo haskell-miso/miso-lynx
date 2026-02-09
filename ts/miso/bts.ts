@@ -25,35 +25,8 @@ import
   { ElementRef
   } from '@lynx-js/type-element-api';
 
-import {
- TextDecoder,
- TextEncoder,
-} from "text-encoding";
-
-import JSBI from "jsbi";
-
 export function bts () {
   'background only'
-
-  console.log('hey inside bts');
-  /* Polyfills for native, these come first */
-  globalThis['TextDecoder'] = TextDecoder;
-  globalThis['TextEncoder'] = TextEncoder;
-  globalThis['BigInt'] = JSBI.BigInt;
-  globalThis['JSBI'] = JSBI;
-  
-  /* Polyfills global rAF w/ lynx */
-  globalThis['requestAnimationFrame'] = lynx['requestAnimationFrame'];
-  globalThis['cancelAnimationFrame'] = lynx['cancelAnimationFrame'];
-  
-  /* export native context globally */
-  globalThis['native'] = {};
-  globalThis['native']['drawingContext'] = drawingContext;
-  globalThis['native']['eventContext'] = eventContext;
-  
-  /* Init BTS state */
-  globalThis['patches'] = [];
-  globalThis['nodeId'] = 1;
 
   /* invoke exec */
   globalThis['invokeExec'] = function
@@ -78,6 +51,7 @@ export function bts () {
        .invoke(args as any)
        .exec();
     }
+
 }
 
 
