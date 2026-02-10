@@ -19,14 +19,7 @@ globalThis['TextEncoder'] = TextEncoder;
 globalThis['BigInt'] = JSBI.BigInt;
 globalThis['JSBI'] = JSBI;
 
-function onBTS () : boolean {
-  if (!('__CreatePage' in globalThis)) {
-    return true;
-  };
-  return false;
-}
-
-if (onBTS()) {
+if (!(__MAIN_THREAD__)) {
   globalThis['native'] = {
     drawingContext : btsContext.drawingContext,
     eventContext : btsContext.eventContext
