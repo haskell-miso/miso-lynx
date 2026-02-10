@@ -13,4 +13,4 @@ chmod +rw out.js
 bun build --minify-whitespace out.js --target=bun --outfile=all.js
 file all.js
 bun run bundle
-http-server -c-1 dist
+http-server -c-1 -p 8085 dist

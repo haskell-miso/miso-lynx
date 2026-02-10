@@ -92,50 +92,47 @@ function processMessage (m : PATCH, runtime) {
       runtime.nodes[m.nodeId] = node;
       break;
     case "swapDOMRefs":
-      drawingContext.swapDOMRefs
+      native.drawingContext.swapDOMRefs
         (runtime.nodes[m.nodeA], runtime.nodes[m.nodeB], runtime.nodes[m.parent]);
       break;
     case "insertBefore":
-      drawingContext.insertBefore
+      native.drawingContext.insertBefore
         (runtime.nodes[m.parent], runtime.nodes[m.child], runtime.nodes[m.node]);
       break;
     case "setAttribute":
       native.drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
       break;
     case "setAttributeNS":
-      drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
+      native.drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
       break;
     case "setTextContent":
-      drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
+      native.drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
     case "appendChild":
       native.drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       break;
     case "removeChild":
-      drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      native.drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       dropChildren (runtime.nodes, runtime.nodes[m.child]);
       break;
     case "replaceChild":
-      drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
+      native.drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
       dropChildren (runtime.nodes, runtime.nodes[m.current]);
       break;
     case "removeAttribute":
-      drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
-      break;
-    case "setTextContent":
-      drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
+      native.drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
       break;
     case "setInlineStyle":
       native.drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
       break;
     case "addClass":
-      drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
+      native.drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
       break;
     case "removeClass":
-      drawingContext.removeClass (m.key, runtime.nodes[m.nodeId]);
+      native.drawingContext.removeClass (m.key, runtime.nodes[m.nodeId]);
       break;
     case "flush":
-      drawingContext.flush ();
+      native.drawingContext.flush ();
       break;
     case "mount":
       runtime.components[m.componentId] = {
@@ -183,14 +180,11 @@ function listen (events : Array<Event> | Event) : void {
   console.log ('listen!', events);
   /* dmj: lynx events can be arrays */
   console.log ('dispatching!');
-  console.log ('target', events[0].target, 'config', __GetConfig(events[0].target.elementRefptr));
   const context = lynx.getJSContext();
   const root = native.drawingContext.getRoot();
-  console.log ('did i make it here?!');
   if (Array.isArray(events)) {
     for (const e of events) {
       const stack = buildStack(root, e.target.elementRefptr);
-      stack.pop()
       const outgoingMessage : ProcessEvent = { event: e, stack, type : "processEvent" };
       return context.postMessage (outgoingMessage);
     }

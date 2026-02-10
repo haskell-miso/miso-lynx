@@ -71,7 +71,7 @@ const eventContext : EventContext<NodeId> = {
   },
   isEqual : (x, y) => {
     /* dmj: required */
-    return x === y;
+    return x.nodeId === y.nodeId;
   },
   getTarget : (_ : Event) => {
     /* dmj: not required. */
