@@ -19,7 +19,7 @@ globalThis['TextEncoder'] = TextEncoder;
 globalThis['BigInt'] = JSBI.BigInt;
 globalThis['JSBI'] = JSBI;
 
-if (!(__MAIN_THREAD__)) {
+if (__BACKGROUND__) {
   globalThis['native'] = {
     drawingContext : btsContext.drawingContext,
     eventContext : btsContext.eventContext
