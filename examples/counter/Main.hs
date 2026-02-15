@@ -35,7 +35,7 @@ counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Transition Model Action
+  -> Effect ROOT Model Action
 updateModel = \case
   AddOne ->
     value += 1
