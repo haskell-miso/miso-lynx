@@ -28,7 +28,7 @@
 
 ##
 
-**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative companies like [ByteDance](https://www.bytedance.com/en/), creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
+**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to use [LynxJS](https://lynxjs.org/) to advance native mobile app development in the functional programming space.
 
 ## Why Lynx
 
@@ -103,6 +103,8 @@ This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer
 > `miso-lynx` depends on the latest version of `miso` (version `1.9`), this includes custom renderers (ala React Renderer) and Components as well.
 > Currently all event handling and drawing are performed on the main thread. Selectively scheduling Haskell code on the Lynx MTS / BTS is ongoing research.
 > This project is under heavy development and is considered experimental.
+>
+> See this [PR](https://github.com/haskell-miso/miso-lynx/pull/70) to follow the progress.
 
 To start developing applications with `miso-lynx` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
