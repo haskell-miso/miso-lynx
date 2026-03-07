@@ -66,7 +66,7 @@ function initMainThreadProcessing () {
        processMessage(m,runtime);
     }
     if (messages.data.length > 0) {
-       native.drawingContext.flush();
+       drawingContext.flush();
     }
   });
 }
@@ -79,60 +79,60 @@ function processMessage (m : PATCH, runtime) {
       addListeners (m.events);
       break;
     case "createElement":
-      node = native.drawingContext.createElement (m.tag);
+      node = drawingContext.createElement (m.tag);
       __SetConfig (node, { nodeId : m.nodeId });
       runtime.nodes[m.nodeId] = node;
       break;
     case "createTextNode":
-      runtime.nodes[m.nodeId] = native.drawingContext.createTextNode (m.text);
+      runtime.nodes[m.nodeId] = drawingContext.createTextNode (m.text);
       break;
     case "createElementNS":
-      node = native.drawingContext.createElementNS (m.namespace, m.tag);
+      node = drawingContext.createElementNS (m.namespace, m.tag);
       __SetConfig (node, { nodeId : m.nodeId });
       runtime.nodes[m.nodeId] = node;
       break;
     case "swapDOMRefs":
-      native.drawingContext.swapDOMRefs
+      drawingContext.swapDOMRefs
         (runtime.nodes[m.nodeA], runtime.nodes[m.nodeB], runtime.nodes[m.parent]);
       break;
     case "insertBefore":
-      native.drawingContext.insertBefore
+      drawingContext.insertBefore
         (runtime.nodes[m.parent], runtime.nodes[m.child], runtime.nodes[m.node]);
       break;
     case "setAttribute":
-      native.drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
+      drawingContext.setAttribute (runtime.nodes[m.nodeId], m.key, m.value);
       break;
     case "setAttributeNS":
-      native.drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
+      drawingContext.setAttributeNS (runtime.nodes[m.nodeId], m.namespace, m.key, m.value);
       break;
     case "setTextContent":
-      native.drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
+      drawingContext.setTextContent (runtime.nodes[m.nodeId], m.text);
       break;
     case "appendChild":
-      native.drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      drawingContext.appendChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       break;
     case "removeChild":
-      native.drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
+      drawingContext.removeChild (runtime.nodes[m.parent], runtime.nodes[m.child]);
       dropChildren (runtime.nodes, runtime.nodes[m.child]);
       break;
     case "replaceChild":
-      native.drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
+      drawingContext.replaceChild (runtime.nodes[m.parent], runtime.nodes[m.new], runtime.nodes[m.current]);
       dropChildren (runtime.nodes, runtime.nodes[m.current]);
       break;
     case "removeAttribute":
-      native.drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
+      drawingContext.removeAttribute (runtime.nodes[m.nodeId], m.key);
       break;
     case "setInlineStyle":
-      native.drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
+      drawingContext.setInlineStyle (m.current, m.new, runtime.nodes[m.nodeId]);
       break;
     case "addClass":
-      native.drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
+      drawingContext.addClass (m.key, runtime.nodes[m.nodeId]);
       break;
     case "removeClass":
-      native.drawingContext.removeClass (m.key, runtime.nodes[m.nodeId]);
+      drawingContext.removeClass (m.key, runtime.nodes[m.nodeId]);
       break;
     case "flush":
-      native.drawingContext.flush ();
+      drawingContext.flush ();
       break;
     case "mount":
       runtime.components[m.componentId] = {
@@ -168,10 +168,10 @@ function dropChildren (nodeMap, node) {
 function addListeners (events : Array <EventCapture>) {
     console.log ('addListeners');
 
-    const page = native.drawingContext.getRoot();
+    const page = drawingContext.getRoot();
     /* delegate on page */
     for (const { name, capture } of events) {
-      native.eventContext['addEventListener'] (page, name, listen, capture);
+      eventContext.addEventListener (page, name, listen, capture);
     }
 }
 
@@ -181,15 +181,15 @@ function listen (events : Array<Event> | Event) : void {
   /* dmj: lynx events can be arrays */
   console.log ('dispatching!');
   const context = lynx.getJSContext();
-  const root = native.drawingContext.getRoot();
+  const root = drawingContext.getRoot();
   if (Array.isArray(events)) {
     for (const e of events) {
-      const stack = buildStack(root, e.target.elementRefptr);
+      const stack = buildStack(root, e.target['elementRefptr']);
       const outgoingMessage : ProcessEvent = { event: e, stack, type : "processEvent" };
       return context.postMessage (outgoingMessage);
     }
   } else {
-      const stack = buildStack(root, events.target.elementRefptr);
+      const stack = buildStack(root, events.target['elementRefptr']);
       const outgoingMessage : ProcessEvent = { event: events, stack, type : "processEvent" };
       return context.postMessage (outgoingMessage);
   }
@@ -198,9 +198,9 @@ function listen (events : Array<Event> | Event) : void {
 /* walk physical DOM, mark the path */
 function buildStack(element: ElementRef, target: ElementRef): Array<number> {
   var stack = [];
-  console.log ('config', __GetConfig (target));
+  console.log ('config', __GetElementConfig (target));
   while (!__ElementIsEqual(element, target)) {
-    stack.unshift(__GetConfig (target)['nodeId']);
+    stack.unshift(__GetElementConfig (target)['nodeId']);
     /* dmj: ^ nodeId is what is accumulated */
     if (target && __GetParent(target)) {
       target = __GetParent(target);

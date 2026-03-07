@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "miso-lynx",
@@ -12,7 +13,7 @@
         "@lynx-js/types": "latest",
         "@rspack/cli": "latest",
         "@rspack/core": "latest",
-        "haskell-miso": "^0.0.5",
+        "haskell-miso": "^0.0.7",
         "jsbi": "^4.3.2",
         "text-encoding": "^0.7.0",
         "typescript": "^5.9.3",
@@ -619,7 +620,7 @@
 
     "has-tostringtag": ["has-tostringtag@1.0.2", "", { "dependencies": { "has-symbols": "^1.0.3" } }, "sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw=="],
 
-    "haskell-miso": ["haskell-miso@0.0.5", "", { "dependencies": { "@lcov-viewer/cli": "^1.3.0", "playwright": "1.53", "typescript": "^5.8.3" } }, "sha512-KEK/2XowmrbUcKbDxhaunS3XubhRviQRb213VxhxwAUBSlR71g5ChUIJ3CUeaM2QdoC6WJKNthisefj4Cr8r4Q=="],
+    "haskell-miso": ["haskell-miso@0.0.7", "", { "dependencies": { "@lcov-viewer/cli": "^1.3.0", "playwright": "1.53", "typescript": "^5.8.3" } }, "sha512-3wM4vNP2GuqseKSV9mN+rTddFBBkG1jb4RwcfryMb/JX6LRYRCE/iYwMU02000cImF8V3MbfLj4QWa78wBkbqQ=="],
 
     "hasown": ["hasown@2.0.2", "", { "dependencies": { "function-bind": "^1.1.2" } }, "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ=="],
 

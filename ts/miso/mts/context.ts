@@ -1,5 +1,17 @@
-import { NodeId, getDOMRef, VComp, DrawingContext, EventContext, VTree } from 'haskell-miso';
+import { NodeId, getDOMRef, VComp, DrawingContext, ComponentContext, EventContext, VTree } from 'haskell-miso';
 import { ElementRef } from '@lynx-js/type-element-api';
+
+export const componentContext : ComponentContext = {
+  mountComponent: function () {
+      return;
+  },
+  unmountComponent: function () {
+      return;
+  },
+  modelHydration: function () {
+      return;
+  }
+};
 
 export const eventContext : EventContext<ElementRef> = {
   delegator : () => {

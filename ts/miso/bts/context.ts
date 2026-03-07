@@ -4,6 +4,7 @@ import {
   VComp,
   DrawingContext,
   EventContext,
+  ComponentContext,
   EventCapture,
   delegateEvent,
   VTree,
@@ -43,6 +44,18 @@ function addPatch (patch : PATCH) : void {
   'background only'
   globalThis['patches'].push(patch);
 }
+
+const componentContext : ComponentContext = {
+    mountComponent : function () {
+
+    },
+    unmountComponent : function () {
+
+    },
+    modelHydration : function () {
+
+    },
+};
 
 const eventContext : EventContext<NodeId> = {
   delegator : (mount: NodeId, events: Array<EventCapture>, getVTree : (callback: (vtree: VTree<NodeId>) => void) => void, debug: boolean, eventContext) => {
@@ -235,7 +248,7 @@ const drawingContext : DrawingContext<NodeId> = {
     return;
   },
   flush : () => {
-     /* send patches from BTS to MTS for application */ 
+     /* send patches from BTS to MTS for application */
      const context = lynx.getCoreContext();
      context.postMessage(globalThis['patches'] as Array<PATCH>);
      globalThis['patches'] = [];
@@ -259,5 +272,5 @@ function areEqual(a: Object, b: Object) : boolean {
 }
 
 export {
-  drawingContext, eventContext
+  drawingContext, eventContext, componentContext
 }

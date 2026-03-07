@@ -69,9 +69,9 @@
     "@lynx-js/types": "latest",
     "@rspack/cli": "latest",
     "@rspack/core": "latest",
-    "haskell-miso": "^0.0.5",
-    "text-encoding": "^0.7.0",
+    "haskell-miso": "^0.0.7",
     "jsbi": "^4.3.2",
+    "text-encoding": "^0.7.0",
     "typescript": "^5.9.3"
   }
 }

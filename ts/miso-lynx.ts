@@ -19,10 +19,11 @@ globalThis['TextEncoder'] = TextEncoder;
 globalThis['BigInt'] = JSBI.BigInt;
 globalThis['JSBI'] = JSBI;
 
-if (__BACKGROUND__) {
+if ('__BACKGROUND__' in globalThis) {
   globalThis['native'] = {
     drawingContext : btsContext.drawingContext,
-    eventContext : btsContext.eventContext
+    eventContext : btsContext.eventContext,
+    componentContext : btsContext.componentContext
   }
   globalThis['patches'] = [];
   globalThis['nodeId'] = 1;
@@ -30,7 +31,8 @@ if (__BACKGROUND__) {
 } else {
   globalThis['native'] = {
     drawingContext : mtsContext.drawingContext,
-    eventContext : mtsContext.eventContext
+    eventContext : mtsContext.eventContext,
+    componentContext : mtsContext.componentContext
   };
 }
 
