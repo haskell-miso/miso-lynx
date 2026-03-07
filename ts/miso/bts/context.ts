@@ -31,10 +31,6 @@ import {
   AddEventListeners,
 } from 'haskell-miso';
 
-import {
-  ElementRef
-} from '@lynx-js/type-element-api';
-
 function nextNodeId () : number {
   'background only'
   return globalThis['nodeId']++;

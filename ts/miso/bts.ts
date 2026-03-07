@@ -21,10 +21,6 @@ import
   , eventContext
   } from '../miso/bts/context';
 
-import
-  { ElementRef
-  } from '@lynx-js/type-element-api';
-
 export function bts () {
   'background only'
 

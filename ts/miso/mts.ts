@@ -30,10 +30,6 @@ import
   , eventContext
   } from '../miso/mts/context';
 
-import
-  { ElementRef
-  } from '@lynx-js/type-element-api';
-
 export function mts () {
   var page = __CreatePage("0", 0);
   var pageId = __GetElementUniqueID(page);
