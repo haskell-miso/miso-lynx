@@ -34,7 +34,7 @@ import           Miso.JSON (toJSON)
 import           Miso.Lynx.Element.List (ListOptions(..))
 import           Miso.Property (textProp, prop)
 import           Miso.String (MisoString)
-import           Miso.Types (View, Attribute, node, NS(HTML))
+import           Miso.Types (View, Attribute, node, Namespace(HTML))
 -----------------------------------------------------------------------------
 -- | Smart constructor for constructing a built-in lynx element.
 --
