@@ -244,10 +244,10 @@ layoutCompleteDecoder = ["detail"] `at` do
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onScroll HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -265,10 +265,10 @@ onScroll action = on "scroll" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onScrollToUpper HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -286,10 +286,10 @@ onScrollToUpper action = on "scrolltoupper" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onScrollToLower HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -311,10 +311,10 @@ onScrollToLower action = on "scrolltolower" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScrollState ScrollStateChange
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onScrollStateChange HandleScrollState ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll Stationary) =
 --   io_ (consoleLog "Received Stationary scroll state change")
 -- update _ = pure ()
@@ -332,10 +332,10 @@ onScrollStateChange action = on "scrollstatechange" scrollStateDecoder (\x _ -> 
 --
 -- data Action = HandleLayout LayoutCompleteEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onLayoutComplete HandleLayout ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleLayout LayoutCompleteEvent {..}) =
 --   io_ (consoleLog "Received LayoutCompleteEvent")
 --
@@ -352,10 +352,10 @@ onLayoutComplete action = on "layoutcomplete" layoutCompleteDecoder (\x _ -> act
 --
 -- data Action = HandleSnap SnapEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = list_ defaultListOptions [ onSnap HandleSnap ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleSnap SnapEvent {..}) =
 --   io_ (consoleLog "Received SnapEvent")
 --

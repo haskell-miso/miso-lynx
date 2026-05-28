@@ -53,7 +53,7 @@ instance ToJSVal SetTextSelection where
 --
 -- data Action = SetText | TextSet | SetTextError MisoString
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update SetText = setTextSelection "someImageId" SetText SetTextError
 -- update TextSet = io_ (consoleLog "text was set")
 -- update (SetTextError e) = io_ (consoleLog e)
@@ -65,7 +65,7 @@ setTextSelection
   -> SetTextSelection
   -> action
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 setTextSelection selector params action =
   invokeExec "setTextSelection" selector params (\() -> action)
 -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ defaultGetTextBoundingRect = GetTextBoundingRect 0 0
 --
 -- data Action = RectReceived Rect | GetRect | GotError MisoString
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update GetRect = getTextBoundingRect "#box" defaultGetTextBoundingRect RectReceived GotError
 -- update (RectReceived rect) = io_ $ consoleLog ("got rect")
 -- update (GotError errMsg) = io_ (consoleLog errMsg)
@@ -105,7 +105,7 @@ getTextBoundingRect
   -> GetTextBoundingRect
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 getTextBoundingRect = invokeExec "getTextBoundingRect"
 -----------------------------------------------------------------------------
 -- | https://lynxjs.org/api/elements/built-in/text.html#getselectedtext
@@ -116,7 +116,7 @@ getTextBoundingRect = invokeExec "getTextBoundingRect"
 --
 -- data Action = TextReceived MisoString | GetText | GotError MisoString
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update GetText = getSelectedText "#box" TextReceived GotError
 -- update (TextReceived txt) = io_ (consoleLog ("got text: " <> txt))
 -- update (GotError errMsg) = io_ (consoleLog errMsg)
@@ -127,6 +127,6 @@ getSelectedText
   :: MisoString
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 getSelectedText selector = invokeExec "getSelectedText" selector ()
 -----------------------------------------------------------------------------

@@ -61,6 +61,7 @@
     "README.md"
   ],
   "dependencies": {
+    "@lynx-js/react": "latest",
     "@lynx-js/qrcode-rsbuild-plugin": "latest",
     "@lynx-js/react-alias-rsbuild-plugin": "latest",
     "@lynx-js/react-rsbuild-plugin": "latest",
@@ -69,7 +70,7 @@
     "@lynx-js/types": "latest",
     "@rspack/cli": "latest",
     "@rspack/core": "latest",
-    "haskell-miso": "^0.0.7",
+    "haskell-miso": "latest",
     "jsbi": "^4.3.2",
     "text-encoding": "^0.7.0",
     "typescript": "^5.9.3"

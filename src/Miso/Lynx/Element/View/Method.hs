@@ -88,7 +88,7 @@ defaultBoundingClientRect
 --   | Failure MisoString
 --   | GetRect
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update GetRect =
 --   boundingClientRect defaultBoundingClientRect "#box" Success Failure
 -- update (Succes Rect {..}) =
@@ -103,7 +103,7 @@ boundingClientRect
   -> BoundingClientRect
   -> (Rect -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 boundingClientRect = invokeExec "boundingClientRect"
 -----------------------------------------------------------------------------
 data TakeScreenshot
@@ -133,7 +133,7 @@ instance ToJSVal TakeScreenshot where
 --   | Failure MisoString
 --   | GetScreenshot
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update GetScreenshot = takeScreenshot
 --   defaultTakeScreenshot "#my-view" Success Failure
 -- update (Succes image) =
@@ -149,7 +149,7 @@ takeScreenshot
   -> TakeScreenshot
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 takeScreenshot = invokeExec "takeScreenshot"
 -----------------------------------------------------------------------------
 -- | Smart constructor for calling 'TakeScreenshot'
@@ -171,7 +171,7 @@ defaultTakeScreenshot
 --   | Failure MisoString
 --   | GetFocus
 --
--- update :: Action -> Effect model Action
+-- update :: Action -> Effect parent props model Action
 -- update GetFocus = requestAccessibilityFocus "#my-view" Success Failure
 -- update Success = consoleLog "Successfuly got focus"
 -- update (Failure errorMsg) =
@@ -183,7 +183,7 @@ requestAccessibilityFocus
   :: MisoString
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 requestAccessibilityFocus selector =
   invokeExec "requestAccessibilityFocus" selector ()
 -----------------------------------------------------------------------------

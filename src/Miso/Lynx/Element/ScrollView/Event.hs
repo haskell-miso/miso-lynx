@@ -66,10 +66,10 @@ data ScrollEvent
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = scrollView_ [ onScroll HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -84,10 +84,10 @@ onScroll action = on "scroll" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = scrollView_ [ onScrollToUpper HnadleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -102,10 +102,10 @@ onScrollToUpper action = on "scrolltoupper" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = scrollView_ [ onScrollToLower HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -120,10 +120,10 @@ onScrollToLower action = on "scrolltolower" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleScroll ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = scrollView_ [ onScrollToLower HandleScroll ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleScroll ScrollEvent {..}) =
 --   io_ (consoleLog "handled scroll event")
 --
@@ -143,10 +143,10 @@ onScrollEnd action = on "scrollend" scrollDecoder (\x _ -> action x)
 --
 -- data Action = HandleContentSizeChanged ScrollEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = scrollView_ [ onContentSizeChanged HandleContentSizeChanged ] [ ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleContentSizeChanged ScrollEvent {..}) =
 --   io_ (consoleLog "handled content size changed event")
 --

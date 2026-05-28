@@ -45,10 +45,10 @@ imageEvents
 --
 -- data Action = HandleImageLoad ImageLoadEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = image_ "url" [ onLoad HandleImageLoad ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleImageLoad ImageLoadEvent {..}) = do
 --   io_ (consoleLog "image load event received")
 --
@@ -65,10 +65,10 @@ onLoad action = on "bindload" imageLoadDecoder (\e _ -> action e)
 --
 -- data Action = HandleImageError ImageErrorEvent
 --
--- view :: Model -> View Action
+-- view :: Model -> View Model Action
 -- view model = image_ "url" [ onError HandleImageError ]
 --
--- update :: Action -> Effect Model Action
+-- update :: Action -> Effect parent props Model Action
 -- update (HandleImageError ImageErrorEvent {..}) = do
 --   io_ (consoleLog "image error event received")
 --
