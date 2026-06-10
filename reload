@@ -12,5 +12,5 @@ cp -v $(nix-build -A miso-lynx-examples-ghcjs9122)/bin/counter.jsexe/all.js out.
 chmod +rw out.js
 bun build --minify-whitespace out.js --target=bun --outfile=all.js
 file all.js
-bun run bundle
+$(nix-build -A pkgs.nodejs --no-out-link)/bin/node node_modules/.bin/rspeedy build
 http-server -c-1 -p 8085 dist

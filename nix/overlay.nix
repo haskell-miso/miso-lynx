@@ -29,7 +29,7 @@ self: super: {
     chmod +rw all.js
     bun build --minify all.js --target=bun --outfile=dist/all.js
     file dist/all.js
-    bun run bundle
+    ${self.nodejs}/bin/node node_modules/.bin/rspeedy build
     file dist/main.lynx.bundle
   '';
 
