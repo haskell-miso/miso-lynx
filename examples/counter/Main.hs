@@ -35,7 +35,7 @@ counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Effect ROOT Model Action
+  -> Effect ROOT props Model Action
 updateModel = \case
   AddOne ->
     value += 1
@@ -43,8 +43,8 @@ updateModel = \case
     value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: Model -> View Model Action
-viewModel m = view_
+viewModel :: props -> Model -> View Model Action
+viewModel _ m = view_
   [ CSS.style_
     [ CSS.height "200px"
     , CSS.display "flex"

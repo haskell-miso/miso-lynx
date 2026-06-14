@@ -88,7 +88,7 @@ scrollToPosition
   -> ScrollToPosition
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 scrollToPosition = invokeExec "scrollToPosition"
 --------------------------------------------------------------------
 data AutoScroll
@@ -114,14 +114,14 @@ autoScroll
   -> AutoScroll
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 autoScroll = invokeExec "scrollToPosition"
 --------------------------------------------------------------------
 getVisibleCells
   :: MisoString
   -> (MisoString -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 getVisibleCells name = invokeExec "getVisibleCells" name ()
 --------------------------------------------------------------------
 data ScrollBy
@@ -143,7 +143,7 @@ scrollBy
   -> ScrollBy
   -> (Consumed -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 scrollBy = invokeExec "scrollBy"
 --------------------------------------------------------------------
 data Consumed

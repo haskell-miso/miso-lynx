@@ -103,7 +103,7 @@ boundingClientRect
   -> BoundingClientRect
   -> (Rect -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 boundingClientRect = invokeExec "boundingClientRect"
 -----------------------------------------------------------------------------
 data TakeScreenshot
@@ -149,7 +149,7 @@ takeScreenshot
   -> TakeScreenshot
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 takeScreenshot = invokeExec "takeScreenshot"
 -----------------------------------------------------------------------------
 -- | Smart constructor for calling 'TakeScreenshot'
@@ -183,7 +183,7 @@ requestAccessibilityFocus
   :: MisoString
   -> (JSVal -> action)
   -> (MisoString -> action)
-  -> Effect parent model action
+  -> Effect parent props model action
 requestAccessibilityFocus selector =
   invokeExec "requestAccessibilityFocus" selector ()
 -----------------------------------------------------------------------------
