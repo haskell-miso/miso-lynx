@@ -79,7 +79,7 @@ onLayout action = on "layout" layoutDecoder (\e _ -> action e)
 -- @
 --
 onSelectionChange :: (SelectionChangeEvent -> action) -> Attribute action
-onSelectionChange action = on "layout" selectionChangeDecoder (\e _ -> action e)
+onSelectionChange action = on "selectionchange" selectionChangeDecoder (\e _ -> action e)
 -----------------------------------------------------------------------------
 selectionChangeDecoder :: Decoder SelectionChangeEvent
 selectionChangeDecoder = ["detail"] `at` parser

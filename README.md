@@ -28,11 +28,11 @@
 
 ##
 
-**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to be an open-source technology partner with innovative companies like [ByteDance](https://www.bytedance.com/en/), creators of [LynxJS](https://lynxjs.org/), to advance native mobile app development in the functional programming space.
+**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to use [LynxJS](https://lynxjs.org/) to advance native mobile app development in the functional programming space.
 
 ## Why Lynx
 
-[Since 2017](https://github.com/dmjio/miso/issues/314), `miso` has sought ways to run on mobile devices that take advantage of native drawing facilities. [Flutter](https://flutter.dev/), [SwiftUI](https://developer.apple.com/swiftui/) produce stunning, performant user experiences but are not necessarily designed for integration with open standards, are effectively only usable with a specific IDE / choice languages, and can lack in cross-platform capability (SwiftUI specifically). [React Native](https://reactnative.dev/) improves upon this situation by allowing open web standards for development and cross-platform capability, but wasn't designed for easy integration with ***any*** web framework (rather for use specifically with [react](https://react.dev)). [React Native](https://reactnative.dev/) also can regress in performance relative to SwiftUI in certain scenarios.
+[Since 2017](https://github.com/dmjio/miso/issues/314), `miso` has sought ways to run on mobile devices that take advantage of native drawing facilities. [Flutter](https://flutter.dev/), [SwiftUI](https://developer.apple.com/swiftui/) produce stunning, performant user experiences but are not necessarily designed for integration with open standards, are effectively only usable with a specific IDE / choice languages, and can lack in cross-platform capability (SwiftUI specifically). [React Native](https://reactnative.dev/) improves upon this situation by allowing open web standards for development and cross-platform capability, but wasn't designed for easy integration with ***any*** web framework (rather for use specifically with [react](https://react.dev)).
 
 [Lynx](https://lynxjs.org/) addresses the aforementioned issues with a new architectural approach.
 
@@ -103,6 +103,8 @@ This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer
 > `miso-lynx` depends on the latest version of `miso` (version `1.9`), this includes custom renderers (ala React Renderer) and Components as well.
 > Currently all event handling and drawing are performed on the main thread. Selectively scheduling Haskell code on the Lynx MTS / BTS is ongoing research.
 > This project is under heavy development and is considered experimental.
+>
+> See this [PR](https://github.com/haskell-miso/miso-lynx/pull/70) to follow the progress.
 
 To start developing applications with `miso-lynx` you will need to acquire [GHC](https://www.haskell.org/ghc/) and [cabal](https://www.haskell.org/cabal/). This can be done via [GHCup](https://www.haskell.org/ghcup/) or [Nix](https://nixos.org/).
 
@@ -153,7 +155,7 @@ counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Transition Model Action
+  -> Effect parent props Model Action
 updateModel = \case
   AddOne ->
     value += 1
@@ -161,8 +163,8 @@ updateModel = \case
     value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: Model -> View Model Action
-viewModel m = view_
+viewModel :: props -> Model -> View Model Action
+viewModel _ m = view_
   [ CSS.style_
     [ CSS.height "200px"
     , CSS.display "flex"
