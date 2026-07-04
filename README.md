@@ -1,8 +1,8 @@
 <h1 align="center">miso-lynx</h1>
 <p align="center">
 
-<a href="https://native.haskell-miso.org">
-<p align="center">A <i>tasty</i> <a href="https://www.haskell.org/"><strong>Haskell</strong></a> mobile framework 🍜 🐈 📱 </p>
+<a>
+  <p align="center">A <i>tasty</i> </a> mobile framework 🍜 🐈 📱 </p>
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@
 
 ##
 
-**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [Haskell miso project](https://github.com/haskell-miso) is excited to use [LynxJS](https://lynxjs.org/) to advance native mobile app development in the functional programming space.
+**Miso Lynx** 🍜 🐈 is a mobile framework that uses [miso](https://github.com/dmjio/miso) and [LynxJS](https://github.com/lynx-family) to facilitate drawing and API interaction on [iOS](https://www.apple.com/ios/), [Android](https://www.android.com/), and [HarmonyOS](https://device.harmonyos.com/en/) devices. The [miso project](https://github.com/haskell-miso) is excited to use [LynxJS](https://lynxjs.org/) to advance native mobile app development in the functional programming space.
 
 ## Why Lynx
 
@@ -73,7 +73,7 @@ As seen @ [React Summit](https://reactsummit.com/) by [@huxpro](https://github.c
 
 [![Alt text](https://img.youtube.com/vi/l2dByiwiQcM/0.jpg)](https://www.youtube.com/watch?v=l2dByiwiQcM)
  
-The Haskell miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUTRryYAyb7SK&t=1712).
+The miso portion is queued [here](https://youtu.be/l2dByiwiQcM?si=3IghUTRryYAyb7SK&t=1712).
 
 ## Fireship
 
