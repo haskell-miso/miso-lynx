@@ -196,9 +196,9 @@ function listen (events : Array<Event> | Event) : void {
 /* walk physical DOM, mark the path */
 function buildStack(element: ElementRef, target: ElementRef): Array<number> {
   var stack = [];
-  console.log ('config', __GetElementConfig (target));
+  console.log ('config', __GetConfig (target));
   while (!__ElementIsEqual(element, target)) {
-    stack.unshift(__GetElementConfig (target)['nodeId']);
+    stack.unshift(__GetConfig (target)['nodeId']);
     /* dmj: ^ nodeId is what is accumulated */
     if (target && __GetParent(target)) {
       target = __GetParent(target);
