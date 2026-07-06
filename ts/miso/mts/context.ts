@@ -1,4 +1,5 @@
 import { NodeId, getDOMRef, VComp, DrawingContext, ComponentContext, EventContext, VTree } from 'haskell-miso';
+import type { ElementRef } from '@lynx-js/type-element-api';
 
 export const componentContext : ComponentContext = {
   mountComponent: function () {
