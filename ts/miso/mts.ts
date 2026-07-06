@@ -46,7 +46,6 @@ export function mts () {
 
 /* Method to initialize main thread event handling / processing */
 function initMainThreadProcessing () {
-  console.log ('inside initMainThreadProcessing');
   const context = lynx.getJSContext();
 
   /* initialize runtime state */
@@ -56,6 +55,7 @@ function initMainThreadProcessing () {
   };
 
   runtime.nodes[0] = globalThis['page'];
+  globalThis['runtime'] = runtime;
 
   /* Receive messages from BG */
   context.addEventListener("message", (messages : MessageEvent<Array<PATCH>>) => {
@@ -153,7 +153,6 @@ function processMessage (m : PATCH, runtime) {
 
 /* This purges all descendants from runtime.nodes map */
 function dropChildren (nodeMap, node) {
-   console.log ('dropChildren');
    delete nodeMap[node.nodeId];
    for (const child of node.children) {
       dropChildren(nodeMap, child);
@@ -164,26 +163,22 @@ function dropChildren (nodeMap, node) {
    This should only be invoked once on application load.
 */
 function addListeners (events : Array <EventCapture>) {
-    console.log ('addListeners');
-
     const page = drawingContext.getRoot();
     /* delegate on page */
     for (const { name, capture } of events) {
-      eventContext.addEventListener (page, name, listen, capture);
+      eventContext.addEventListener (page, name, listen, capture, null);
     }
 }
 
 /* function eventListener */
 function listen (events : Array<Event> | Event) : void {
-  console.log ('listen!', events);
   /* dmj: lynx events can be arrays */
-  console.log ('dispatching!');
   const context = lynx.getJSContext();
   const root = drawingContext.getRoot();
   if (Array.isArray(events)) {
-    for (const e of events) {
-      const stack = buildStack(root, e.target['elementRefptr']);
-      const outgoingMessage : ProcessEvent = { event: e, stack, type : "processEvent" };
+    for (const event of events) {
+      const stack = buildStack(root, event.target['elementRefptr']);
+      const outgoingMessage : ProcessEvent = { event, stack, type : "processEvent" };
       return context.postMessage (outgoingMessage);
     }
   } else {
@@ -196,7 +191,6 @@ function listen (events : Array<Event> | Event) : void {
 /* walk physical DOM, mark the path */
 function buildStack(element: ElementRef, target: ElementRef): Array<number> {
   var stack = [];
-  console.log ('config', __GetConfig (target));
   while (!__ElementIsEqual(element, target)) {
     stack.unshift(__GetConfig (target)['nodeId']);
     /* dmj: ^ nodeId is what is accumulated */

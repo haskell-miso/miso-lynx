@@ -10,7 +10,6 @@ self: super:
   miso-lynx = self.callCabal2nix "miso-lynx" source.miso-lynx {};
 
   /* deps */
-  jsaddle = self.callCabal2nix "jsaddle" "${source.jsaddle}/jsaddle" {};
   ghcjs-base = self.callCabal2nix "ghcjs-base" source.ghcjs-base {};
 
   /* examples */

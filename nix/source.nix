@@ -14,6 +14,7 @@ let
          (hasSuffix ".html" baseName) ||
          (hasSuffix ".png" baseName) ||
          (hasSuffix ".js" baseName) ||
+         (hasSuffix ".c" baseName) ||
          (hasSuffix ".ts" baseName) ||
          (hasSuffix ".json" baseName) ||
          (baseName == "README.md") ||
@@ -32,7 +33,6 @@ in
   miso-lynx = make-src-filter ../.;
   examples = make-src-filter ../examples;
   miso = fetchFromFlake (nodes.miso);
-  jsaddle = fetchFromFlake (nodes.jsaddle);
   ghcjs-base = fetchFromGitHub {
     owner = "dmjio";
     repo = "ghcjs-base";

@@ -1,6 +1,10 @@
 import { NodeId, getDOMRef, VComp, DrawingContext, ComponentContext, EventContext, VTree } from 'haskell-miso';
 import type { ElementRef } from '@lynx-js/type-element-api';
 
+function nextNodeId () : number {
+  return globalThis['nodeId']++;
+}
+
 export const componentContext : ComponentContext = {
   mountComponent: function () {
       return;
@@ -50,36 +54,55 @@ export const drawingContext : DrawingContext<ElementRef> = {
       return getDOMRef(x.nextSibling);
   },
   createTextNode : (s: string) => {
-    return __CreateRawText(s);
+    const node = __CreateRawText(s);
+    if (globalThis['initialDraw']) {
+        const nodeId: number = nextNodeId ();
+        globalThis['runtime']['nodes'][nodeId] = node;
+        __SetConfig (node, { nodeId });
+    }
+    return node;
   },
   createElementNS : (ns : string, tag : string) => {
-   return globalThis['miso']['context']['createElement'](tag);
+    const node = globalThis['miso']['context']['createElement'](tag);
+    if (globalThis['initialDraw']) {
+        const nodeId: number = nextNodeId ();
+        globalThis['runtime']['nodes'][nodeId] = node;
+        __SetConfig (node, { nodeId });
+    }
+    return node;
   },
   createElement : (tag : string) => {
       var pageId = globalThis['native']['currentPageId'];
+      var node = undefined;
       switch (tag) {
           case 'view':
-              return __CreateView(pageId);
+              node = __CreateView(pageId);
               break;
           case 'scroll-view':
-              return __CreateScrollView(pageId);
+              node = __CreateScrollView(pageId);
               break;
           case 'text':
-              return __CreateText(pageId);
+              node = __CreateText(pageId);
               break;
           case 'list':
-              return __CreateList(pageId, undefined, null, null);
+              node = __CreateList(pageId, undefined, null, null);
               break;
           case 'image':
-              return __CreateImage(pageId);
+              node = __CreateImage(pageId);
               break;
           case 'frame':
-              return __CreateFrame(pageId, null);
+              node = __CreateFrame(pageId, null);
               break;
           default:
-              return __CreateElement(tag, pageId);
+              node = __CreateElement(tag, pageId);
               break;
       }
+      if (globalThis['initialDraw']) {
+          const nodeId: number = nextNodeId ();
+          globalThis['runtime']['nodes'][nodeId] = node;
+          __SetConfig (node, { nodeId });
+      }
+      return node;
   },
   appendChild : (parent, child) => {
     return __AppendElement (parent, child);
@@ -114,6 +137,9 @@ export const drawingContext : DrawingContext<ElementRef> = {
       return __SetInlineStyles(node, nCss)
   },
   flush : () => {
+    if (globalThis['initialDraw']) {
+      globalThis['initialDraw'] = false;
+    }
     return __FlushElementTree();
   },
   getRoot : () => {

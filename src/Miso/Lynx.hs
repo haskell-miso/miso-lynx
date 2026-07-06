@@ -53,7 +53,7 @@ import Control.Monad (void)
 lynx :: Eq model => Events -> App model action -> IO ()
 lynx events vcomp = withJS (renderApp events "native" vcomp)
 -----------------------------------------------------------------------------
--- | Used when compiling with jsaddle to make miso's JavaScript present in
+-- | Used when compiling with WASM to make miso's JavaScript present in
 -- the execution context.
 withJS :: IO a -> IO ()
 withJS action = void $ do

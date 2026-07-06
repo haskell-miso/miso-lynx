@@ -1,8 +1,3 @@
-import { mts } from './miso/mts';
-import { bts } from './miso/bts';
-import * as btsContext from './miso/bts/context';
-import * as mtsContext from './miso/mts/context';
-
 import {
   TextDecoder,
   TextEncoder,
@@ -19,32 +14,25 @@ globalThis['TextEncoder'] = TextEncoder;
 globalThis['BigInt'] = JSBI.BigInt;
 globalThis['JSBI'] = JSBI;
 
-if ('__BACKGROUND__' in globalThis) {
-  globalThis['native'] = {
-    drawingContext : btsContext.drawingContext,
-    eventContext : btsContext.eventContext,
-    componentContext : btsContext.componentContext
-  }
+import { bts } from './miso/bts';
+import { mts } from './miso/mts';
+import { drawingContext as btsDC, eventContext as btsEC, componentContext as btsCX } from './miso/bts/context';
+import { drawingContext as mtsDC, eventContext as mtsEC, componentContext as mtsCX } from './miso/mts/context';
+
+// both use nodeId
+globalThis['nodeId'] = 1;
+globalThis['initialDraw'] = true;
+
+if (__BACKGROUND__) {
+  globalThis['native'] = { drawingContext: btsDC, eventContext: btsEC, componentContext: btsCX };
   globalThis['patches'] = [];
-  globalThis['nodeId'] = 1;
   bts();
 } else {
-  globalThis['native'] = {
-    drawingContext : mtsContext.drawingContext,
-    eventContext : mtsContext.eventContext,
-    componentContext : mtsContext.componentContext
-  };
-}
-
-/* init mts() */
-globalThis['renderPage'] = function () {
-  mts();
+  globalThis['native'] = { drawingContext: mtsDC, eventContext: mtsEC, componentContext: mtsCX };
+  globalThis['renderPage'] = () => mts();
+  globalThis['runWorklet'] = (worklet, params) => worklet(params);
 }
 
 /* etc. */
 globalThis['processData'] = () => {};
 
-/* runWorklet boilerplate */
-globalThis['runWorklet'] = (worklet, params) => {
-  return worklet(params);
-}

@@ -245,8 +245,12 @@ const drawingContext : DrawingContext<NodeId> = {
   },
   flush : () => {
      /* send patches from BTS to MTS for application */
-     const context = lynx.getCoreContext();
-     context.postMessage(globalThis['patches'] as Array<PATCH>);
+     if (globalThis['initialDraw']) {
+       globalThis['initialDraw'] = false;
+     } else {
+       const context = lynx.getCoreContext();
+       context.postMessage(globalThis['patches'] as Array<PATCH>);
+     }
      globalThis['patches'] = [];
   },
   getHead : function () {
