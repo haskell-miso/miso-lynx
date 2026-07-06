@@ -33,8 +33,9 @@ import
   } from '../miso/mts/context';
 
 export function mts () {
-  var page = __CreatePage("0", 0);
-  var pageId = __GetElementUniqueID(page);
+  const page = __CreatePage("0", 0);
+  const pageId = __GetElementUniqueID(page);
+  __SetCSSId([page], 0);
   globalThis['native']['currentPageId'] = pageId;
   globalThis['page'] = page;
 
