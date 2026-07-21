@@ -2,7 +2,7 @@
 <p align="center">
 
 <a>
-  <p align="center">A <i>tasty</i> </a> mobile framework 🍜 🐈 📱 </p>
+  <p align="center">A <i>tasty</i> </a> mobile Haskell framework 🍜 🐈 📱 </p>
 </p>
 
 <p align="center">
