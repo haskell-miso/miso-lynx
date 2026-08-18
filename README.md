@@ -29,7 +29,7 @@
 ##
 
 > [!TIP]
-> This project has been upstreamed into [miso](https://github.com/dmjio/miso) proper. Please see the [docs](https://haddocks.haskell-miso.org) for more information
+> This project has been upstreamed into [miso](https://github.com/dmjio/miso) proper. Please see the [docs](https://haddocks.haskell-miso.org/miso/Miso-Native.html) for more information
 
 ##
 
