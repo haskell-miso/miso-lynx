@@ -3,20 +3,28 @@
 {-# LANGUAGE RecordWildCards             #-}
 {-# LANGUAGE OverloadedStrings           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving  #-}
+{-# LANGUAGE StaticPointers              #-}
+{-# LANGUAGE DeriveGeneric               #-}
+{-# LANGUAGE DeriveAnyClass              #-}
+{-# LANGUAGE DerivingStrategies          #-}
 -----------------------------------------------------------------------------
 module Main where
 -----------------------------------------------------------------------------
 import           Miso hiding (text_)
-import           Miso.Lynx
-import           Miso.Lynx.Element.View.Event (onTap)
+import           Miso.Native
+import           Miso.Native.Element.View.Event (onTap)
 -----------------------------------------------------------------------------
 import           Miso.Lens
 import           Miso.String
 import qualified Miso.CSS as CSS
+import           Miso.JSON (ToJSON, FromJSON)
+import           GHC.Generics (Generic)
 -----------------------------------------------------------------------------
 -- | Application model
 newtype Model = Model { _value :: Int }
-  deriving (Show, Eq, ToMisoString)
+  deriving stock (Show, Eq, Generic)
+  deriving anyclass (ToJSON, FromJSON)
+  deriving newtype (ToMisoString)
 -----------------------------------------------------------------------------
 value :: Lens Model Int
 value = lens _value $ \m v -> m { _value = v }
@@ -24,18 +32,19 @@ value = lens _value $ \m v -> m { _value = v }
 data Action
   = AddOne
   | SubtractOne
-  deriving (Show, Eq)
+  deriving stock (Show, Eq, Generic)
+  deriving anyclass (ToJSON, FromJSON)
 -----------------------------------------------------------------------------
--- | Entry point for a miso application
+-- | Entry point for a native miso application
 main :: IO ()
-main = lynx lynxEvents counterComponent
+main = native nativeEvents (static (mountStatic_ counterComponent))
 -----------------------------------------------------------------------------
-counterComponent :: App Model Action
+counterComponent :: Component () () Model Action
 counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Effect ROOT props Model Action
+  -> Effect () () Model Action
 updateModel = \case
   AddOne ->
     value += 1
@@ -43,8 +52,8 @@ updateModel = \case
     value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: props -> Model -> View Model Action
-viewModel _ m = view_
+viewModel :: () -> () -> Model -> View () Model Action
+viewModel _ _ m = view_
   [ CSS.style_
     [ CSS.height "200px"
     , CSS.display "flex"
