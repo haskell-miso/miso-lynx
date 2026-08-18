@@ -45,7 +45,7 @@
    The [Lynx](https://lynxjs.org) engine uses [two embedded JavaScript interpreters](https://lynxjs.org/react/thinking-in-reactlynx.html#your-code-runs-on-two-threads) to selectively schedule / offload computation to free up the render thread. This avoids drawing lag as commonly seen with scroll events in react native applications.
 
  - #### Element PAPI (PrimJS API)
-   Exposing a [DOM API](https://lynxjs.org/api/engine/element-api.html) for rendering allows any JavaScript (or compile-to-JavaScript 🍜) web framework to produce cross-platfom mobile applications. [Seen here](https://github.com/haskell-miso/miso-lynx/blob/master/ts/miso/context/lynx.ts) in `miso-lynx`.
+   Exposing a [DOM API](https://lynxjs.org/api/engine/element-api.html) for rendering allows any JavaScript (or compile-to-JavaScript 🍜) web framework to produce cross-platfom mobile applications. [Seen here](https://github.com/dmjio/miso/tree/master/ts/miso/native) in `Miso.Native` (upstreamed from `miso-lynx`).
 
  - #### Cross platform capability
    Lynx targets iOS, Android, HarmonyOS, Web by default, and has [a roadmap](https://lynxjs.org/blog/lynx-open-source-roadmap-2025) that mentions Desktop UI as well (OSX, etc.)
@@ -64,7 +64,7 @@ For framework implementors, this is a dream come true, and we hope `miso-lynx` c
 - [Demo](#demo)
 - [Preview](#preview)
 - [Quick Start](#quick-start)
-- [Setup](#setup)
+- [Example](#example)
 - [Haddocks](#haddocks)
 - [Binary cache](#binary-cache)
 - [Maintainers](#maintainers)
@@ -89,11 +89,14 @@ See [Fireship](https://www.youtube.com/watch?v=-qjE8JkIVoQ) 🔥 🚀 video
 
 ## Preview
 
-To run the example locally execute the following command
+To build the example locally, via the flake (which pulls in `miso`'s
+`ghcNative` package set and its shared `mkLynxBundle` helper):
 
 ```bash
 $ git clone git@github.com:haskell-miso/miso-lynx.git
-$ http-server ./miso-lynx/examples
+$ cd miso-lynx
+$ nix build .#counter-bundle
+$ http-server ./result
 ```
 
 This will host the `main.lynx.bundle` which can be loaded into the `LynxExplorer` for interactive development.
@@ -109,15 +112,19 @@ To start developing applications with `miso` and `LynxJS` see the [miso-lynx-gal
 
 ### `Main.hs`
 
-This file contains a simple `miso-lynx` counter application.
+This file contains a simple `miso-lynx` counter application (see
+[`examples/counter/Main.hs`](examples/counter/Main.hs)).
 
 ```haskell
 -----------------------------------------------------------------------------
 {-# LANGUAGE LambdaCase                  #-}
 {-# LANGUAGE RecordWildCards             #-}
-{-# LANGUAGE StaticPointers              #-}
 {-# LANGUAGE OverloadedStrings           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving  #-}
+{-# LANGUAGE StaticPointers              #-}
+{-# LANGUAGE DeriveGeneric               #-}
+{-# LANGUAGE DeriveAnyClass              #-}
+{-# LANGUAGE DerivingStrategies          #-}
 -----------------------------------------------------------------------------
 module Main where
 -----------------------------------------------------------------------------
@@ -128,10 +135,14 @@ import           Miso.Native.Element.View.Event (onTap)
 import           Miso.Lens
 import           Miso.String
 import qualified Miso.CSS as CSS
+import           Miso.JSON (ToJSON, FromJSON)
+import           GHC.Generics (Generic)
 -----------------------------------------------------------------------------
 -- | Application model
 newtype Model = Model { _value :: Int }
-  deriving (Show, Eq, ToMisoString)
+  deriving stock (Show, Eq, Generic)
+  deriving anyclass (ToJSON, FromJSON)
+  deriving newtype (ToMisoString)
 -----------------------------------------------------------------------------
 value :: Lens Model Int
 value = lens _value $ \m v -> m { _value = v }
@@ -139,18 +150,19 @@ value = lens _value $ \m v -> m { _value = v }
 data Action
   = AddOne
   | SubtractOne
-  deriving (Show, Eq)
+  deriving stock (Show, Eq, Generic)
+  deriving anyclass (ToJSON, FromJSON)
 -----------------------------------------------------------------------------
--- | Entry point for a miso application
+-- | Entry point for a native miso application
 main :: IO ()
-main = native tapEvents (static (mountStatic_ counterComponent))
+main = native nativeEvents (static (mountStatic_ counterComponent))
 -----------------------------------------------------------------------------
-counterComponent :: App Model Action
+counterComponent :: Component () () Model Action
 counterComponent = component (Model 0) updateModel viewModel
 -----------------------------------------------------------------------------
 updateModel
   :: Action
-  -> Effect context props Model Action
+  -> Effect () () Model Action
 updateModel = \case
   AddOne ->
     value += 1
@@ -158,7 +170,7 @@ updateModel = \case
     value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: context -> props -> Model -> View context Model Action
+viewModel :: () -> () -> Model -> View () Model Action
 viewModel _ _ m = view_
   [ CSS.style_
     [ CSS.height "200px"
