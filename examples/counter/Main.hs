@@ -37,7 +37,7 @@ data Action
 -----------------------------------------------------------------------------
 -- | Entry point for a native miso application
 main :: IO ()
-main = native nativeEvents (static (mountStatic_ counterComponent))
+main = native nativeEvents (static (mountStatic counterComponent))
 -----------------------------------------------------------------------------
 counterComponent :: Component () () Model Action
 counterComponent = component (Model 0) updateModel viewModel

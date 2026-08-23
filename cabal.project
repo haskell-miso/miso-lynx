@@ -14,4 +14,4 @@ package miso
 source-repository-package
   type: git
   location: https://github.com/dmjio/miso.git
-  tag: master
+  tag: 998854f34040a7e3be1ef460226b835ff57a3cc1
