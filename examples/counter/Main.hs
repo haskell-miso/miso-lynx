@@ -52,8 +52,8 @@ updateModel = \case
     value -= 1
 -----------------------------------------------------------------------------
 -- | Constructs a virtual DOM from a model
-viewModel :: () -> () -> Model -> View () Model Action
-viewModel _ _ m = view_
+viewModel :: Model -> View () () Model Action
+viewModel m = view_
   [ CSS.style_
     [ CSS.height "200px"
     , CSS.display "flex"
